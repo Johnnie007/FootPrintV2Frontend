@@ -1,0 +1,36 @@
+.container{
+    display:flex;
+    justify-content: space-between;
+    width: 100%;
+    border-bottom: 1px solid black;
+}
+.logo{
+    align-self: center;
+    margin: .5rem;
+}
+
+.nav-links-container{
+    margin-right: 2rem;
+}
+
+.nav-links{
+    display: flex;
+    list-style-type: none;
+    padding-left: 0px;
+    
+}
+
+.link{
+    margin-right: 5rem;
+    padding-top: 5px;
+}
+
+.btn{
+    width: 100px;
+    height: 30px;
+    border: none;
+    color: white;
+    font-size: 15px;
+    background-color: #97EE62;
+    border-radius: 50px;
+}
