@@ -1,0 +1,29 @@
+<div class="login-container">
+    <div class="login-form">
+        <div class="logo-container">
+            <img class="logo" src="../../assets/images/undraw_nature_m5ll 2.svg" alt="logo">
+        </div>
+        <div class="inputs-container">
+            <h4 class="title">Sign In</h4>
+        <div>
+        <input class="inputs" placeholder="first name" type="text" name="firstName" [(ngModel)]="firstName">
+        </div>
+        <div>
+        <input class="inputs" placeholder="last name" type="lastName" name="lastName" [(ngModel)]="lastName">
+        </div>
+        <div>
+        <input class="inputs" placeholder="email" type="text" name="username" [(ngModel)]="email">
+        </div>
+        <div>
+        <input class="inputs" placeholder="password" type="password" name="password" [(ngModel)]="password">
+        </div>
+    </div>
+        <div>
+        <button class="login-btn" (click)="validateLogin()">Sign In</button>
+        </div>
+        <div class="signup">
+        <a class="signup" routerLink="/">Need to Sign In?</a>
+        </div>
+        
+    </div>
+</div>
