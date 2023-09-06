@@ -15,7 +15,5 @@ export class SignupComponent {
   constructor(private router:Router){}
 
   validateLogin(){
-    console.log(this.email);
-    console.log(this.password);
   }
 }

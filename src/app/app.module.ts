@@ -7,13 +7,15 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { LoginComponent } from './login/login.component';
 import { FormsModule } from '@angular/forms';
 import { SignupComponent } from './signup/signup.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavBarComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
