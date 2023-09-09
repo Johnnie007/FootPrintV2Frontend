@@ -1,15 +1,66 @@
-.user-container{
+.demo-container{
+    margin-top: 2rem;
+    margin-left: 2rem;
+    display: flex;
+    justify-content: space-around;
+}
+
+.user-container, .vehicle-container, .home-container{
     background-color: rgba($color: #97EE62, $alpha: .65);
     width: 300px;
     height: 350px;
     border-radius: 40px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
 }
 
 .image{
     width: 125px;
+    height: 125px;
+}
+
+.info-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.user-info{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.user-info h4{
+    margin: 0;
+}
+
+.output{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+.output p{
+    margin: 0;
+}
+
+.edit-icon{
+    align-self: flex-end;
+    margin-right: 1rem;
+    margin-top: 1rem;
+}
+
+.home-image{
+    width: 100px;
+    height: 100px;
+}
+
+.vehicle-image{
+    width: 150px;
     height: 125px;
 }
