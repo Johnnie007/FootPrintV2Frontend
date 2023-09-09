@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { SignupComponent } from './signup/signup.component';
 import { HomeComponent } from './home/home.component';
 import { ChartComponent } from './chart/chart.component';
+import { DemoComponent } from './demo/demo.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { ChartComponent } from './chart/chart.component';
     LoginComponent,
     SignupComponent,
     HomeComponent,
-    ChartComponent
+    ChartComponent,
+    DemoComponent
   ],
   imports: [
     BrowserModule,
