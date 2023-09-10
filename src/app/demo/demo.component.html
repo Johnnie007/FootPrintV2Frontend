@@ -1,8 +1,9 @@
 <div class="demo-container">
+<div class="header-container">
     
     <div class="user-container">
         <div class="edit-icon">
-            <img src="../../assets/images/edit.svg" alt="edit">
+           <img src="../../assets/images/edit.svg" alt="edit">
         </div>
         <div class="info-container">
             <div class="image-container">
@@ -22,31 +23,54 @@
         <div class="edit-icon">
             <img src="../../assets/images/edit.svg" alt="edit">
         </div>
-        <div class="info-container">
-            <div class="image-container">
-                <img class="vehicle-image" src="../../assets/images/SUV.svg" alt="profile picture">
+        
+        <div class="vehicle-section">
+            <div class="leftArrow">
+                <img class="left-arrow" src="../../assets/images/leftArrow.svg" alt="">
             </div>
+            <div class="info-container">
+                <div class="image-container">
+                    <img class="vehicle-image" src="../../assets/images/SUV.svg" alt="profile picture">
+                </div>
                 <div class="monthly-output">
                     <h4>Monthly Output:</h4>
                     <p>50 tons GHG/year</p>
                 </div>
-    </div>
+            </div>
+            <div class="leftArrow">
+                <img class="right-arrow" src="../../assets/images/rightArrow.svg" alt="">
+            </div>
+        </div>
     </div>
 
     <div class="home-container">
         <div class="edit-icon">
             <img src="../../assets/images/edit.svg" alt="edit">
         </div>
-        <div class="info-container">
-            <div class="home-image-container">
-                <img class="home-image" src="../../assets/images/house.svg" alt="profile picture">
+        
+        <div class="home-section">
+            <div class="leftArrow">
+                <img class="left-arrow" src="../../assets/images/leftArrow.svg" alt="">
             </div>
-                <div class="home-output">
+            <div class="info-container">
+                <div class="image-container">
+                    <img class="home-image" src="../../assets/images/house.svg" alt="profile picture">
+                </div>
+                <div class="monthly-output">
                     <h4>Monthly Output:</h4>
                     <p>50 tons GHG/year</p>
                 </div>
+            </div>
+            <div class="rightArrow">
+                <img class="left-arrow" src="../../assets/images/rightArrow.svg" alt="">
+            </div>
+        </div>
     </div>
-    </div>
+</div>
 
+    <div class="chart">
+        <app-chart></app-chart>
+    </div>
 
 </div>
+

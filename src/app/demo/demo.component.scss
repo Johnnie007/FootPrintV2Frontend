@@ -1,4 +1,9 @@
 .demo-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.header-container{
     margin-top: 2rem;
     margin-left: 2rem;
     display: flex;
@@ -58,9 +63,25 @@
 .home-image{
     width: 100px;
     height: 100px;
+    margin-bottom: 25px;
 }
 
 .vehicle-image{
     width: 150px;
     height: 125px;
+}
+
+.chart{
+    align-self: center;
+    margin-top: 5rem;
+}
+
+.vehicle-section, .home-section{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.left-arrow, .right-arrow{
+    width: 30px;
 }
