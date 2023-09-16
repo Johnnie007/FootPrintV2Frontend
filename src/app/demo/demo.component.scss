@@ -95,3 +95,11 @@
 .offsetter-header, .recommendations-header{
     align-self: center;
 }
+.list-item{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+.offsetter-list-item{
+    display: flex;
+}
