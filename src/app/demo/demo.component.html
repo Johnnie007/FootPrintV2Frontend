@@ -78,7 +78,7 @@
             <div class="offsetter-header">
                 <h4>OFFSETTERS</h4>
             </div>
-                <div class="list-item">
+                <div class="list-item" *ngFor="let x of offsetters">
                     <div class="offsetter-list-item">
                         <img src="../../assets/images/minus.svg" alt="remove offsetter">
                         <p class="offsetter-name">
@@ -97,14 +97,17 @@
                 <div class="recommendations-header">
                     <h4>RECOMMENDATIONS</h4>
                 </div>
-                    <ul>
-                        <li>Test</li>
-                        <li>Test</li>
-                        <li>Test</li>
-                        <li>Test</li>
-                        <li>Test</li>
-                    </ul>
-               
+                <div class="list-item" *ngFor="let x of offsetters">
+                    <div class="offsetter-list-item">
+                        <img src="../../assets/images/add.svg" alt="remove offsetter">
+                        <p class="offsetter-name">
+                            Solar
+                        </p>
+                    </div>
+                    <div class="offsetter-ghg-list-item">
+                        <p class="offsetter-ghg">-30 GHG/Year</p>
+                    </div>
+                </div>  
             </div>
 
 </div>

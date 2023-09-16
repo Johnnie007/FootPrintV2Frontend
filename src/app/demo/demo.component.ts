@@ -7,4 +7,5 @@ import { Component } from '@angular/core';
 })
 export class DemoComponent {
 
+  offsetters = ['Succulent', 'Succulent', 'Succulent', 'Succulent','Succulent'];
 }
