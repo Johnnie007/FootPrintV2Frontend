@@ -11,6 +11,7 @@ import { HomeComponent } from './home/home.component';
 import { ChartComponent } from './chart/chart.component';
 import { DemoComponent } from './demo/demo.component';
 import { ApiComponent } from './api/api.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ApiComponent } from './api/api.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
