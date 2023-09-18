@@ -15,12 +15,14 @@ export class LoginComponent {
   constructor(private router:Router, private authenticationService: AuthencationService){}
 
   validateLogin(){
-    console.log(this.email)
-    console.log(this.password)
       this.authenticationService.authenticateUser(this.email, this.password).subscribe(
         data =>{
           console.log(data)
+        },
+        error =>{
+          console.log(error)
         }
       )
   }
+  
 }

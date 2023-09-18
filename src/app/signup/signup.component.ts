@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthencationService } from '../service/authencation.service';
 
 @Component({
   selector: 'app-signup',
@@ -12,8 +13,16 @@ export class SignupComponent {
   firstName = '';
   lastName = '';
 
-  constructor(private router:Router){}
+  constructor(private router:Router, private authenticationService: AuthencationService){}
 
   validateLogin(){
+    this.authenticationService.createUser(this.firstName, this.lastName, this.email, this.password).subscribe(
+      data =>{
+        console.log(data)
+      },
+      error =>{
+        console.log(error)
+      }
+    )
   }
 }
