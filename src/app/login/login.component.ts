@@ -17,12 +17,12 @@ export class LoginComponent {
   validateLogin(){
       this.authenticationService.authenticateUser(this.email, this.password).subscribe(
         data =>{
-          console.log(data)
+         this.router.navigate(['/userprofile'])
         },
         error =>{
           console.log(error)
         }
       )
   }
-  
+
 }

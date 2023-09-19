@@ -12,6 +12,7 @@ import { ChartComponent } from './chart/chart.component';
 import { DemoComponent } from './demo/demo.component';
 import { ApiComponent } from './api/api.component';
 import { HttpClientModule } from '@angular/common/http';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { HttpClientModule } from '@angular/common/http';
     HomeComponent,
     ChartComponent,
     DemoComponent,
-    ApiComponent
+    ApiComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,

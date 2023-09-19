@@ -39,8 +39,8 @@ export class AuthencationService {
     .pipe(
      map(
        userData => {
-         sessionStorage.setItem('username', username)
-         console.log(userData)
+         sessionStorage.setItem('username', username);
+         sessionStorage.setItem('isLoggedIn', 'true');
          return userData;
        }
      )
