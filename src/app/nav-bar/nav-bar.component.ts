@@ -7,6 +7,10 @@ import { AuthencationService } from '../service/authencation.service';
 })
 export class NavBarComponent{
   constructor(public authenticationService: AuthencationService){}
-
+  
+  logOutUser(){
+    sessionStorage.removeItem('username')
+    this.authenticationService.logOutUser
+  }
 
 }

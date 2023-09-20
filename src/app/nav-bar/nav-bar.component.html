@@ -12,11 +12,8 @@
     </div>
     <div *ngIf="(authenticationService.authenticate | async) === true" class="nav-links-container">
         <ul class="nav-links">
-            <!-- <li class="link" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}"><a class="li-link" routerLink="/" >home</a></li>
-            <li class="link" routerLinkActive="active-link"><a class="li-link" routerLink="/demo">demo</a></li>
-            <li class="link" routerLinkActive="active-link"><a class="li-link" routerLink="/api">api</a></li> -->
             <div class="button-container">
-                <button class="btn"><a class="btn-link" routerLink="/signin">Sign Out</a></button>
+                <button class="btn"><a (click)="logOutUser()" class="btn-link" routerLink="/">Sign Out</a></button>
             </div>
         </ul>
     </div>
