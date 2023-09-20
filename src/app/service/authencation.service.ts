@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http'
-import { map } from 'rxjs';
+import { BehaviorSubject, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +8,15 @@ import { map } from 'rxjs';
 export class AuthencationService {
 
   constructor(private httpClient: HttpClient) { }
+  authenticate = new BehaviorSubject<boolean>(false);
+
+  logInUser(){
+    this.authenticate.next(true);
+  }
+
+  logOutUser(){
+    this.authenticate.next(false);
+  }
 
   authenticateUser(username, password){
     let user = {
@@ -19,6 +28,7 @@ export class AuthencationService {
     .pipe(
      map(
        userData => {
+        this.logInUser()
          sessionStorage.setItem('username', username)
          console.log(userData)
          return userData;
