@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http'
+import {HttpClient} from '@angular/common/http';
 import { BehaviorSubject, map } from 'rxjs';
 
 @Injectable({
@@ -30,6 +30,7 @@ export class AuthencationService {
        userData => {
         this.logInUser()
          sessionStorage.setItem('username', username)
+         sessionStorage.setItem('password', password)
          console.log(userData)
          return userData;
        }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthencationService } from '../service/authencation.service';
+import { AuthencationService } from '../auth-service/authencation.service';
 
 @Component({
   selector: 'app-signup',
