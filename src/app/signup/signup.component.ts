@@ -18,7 +18,7 @@ export class SignupComponent {
   validateLogin(){
     this.authenticationService.createUser(this.firstName, this.lastName, this.email, this.password).subscribe(
       data =>{
-         this.router.navigate(['/userprofile'])
+         this.router.navigate(['/userprofile']);
         console.log(data)
       },
       error =>{
