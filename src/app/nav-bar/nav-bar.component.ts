@@ -10,7 +10,7 @@ export class NavBarComponent{
   
   logOutUser(){
     sessionStorage.removeItem('username')
-    this.authenticationService.logOutUser
+    this.authenticationService.logOutUser()
   }
 
 }
