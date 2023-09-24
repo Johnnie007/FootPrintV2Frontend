@@ -51,7 +51,7 @@
 }
 
 .output p{
-    margin: 0;
+    margin: 10px;
 }
 
 .edit-icon{
@@ -102,4 +102,17 @@
 }
 .offsetter-list-item{
     display: flex;
+}
+
+.add-vehicle{
+    display: flex;
+    height: 60%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.add-button{
+    width: 90px;
+    height: 80px;
 }

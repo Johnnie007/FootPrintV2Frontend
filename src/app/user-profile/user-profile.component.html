@@ -1,4 +1,4 @@
-<div class="demo-container">
+<div *ngIf="vehicle != undefined" class="demo-container">
     <div class="header-container">
         
         <div class="user-container">
@@ -10,16 +10,23 @@
                     <img class="image" src="../../assets/images/demoProfile.png" alt="profile picture">
                 </div>
                 <div class="user-info">
-                    <h4>{{user?.first_name}}</h4>
+                    <h4>{{user.first_name}} {{user.last_name}}</h4>
                     <div class="output">
                         <h4>Footprint:</h4>
-                        <p>50 tons GHG/year</p>
+                        <p>{{user.footprint}} tons GHG/year</p>
                     </div>
                 </div>
             </div>
         </div>
     
-        <div class="vehicle-container">
+        <div *ngIf="vehicle?.length == 0" class="vehicle-container">
+            <div class="add-vehicle">
+                <h2>Add Vehicle</h2>
+                <img class="add-button" src="../../assets/images/AddButton.svg" alt="add vehicle">
+            </div>
+        </div>
+        
+        <div *ngIf="vehicle.length != 0" class="vehicle-container">
             <div class="edit-icon">
                 <img src="../../assets/images/edit.svg" alt="edit">
             </div>
@@ -43,7 +50,13 @@
             </div>
         </div>
     
-        <div class="home-container">
+        <div *ngIf="home?.length == 0" class="home-container">
+            <div class="add-vehicle">
+                <h2>Add Home</h2>
+                <img class="add-button" src="../../assets/images/AddButton.svg" alt="add home">
+            </div>
+        </div>
+        <div *ngIf="home.length != 0" class="home-container">
             <div class="edit-icon">
                 <img src="../../assets/images/edit.svg" alt="edit">
             </div>

@@ -12,14 +12,74 @@ export class UserProfileComponent implements OnInit{
   }
   offsetters = ['Succulent', 'Succulent', 'Succulent', 'Succulent','Succulent'];
   user: User;
+  userImage;
+  vehicle;
+  home;
+  
   ngOnInit(): void {
-    console.log(0)
-    this.restService.getUser().subscribe(
-      data =>{
-        this.user = data;
-        console.log(data)
-        console.log(this.user?.first_name)
-      }
-    )
+    this.setUserData()
+    .then(()=>{
+      this.setUserImage()
+    })
+    .then(()=>{
+      this.setVehicleData()
+    })
+    .then(()=>{
+      this.setHomeData()
+    })
   }
+
+  setUserData():Promise<any>{
+    return new Promise((resolve)=>{
+      this.restService.getUser()
+      .subscribe(
+        data =>{
+          this.user = data;
+          this.user.footprint = 0
+          console.log(this.user);
+          resolve(true)
+        }
+    )
+    })
+  }
+
+  setUserImage(): Promise<any>{
+    return new Promise((resolve)=>{
+      this.restService.getUserImage(this.user.id)
+      .subscribe(
+        data =>{
+          this.userImage = data;
+          console.log(this.userImage)
+          resolve(true)
+        }
+      )
+    })
+  }
+
+  setVehicleData():Promise<any>{
+    return new Promise((resolve)=>{
+      this.restService.getVehicle(this.user.id)
+      .subscribe(
+        data =>{
+          this.vehicle = data;
+          console.log(this.vehicle);
+          resolve(true);
+        }
+      )
+      })
+  }
+
+  setHomeData():Promise<any>{
+    return new  Promise((resolve)=>{
+      this.restService.getHome(this.user.id)
+      .subscribe(
+        data => {
+          this.home = data;
+          console.log(this.home)
+          resolve(true);
+        }
+      )
+    });
+  }
+
 }
