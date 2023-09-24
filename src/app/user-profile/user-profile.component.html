@@ -26,6 +26,42 @@
             </div>
         </div>
         
+        <div class="vehicle-container">
+            <div class="edit-container">
+                <h2 class="edit-header">Add Vehicle</h2>
+                <div class="vehicle-type">
+                    <h4 class="vehicle-type-header">Type of Vehicle:</h4>
+                    <div class="vehicle-type-inputs">
+                        <div>
+                            <input type="radio" name="vehicle">
+                            <label for="motorcycle">Motorcycle</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="vehicle">
+                            <label for="suv">SUV</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="vehicle">
+                            <label for="car">Car</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="vehicle">
+                            <label for="truck">truck</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="vehicle-mpg">
+                        <label for="mpg">MPG: </label>
+                        <input type="number" step="0.01" name="vehicle" id="mpg">
+                </div>
+                
+                <div class="btns">
+                    <button class="btn">Add</button>
+                    <button class="btn">Cancel</button>
+                </div>
+            </div>
+        </div>
+
         <div *ngIf="vehicle.length != 0" class="vehicle-container">
             <div class="edit-icon">
                 <img src="../../assets/images/edit.svg" alt="edit">
@@ -79,7 +115,40 @@
                 </div>
             </div>
         </div>
+
+        <div class="vehicle-container">
+            <div class="edit-container">
+                <h2 class="edit-header">Add Home</h2>
+                <div class="vehicle-type">
+                    <h4 class="vehicle-type-header">Type of Home:</h4>
+                    <div class="vehicle-type-inputs">
+                        <div>
+                            <input type="radio" name="home">
+                            <label for="house">House</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="home">
+                            <label for="mansion">Mansion</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="home">
+                            <label for="Apartment">Apartment</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="vehicle-mpg">
+                        <label for="mpg">SQFT: </label>
+                        <input type="number" step="0.01" name="vehicle" id="mpg">
+                </div>
+                
+                <div class="btns">
+                    <button class="btn">Add</button>
+                    <button class="btn">Cancel</button>
+                </div>
+            </div>
+        </div>
     </div>
+
     
         <div class="chart">
             <app-chart></app-chart>

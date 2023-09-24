@@ -116,3 +116,42 @@
     width: 90px;
     height: 80px;
 }
+
+.vehicle-type-header{
+   margin-right: 1rem;
+}
+
+.vehicle-type{
+    display: flex;
+    align-items: center;
+}
+
+.vehicle-mpg{
+    margin-top: 1rem;
+}
+
+.btns{
+    margin-top: 1rem; 
+}
+
+.btn{
+    width: 100px;
+    height: 30px;
+    border: none;
+    background-color: #027200;
+    border-radius: 50px;
+    color: white;
+    margin-left: 10px;
+}
+
+.edit-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+}
+
+.edit-header{
+    margin: 0;
+}
