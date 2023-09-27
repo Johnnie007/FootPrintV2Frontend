@@ -26,7 +26,7 @@
             </div>
         </div>
         
-        <div class="vehicle-container">
+        <div *ngIf="false" class="vehicle-container">
             <div class="edit-container">
                 <h2 class="edit-header">Add Vehicle</h2>
                 <div class="vehicle-type">
@@ -116,12 +116,12 @@
             </div>
         </div>
 
-        <div class="vehicle-container">
+        <div *ngIf="false" class="home-container">
             <div class="edit-container">
                 <h2 class="edit-header">Add Home</h2>
-                <div class="vehicle-type">
-                    <h4 class="vehicle-type-header">Type of Home:</h4>
-                    <div class="vehicle-type-inputs">
+                <div class="home-type">
+                    <h4 class="home-type-header">Type of Home:</h4>
+                    <div class="home-type-inputs">
                         <div>
                             <input type="radio" name="home">
                             <label for="house">House</label>
@@ -136,7 +136,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="vehicle-mpg">
+                <div class="home-mpg">
                         <label for="mpg">SQFT: </label>
                         <input type="number" step="0.01" name="vehicle" id="mpg">
                 </div>
@@ -155,14 +155,13 @@
         </div>
     
         <div class="offsetter-section">
-    
             <div class="offsetter-container">
                 <div class="offsetter-header">
                     <h4>OFFSETTERS</h4>
                 </div>
                     <div class="list-item" *ngFor="let x of offsetters">
                         <div class="offsetter-list-item">
-                            <img src="../../assets/images/minus.svg" alt="remove offsetter">
+                            <img class="offsetter-icon" src="../../assets/images/removeIcon.svg" alt="remove offsetter">
                             <p class="offsetter-name">
                                 Succulent
                             </p>
@@ -182,7 +181,7 @@
                     <!--change div names-->
                     <div class="list-item" *ngFor="let x of offsetters">
                         <div class="offsetter-list-item">
-                            <img src="../../assets/images/add.svg" alt="remove offsetter">
+                            <img class="offsetter-icon" src="../../assets/images/addIcon.svg" alt="Add offsetter">
                             <p class="offsetter-name">
                                 Solar
                             </p>
