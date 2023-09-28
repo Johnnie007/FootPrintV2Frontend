@@ -15,6 +15,10 @@ export class UserProfileComponent implements OnInit{
   userImage;
   vehicle;
   home;
+
+  vehicleEditMode = false;
+  homeEditMode = false;
+  profileEditMode = false;
   
   ngOnInit(): void {
     this.setUserData()
@@ -80,6 +84,28 @@ export class UserProfileComponent implements OnInit{
         }
       )
     });
+  }
+
+  editProfile(){
+    this.profileEditMode = true;
+  }
+  
+  editVehicle(){
+    this.vehicleEditMode = true;
+  }
+  
+  editHome(){
+    this.homeEditMode = true;
+  }
+
+  cancelEditProfile(){
+    this.vehicleEditMode = false;
+  }
+  cancelEditVehicle(){
+    this.vehicleEditMode = false;
+  }
+  cancelEditHome(){
+    this.homeEditMode = false;
   }
 
 }
