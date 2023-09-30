@@ -1,9 +1,9 @@
 <div *ngIf="vehicle != undefined" class="demo-container">
     <div class="header-container">
         
-        <div class="user-container">
+        <div *ngIf="userEditMode !== true" class="user-container">
             <div class="edit-icon">
-               <img (click)="editProfile()" src="../../assets/images/edit.svg" alt="edit">
+               <img (click)="editUser()" src="../../assets/images/edit.svg" alt="edit">
             </div>
             <div class="info-container">
                 <div class="image-container">
@@ -18,7 +18,24 @@
                 </div>
             </div>
         </div>
-    
+
+        <div *ngIf="userEditMode === true" class="user-container">
+            <div class="edit-user">
+                <h2 class="update-header">Update User</h2>
+                <div class="image-container">
+                    <img class="image" src="../../assets/images/demoProfile.png" alt="profile picture">
+                </div>
+                <div class="update-user">
+                    <label class="update-user__font" for="profilePic">Update Picture:</label>
+                    <input class="update-user__width" type="file" accept="image/png, image/jpeg"  name="profilePic" />
+                </div>
+                <div class="user-btns">
+                    <button class="btn">Update</button>
+                    <button (click)="cancelEditUser()" class="btn">Cancel</button>
+                </div>
+            </div>
+        </div>
+        
         <div *ngIf="vehicle?.length == 0 && vehicleEditMode == false" class="vehicle-container">
             <div class="add-vehicle">
                 <h2>Add Vehicle</h2>
@@ -92,7 +109,6 @@
                 <img (click)="editHome()" class="add-button" src="../../assets/images/AddButton.svg" alt="add home">
             </div>
         </div>
-        
         <div *ngIf="home.length != 0 && homeEditMode == false" class="home-container">
             <div class="edit-icon">
                 <img (click)="editHome()" src="../../assets/images/edit.svg" alt="edit">

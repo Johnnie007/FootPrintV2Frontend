@@ -19,7 +19,35 @@
     flex-direction: column;
 }
 
+.edit-user{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.update-user{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    &__width{
+        width: 180px;
+    }
+
+    &__font{
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+}
+
+.user-btns{
+    margin-bottom: 1rem;
+}
+
 .image{
+    object-fit: contain;
     width: 125px;
     height: 125px;
 }
