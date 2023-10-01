@@ -13,8 +13,8 @@ export class UserProfileComponent implements OnInit{
   offsetters = ['Succulent', 'Succulent', 'Succulent', 'Succulent','Succulent'];
   user: User;
   userImage;
-  vehicle;
-  home;
+  vehicles;
+  homes;
 
   vehicleEditMode = false;
   homeEditMode = false;
@@ -27,6 +27,10 @@ export class UserProfileComponent implements OnInit{
   //home stuff
   homeType;
   homeSize;
+
+  //display stuff
+  vehicleIndex = 0;
+  currentVehicle;
   
   ngOnInit(): void {
     this.setUserData()
@@ -73,8 +77,8 @@ export class UserProfileComponent implements OnInit{
       this.restService.getVehicle(this.user.id)
       .subscribe(
         data =>{
-          this.vehicle = data;
-          console.log(this.vehicle);
+          this.vehicles = data;
+          console.log(this.vehicles);
           resolve(true);
         }
       )
@@ -86,8 +90,8 @@ export class UserProfileComponent implements OnInit{
       this.restService.getHome(this.user.id)
       .subscribe(
         data => {
-          this.home = data;
-          console.log(this.home)
+          this.homes = data;
+          console.log(this.homes)
           resolve(true);
         }
       )
@@ -121,15 +125,54 @@ export class UserProfileComponent implements OnInit{
   addVehicle(){
     console.log(this.vehicleType);
     console.log(this.vehicleMpg);
-    //resets values
+    
+   const vehicleBody = {
+      type: this.vehicleType,
+      mpg: this.vehicleMpg,
+      userId: this.user.id
+    };
+    this.restService.addVehicle(this.user.id, vehicleBody).subscribe( (res)=>{
+      console.log(res)
+      //resets values
     this.vehicleType = '';
     this.vehicleMpg = 0;
+    
+    this.setVehicleData().then(()=>{
+      this.vehicleEditMode = false;
+    });
+    
+    }
+  );
   }
+
   addHome(){
     console.log(this.homeType);
     console.log(this.homeSize);
-    //resets values
+    const homeBody = {
+      homeType: this.homeType,
+      homeSize: this.homeSize,
+      userId: this.user.id
+    };
+   
+    this.restService.addHome(this.user.id, homeBody).subscribe( (res)=>{
+      console.log(res)
+       //resets values
     this.homeType = '';
     this.homeSize = 0;
+    
+    this.setHomeData().then(()=>{
+      this.homeEditMode = false;
+    })
+    }
+  );
   }
+
+  displayVehicle(){
+    if(this.currentVehicle === undefined && this.vehicles.length != 0){
+      this.currentVehicle = this.vehicles[0];
+    }else if(this.currentVehicle != undefined && this.vehicles.length != 0){
+      this.currentVehicle = this.vehicles[this.vehicleIndex];
+    } 
+  }
+
 }

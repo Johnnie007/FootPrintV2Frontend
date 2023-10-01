@@ -1,4 +1,4 @@
-<div *ngIf="vehicle != undefined" class="demo-container">
+<div *ngIf="vehicles != undefined" class="demo-container">
     <div class="header-container">
         
         <div *ngIf="userEditMode !== true" class="user-container">
@@ -36,7 +36,7 @@
             </div>
         </div>
         
-        <div *ngIf="vehicle?.length == 0 && vehicleEditMode == false" class="vehicle-container">
+        <div *ngIf="vehicles?.length == 0 && vehicleEditMode == false" class="vehicle-container">
             <div class="add-vehicle">
                 <h2>Add Vehicle</h2>
                     <img (click)="editVehicle()" class="add-button" src="../../assets/images/AddButton.svg" alt="add vehicle">
@@ -79,7 +79,7 @@
             </div>
         </div>
 
-        <div *ngIf="vehicle.length != 0 && vehicleEditMode == false" class="vehicle-container">
+        <div *ngIf="vehicles.length != 0 && vehicleEditMode == false" class="vehicle-container">
             <div class="edit-icon">
                 <img (click)="editVehicle()" src="../../assets/images/edit.svg" alt="edit">
             </div>
@@ -103,13 +103,13 @@
             </div>
         </div>
     
-        <div *ngIf="home?.length == 0 && homeEditMode == false" class="home-container">
+        <div *ngIf="homes?.length == 0 && homeEditMode == false" class="home-container">
             <div class="add-vehicle">
                 <h2>Add Home</h2>
                 <img (click)="editHome()" class="add-button" src="../../assets/images/AddButton.svg" alt="add home">
             </div>
         </div>
-        <div *ngIf="home.length != 0 && homeEditMode == false" class="home-container">
+        <div *ngIf="homes.length != 0 && homeEditMode == false" class="home-container">
             <div class="edit-icon">
                 <img (click)="editHome()" src="../../assets/images/edit.svg" alt="edit">
             </div>
