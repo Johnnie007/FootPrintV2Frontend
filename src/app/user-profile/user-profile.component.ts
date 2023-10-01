@@ -19,6 +19,14 @@ export class UserProfileComponent implements OnInit{
   vehicleEditMode = false;
   homeEditMode = false;
   userEditMode = false;
+
+  //vehicle stuff
+  vehicleType;
+  vehicleMpg;
+
+  //home stuff
+  homeType;
+  homeSize;
   
   ngOnInit(): void {
     this.setUserData()
@@ -101,11 +109,27 @@ export class UserProfileComponent implements OnInit{
   cancelEditUser(){
     this.userEditMode = false;
   }
+
   cancelEditVehicle(){
     this.vehicleEditMode = false;
   }
+
   cancelEditHome(){
     this.homeEditMode = false;
   }
-
+  
+  addVehicle(){
+    console.log(this.vehicleType);
+    console.log(this.vehicleMpg);
+    //resets values
+    this.vehicleType = '';
+    this.vehicleMpg = 0;
+  }
+  addHome(){
+    console.log(this.homeType);
+    console.log(this.homeSize);
+    //resets values
+    this.homeType = '';
+    this.homeSize = 0;
+  }
 }

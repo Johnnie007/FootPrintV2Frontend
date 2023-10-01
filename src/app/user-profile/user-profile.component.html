@@ -50,30 +50,30 @@
                     <h4 class="vehicle-type-header">Type of Vehicle:</h4>
                     <div class="vehicle-type-inputs">
                         <div>
-                            <input type="radio" name="vehicle">
+                            <input type="radio" name="vehicle" value="motorcycle" [(ngModel)]="vehicleType">
                             <label for="motorcycle">Motorcycle</label>
                         </div>
                         <div>
-                            <input type="radio" name="vehicle">
+                            <input type="radio" name="vehicle" value="suv" [(ngModel)]="vehicleType">
                             <label for="suv">SUV</label>
                         </div>
                         <div>
-                            <input type="radio" name="vehicle">
+                            <input type="radio" name="vehicle" value="car" [(ngModel)]="vehicleType">
                             <label for="car">Car</label>
                         </div>
                         <div>
-                            <input type="radio" name="vehicle">
+                            <input type="radio" name="vehicle" value="truck" [(ngModel)]="vehicleType">
                             <label for="truck">Truck</label>
                         </div>
                     </div>
                 </div>
                 <div class="vehicle-mpg">
-                        <label for="mpg">MPG: </label>
-                        <input type="number" step="0.01" name="vehicle" id="mpg">
+                        <label class="vehicle-mpg__bold" for="mpg">MPG: </label>
+                        <input type="number" step="0.01" name="vehicle" id="mpg" [(ngModel)]="vehicleMpg">
                 </div>
                 
                 <div class="btns">
-                    <button class="btn">Add</button>
+                    <button (click)="addVehicle()" class="btn">Add</button>
                     <button (click)="cancelEditVehicle()" class="btn">Cancel</button>
                 </div>
             </div>
@@ -140,26 +140,26 @@
                     <h4 class="home-type-header">Type of Home:</h4>
                     <div class="home-type-inputs">
                         <div>
-                            <input type="radio" name="home">
+                            <input type="radio"  name="home" [(ngModel)]="homeType" value="house">
                             <label for="house">House</label>
                         </div>
                         <div>
-                            <input type="radio" name="home">
+                            <input type="radio" name="home" [(ngModel)]="homeType" value="mansion">
                             <label for="mansion">Mansion</label>
                         </div>
                         <div>
-                            <input type="radio" name="home">
+                            <input type="radio" name="home" [(ngModel)]="homeType" value="apartment">
                             <label for="Apartment">Apartment</label>
                         </div>
                     </div>
                 </div>
-                <div class="home-mpg">
-                        <label for="mpg">SQFT: </label>
-                        <input type="number" step="0.01" name="vehicle" id="mpg">
+                <div class="home-sqft">
+                        <label class="home-sqft__bold" for="SQFT">SQFT: </label>
+                        <input [(ngModel)]="homeSize"  type="number" step="0.01" name="home" id="sqft">
                 </div>
                 
                 <div class="btns">
-                    <button class="btn">Add</button>
+                    <button (click)="addHome()" class="btn">Add</button>
                     <button (click)="cancelEditHome()" class="btn">Cancel</button>
                 </div>
             </div>

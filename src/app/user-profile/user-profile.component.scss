@@ -156,6 +156,15 @@
 
 .vehicle-mpg{
     margin-top: 1rem;
+    &__bold{
+        font-weight: bold;
+    }
+}
+
+.home-sqft{
+    &__bold{
+        font-weight: bold;
+    }
 }
 
 .btns{
