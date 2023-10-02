@@ -85,7 +85,7 @@
             </div>
             
             <div class="vehicle-section">
-                <div class="leftArrow">
+                <div *ngIf="vehicles.length > 1" class="leftArrow">
                     <img class="left-arrow" src="../../assets/images/leftArrow.svg" alt="">
                 </div>
                 <div class="info-container">
@@ -94,10 +94,10 @@
                     </div>
                     <div class="monthly-output">
                         <h4>Monthly Output:</h4>
-                        <p>50 tons GHG/year</p>
+                        <p>{{currentVehicle.vehicleGHG}} tons GHG/year</p>
                     </div>
                 </div>
-                <div class="leftArrow">
+                <div *ngIf="vehicles.length > 1" class="leftArrow">
                     <img class="right-arrow" src="../../assets/images/rightArrow.svg" alt="">
                 </div>
             </div>

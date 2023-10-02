@@ -62,13 +62,11 @@ export class RestService {
 
   addVehicle(id, vehicle){
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)});
-    //const body = JSON.stringify(vehicle);
     return this.httpClient.post(`http://localhost:8080/api/${id}/add/vehicle`,vehicle,{headers});
   }
   
   addHome(id, home){
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)});
-    //const body = JSON.stringify(vehicle);
     return this.httpClient.post(`http://localhost:8080/api/${id}/home`,home,{headers});
   }
 }

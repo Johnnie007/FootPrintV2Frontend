@@ -9,7 +9,6 @@ export class NavBarComponent{
   constructor(public authenticationService: AuthencationService){}
   
   logOutUser(){
-    sessionStorage.removeItem('username')
     this.authenticationService.logOutUser()
   }
 

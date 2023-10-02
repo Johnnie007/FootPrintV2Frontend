@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import { BehaviorSubject, map } from 'rxjs';
+import { Router } from '@angular/router';
+import { BrowserModule } from '@angular/platform-browser';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthencationService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private router: Router) { }
   authenticate = new BehaviorSubject<boolean>(false);
 
   logInUser(){
@@ -15,6 +17,10 @@ export class AuthencationService {
   }
 
   logOutUser(){
+    sessionStorage.removeItem('username');
+    sessionStorage.removeItem('password');
+    //clears headers Saved in Browser
+    window.location.reload();
     this.authenticate.next(false);
   }
 
@@ -51,7 +57,8 @@ export class AuthencationService {
      map(
        userData => {
         this.logInUser()
-         sessionStorage.setItem('username', username);
+        sessionStorage.setItem('username', username)
+        sessionStorage.setItem('password', password)
          return userData;
        }
      )

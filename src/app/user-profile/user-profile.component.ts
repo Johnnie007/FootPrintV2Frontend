@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { RestService } from '../auth-service/rest-service.service';
 import { User } from '../models/User.model';
+import { Router } from '@angular/router';
+import { Subscription, map } from 'rxjs';
 
 @Component({
   selector: 'app-user-profile',
@@ -8,8 +10,13 @@ import { User } from '../models/User.model';
   styleUrls: ['./user-profile.component.scss']
 })
 export class UserProfileComponent implements OnInit{
+  
   constructor(private restService: RestService){
   }
+  
+  //subscription Stuff
+  userSubscription: Subscription
+
   offsetters = ['Succulent', 'Succulent', 'Succulent', 'Succulent','Succulent'];
   user: User;
   userImage;
@@ -31,6 +38,8 @@ export class UserProfileComponent implements OnInit{
   //display stuff
   vehicleIndex = 0;
   currentVehicle;
+  homeIndex = 0;
+  currentHome;
   
   ngOnInit(): void {
     this.setUserData()
@@ -38,21 +47,25 @@ export class UserProfileComponent implements OnInit{
       this.setUserImage()
     })
     .then(()=>{
-      this.setVehicleData()
+      this.setVehicleData().then(()=>{
+        this.displayVehicle();
+      })
     })
     .then(()=>{
-      this.setHomeData()
-    })
+      this.setHomeData().then(()=>{
+        this.displayHome();
+      })
+    });
   }
 
   setUserData():Promise<any>{
     return new Promise((resolve)=>{
-      this.restService.getUser()
+       this.userSubscription = this.restService.getUser()
       .subscribe(
         data =>{
           this.user = data;
           this.user.footprint = 0
-          console.log(this.user);
+          console.log(data);
           resolve(true)
         }
     )
@@ -123,48 +136,79 @@ export class UserProfileComponent implements OnInit{
   }
   
   addVehicle(){
-    console.log(this.vehicleType);
-    console.log(this.vehicleMpg);
-    
+
    const vehicleBody = {
       type: this.vehicleType,
       mpg: this.vehicleMpg,
-      userId: this.user.id
+      userId: this.user.id,
+      vehicleGHG: this.calculateVehicleGHG()
     };
-    this.restService.addVehicle(this.user.id, vehicleBody).subscribe( (res)=>{
-      console.log(res)
-      //resets values
-    this.vehicleType = '';
-    this.vehicleMpg = 0;
+    this.restService.addVehicle(this.user.id, vehicleBody)
+    .pipe(map(
+      res =>{
+              //resets values
+            this.vehicleType = '';
+            this.vehicleMpg = 0;
+            
+            this.setVehicleData().then(()=>{
+            this.vehicleEditMode = false;
+            });
+            
+            }
+    ))
+  //   .subscribe( (res)=>{
+  //     console.log(res)
+  //     //resets values
+  //   this.vehicleType = '';
+  //   this.vehicleMpg = 0;
     
-    this.setVehicleData().then(()=>{
-      this.vehicleEditMode = false;
-    });
+  //   this.setVehicleData().then(()=>{
+  //     this.vehicleEditMode = false;
+  //   });
     
-    }
-  );
+  //   }
+  // );
+  }
+
+  calculateVehicleGHG(){
+    let gasUsed =  12000/ this.vehicleMpg;
+    let ghgPerYear = 8.89 * (10**-3) * gasUsed;
+    return ghgPerYear;
   }
 
   addHome(){
-    console.log(this.homeType);
-    console.log(this.homeSize);
     const homeBody = {
       homeType: this.homeType,
       homeSize: this.homeSize,
       userId: this.user.id
     };
    
-    this.restService.addHome(this.user.id, homeBody).subscribe( (res)=>{
-      console.log(res)
-       //resets values
-    this.homeType = '';
-    this.homeSize = 0;
+    this.restService.addHome(this.user.id, homeBody).pipe( map(
+      res=>{
+            console.log(res)
+             //resets values
+          this.homeType = '';
+          this.homeSize = 0;
+          
+          this.setHomeData().then(()=>{
+            this.homeEditMode = false;
+          })
+          }
+    ))
     
-    this.setHomeData().then(()=>{
-      this.homeEditMode = false;
-    })
-    }
-  );
+    
+    
+  //   .subscribe( (res)=>{
+  //     console.log(res)
+  //      //resets values
+  //   this.homeType = '';
+  //   this.homeSize = 0;
+    
+  //   this.setHomeData().then(()=>{
+  //     this.homeEditMode = false;
+  //   })
+  //   }
+  // );
   }
 
   displayVehicle(){
@@ -172,6 +216,13 @@ export class UserProfileComponent implements OnInit{
       this.currentVehicle = this.vehicles[0];
     }else if(this.currentVehicle != undefined && this.vehicles.length != 0){
       this.currentVehicle = this.vehicles[this.vehicleIndex];
+    } 
+  }
+  displayHome(){
+    if(this.currentHome === undefined && this.homes.length != 0){
+      this.currentVehicle = this.homes[0];
+    }else if(this.currentHome != undefined && this.homes.length != 0){
+      this.currentHome = this.homes[this.homeIndex];
     } 
   }
 
