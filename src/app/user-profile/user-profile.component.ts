@@ -40,6 +40,8 @@ export class UserProfileComponent implements OnInit{
   currentVehicle;
   homeIndex = 0;
   currentHome;
+
+  loading = true;
   
   ngOnInit(): void {
     this.setUserData()
@@ -54,6 +56,7 @@ export class UserProfileComponent implements OnInit{
     .then(()=>{
       this.setHomeData().then(()=>{
         this.displayHome();
+        this.loading = false
       })
     });
   }
@@ -64,8 +67,11 @@ export class UserProfileComponent implements OnInit{
       .subscribe(
         data =>{
           this.user = data;
-          this.user.footprint = 0
-          console.log(data);
+          
+          if(!this.user.footprint){
+            //default user Footprint
+            this.user.footprint = 0.41;
+          }
           resolve(true)
         }
     )
@@ -92,6 +98,7 @@ export class UserProfileComponent implements OnInit{
         data =>{
           this.vehicles = data;
           console.log(this.vehicles);
+          
           resolve(true);
         }
       )
@@ -144,35 +151,31 @@ export class UserProfileComponent implements OnInit{
       vehicleGHG: this.calculateVehicleGHG()
     };
     this.restService.addVehicle(this.user.id, vehicleBody)
-    .pipe(map(
-      res =>{
-              //resets values
-            this.vehicleType = '';
-            this.vehicleMpg = 0;
-            
-            this.setVehicleData().then(()=>{
-            this.vehicleEditMode = false;
-            });
-            
-            }
-    ))
-  //   .subscribe( (res)=>{
-  //     console.log(res)
-  //     //resets values
-  //   this.vehicleType = '';
-  //   this.vehicleMpg = 0;
+    .subscribe( (res)=>{
+      console.log(res)
+      //resets values
+    this.vehicleType = '';
+    this.vehicleMpg = 0;
     
-  //   this.setVehicleData().then(()=>{
-  //     this.vehicleEditMode = false;
-  //   });
+    this.setVehicleData().then(()=>{
+      this.vehicleEditMode = false;
+    });
     
-  //   }
-  // );
+    }
+  );
   }
 
   calculateVehicleGHG(){
     let gasUsed =  12000/ this.vehicleMpg;
-    let ghgPerYear = 8.89 * (10**-3) * gasUsed;
+    let ghgPerYear = (19.6 * gasUsed) / 2000;
+    
+    return ghgPerYear;
+  }
+
+  calculateHomeGHG(){
+    let totalWatts =  this.homeSize * .75;
+    let ghgPerYear = (totalWatts * .855) / 2000;
+
     return ghgPerYear;
   }
 
@@ -180,35 +183,20 @@ export class UserProfileComponent implements OnInit{
     const homeBody = {
       homeType: this.homeType,
       homeSize: this.homeSize,
-      userId: this.user.id
+      userId: this.user.id,
+      homeGHG: this.calculateVehicleGHG()
     };
    
-    this.restService.addHome(this.user.id, homeBody).pipe( map(
-      res=>{
-            console.log(res)
-             //resets values
-          this.homeType = '';
-          this.homeSize = 0;
-          
-          this.setHomeData().then(()=>{
-            this.homeEditMode = false;
-          })
-          }
-    ))
+    this.restService.addHome(this.user.id, homeBody).subscribe( (res)=>{
+       //resets values
+    this.homeType = '';
+    this.homeSize = 0;
     
-    
-    
-  //   .subscribe( (res)=>{
-  //     console.log(res)
-  //      //resets values
-  //   this.homeType = '';
-  //   this.homeSize = 0;
-    
-  //   this.setHomeData().then(()=>{
-  //     this.homeEditMode = false;
-  //   })
-  //   }
-  // );
+    this.setHomeData().then(()=>{
+      this.homeEditMode = false;
+    })
+    }
+  );
   }
 
   displayVehicle(){
