@@ -18,10 +18,10 @@ export class UserProfileComponent implements OnInit{
   userSubscription: Subscription
 
   offsetters = ['Succulent', 'Succulent', 'Succulent', 'Succulent','Succulent'];
-  user: User;
-  userImage;
-  vehicles;
-  homes;
+  user: User = null;
+  userImage = null;
+  vehicles = null;
+  homes = null;
 
   vehicleEditMode = false;
   homeEditMode = false;
@@ -50,13 +50,12 @@ export class UserProfileComponent implements OnInit{
     })
     .then(()=>{
       this.setVehicleData().then(()=>{
-        this.displayVehicle();
+       // this.displayVehicle();
       })
     })
     .then(()=>{
       this.setHomeData().then(()=>{
-        this.displayHome();
-        this.loading = false
+       // this.displayHome();
       })
     });
   }
@@ -84,7 +83,7 @@ export class UserProfileComponent implements OnInit{
       .subscribe(
         data =>{
           this.userImage = data;
-          console.log(this.userImage)
+          this.isLoading()
           resolve(true)
         }
       )
@@ -97,8 +96,7 @@ export class UserProfileComponent implements OnInit{
       .subscribe(
         data =>{
           this.vehicles = data;
-          console.log(this.vehicles);
-          
+          this.isLoading()
           resolve(true);
         }
       )
@@ -111,7 +109,8 @@ export class UserProfileComponent implements OnInit{
       .subscribe(
         data => {
           this.homes = data;
-          console.log(this.homes)
+          console.log(data)
+          this.isLoading()
           resolve(true);
         }
       )
@@ -144,6 +143,8 @@ export class UserProfileComponent implements OnInit{
   
   addVehicle(){
 
+    this.loading = true;
+
    const vehicleBody = {
       type: this.vehicleType,
       mpg: this.vehicleMpg,
@@ -167,24 +168,37 @@ export class UserProfileComponent implements OnInit{
 
   calculateVehicleGHG(){
     let gasUsed =  12000/ this.vehicleMpg;
-    let ghgPerYear = (19.6 * gasUsed) / 2000;
+    let ghgPerYear =(8.89 * (10**-3) * gasUsed);
+    this.user.footprint = ghgPerYear + this.user.footprint;
+
+    //assigns number with two decimal points 
+    ghgPerYear = Math.round((ghgPerYear *100) /100);
+    this.user.footprint = Math.round((this.user.footprint *100) /100);
     
+    this.vehicles = null;
     return ghgPerYear;
   }
 
   calculateHomeGHG(){
     let totalWatts =  this.homeSize * .75;
     let ghgPerYear = (totalWatts * .855) / 2000;
-
+    this.user.footprint = ghgPerYear + this.user.footprint;
+   
+    //assigns number with two decimal points 
+    ghgPerYear = Math.round((ghgPerYear *100) /100);
+    this.user.footprint = Math.round((this.user.footprint *100) /100);
+    this.homes = null;
     return ghgPerYear;
   }
 
   addHome(){
+   
+    this.loading = true;
     const homeBody = {
       homeType: this.homeType,
       homeSize: this.homeSize,
       userId: this.user.id,
-      homeGHG: this.calculateVehicleGHG()
+      homeGHG: this.calculateHomeGHG()
     };
    
     this.restService.addHome(this.user.id, homeBody).subscribe( (res)=>{
@@ -199,19 +213,58 @@ export class UserProfileComponent implements OnInit{
   );
   }
 
-  displayVehicle(){
-    if(this.currentVehicle === undefined && this.vehicles.length != 0){
-      this.currentVehicle = this.vehicles[0];
-    }else if(this.currentVehicle != undefined && this.vehicles.length != 0){
-      this.currentVehicle = this.vehicles[this.vehicleIndex];
-    } 
+  // displayVehicle(){
+  //   if(this.currentVehicle === undefined && this.vehicles.length != 0){
+  //     this.currentVehicle = this.vehicles[0];
+  //   }else if(this.currentVehicle != undefined && this.vehicles.length != 0){
+  //     this.currentVehicle = this.vehicles[this.vehicleIndex];
+  //   } 
+  // }
+  // displayHome(){
+  //   if(this.currentHome === undefined && this.homes.length != 0){
+  //     this.currentVehicle = this.homes[0];
+  //   }else if(this.currentHome != undefined && this.homes.length != 0){
+  //     this.currentHome = this.homes[this.homeIndex];
+  //   } 
+  // }
+
+  increaseVehicleIndex(){
+    if(this.vehicleIndex === this.vehicles.length - 1){
+      this.vehicleEditMode = true
+    }else if(this.vehicleIndex <= this.vehicles.length -1){
+        this.vehicleIndex = this.vehicleIndex + 1;
+    }
   }
-  displayHome(){
-    if(this.currentHome === undefined && this.homes.length != 0){
-      this.currentVehicle = this.homes[0];
-    }else if(this.currentHome != undefined && this.homes.length != 0){
-      this.currentHome = this.homes[this.homeIndex];
-    } 
+
+  decreaseVehicleIndex(){
+    if(this.vehicleIndex === this.vehicles.length - 1){
+      this.vehicleIndex = this.vehicleIndex -1
+      this.vehicleEditMode = false;
+    }else if(this.vehicleIndex <= this.vehicles.length - 1 && this.vehicleIndex != 0){
+        this.vehicleIndex = this.vehicleIndex - 1;
+    }
+  }
+  increaseHomeIndex(){
+    if(this.homeIndex === this.homes.length - 1){
+      this.homeEditMode = true
+    }else if(this.homeIndex <= this.homes.length -1){
+        this.homeIndex = this.homeIndex + 1;
+    }
+  }
+
+  decreaseHomeIndex(){
+    if(this.homeIndex === this.homes.length - 1){
+      this.homeIndex = this.homeIndex -1
+      this.homeEditMode = false;
+    }else if(this.homeIndex <= this.homes.length - 1 && this.homeIndex != 0){
+        this.homeIndex = this.homeIndex - 1;
+    }
+  }
+
+  isLoading(){
+    if(this.homes != null && this.vehicles != null && this.user != null){
+      this.loading = false;
+    }
   }
 
 }

@@ -86,7 +86,7 @@
             
             <div class="vehicle-section">
                 <div *ngIf="vehicles.length > 1" class="leftArrow">
-                    <img class="left-arrow" src="../../assets/images/leftArrow.svg" alt="">
+                    <img (click)="decreaseVehicleIndex()" class="left-arrow" src="../../assets/images/leftArrow.svg" alt="">
                 </div>
                 <div class="info-container">
                     <div class="image-container">
@@ -94,16 +94,16 @@
                     </div>
                     <div class="monthly-output">
                         <h4>Monthly Output:</h4>
-                        <p>{{currentVehicle.vehicleGHG}} tons GHG/year</p>
+                        <p>{{vehicles[vehicleIndex].vehicleGHG}} tons GHG/year</p>
                     </div>
                 </div>
                 <div *ngIf="vehicles.length > 1" class="leftArrow">
-                    <img class="right-arrow" src="../../assets/images/rightArrow.svg" alt="">
+                    <img (click)="increaseVehicleIndex()" class="right-arrow" src="../../assets/images/rightArrow.svg" alt="">
                 </div>
             </div>
         </div>
     
-        <div *ngIf="homes?.length == 0 && homeEditMode == false" class="home-container">
+        <div *ngIf="homes.length == 0 && homeEditMode == false" class="home-container">
             <div class="add-vehicle">
                 <h2>Add Home</h2>
                 <img (click)="editHome()" class="add-button" src="../../assets/images/AddButton.svg" alt="add home">
@@ -116,7 +116,7 @@
             
             <div class="home-section">
                 <div class="leftArrow">
-                    <img class="left-arrow" src="../../assets/images/leftArrow.svg" alt="">
+                    <img (click)="decreaseHomeIndex()" class="left-arrow" src="../../assets/images/leftArrow.svg" alt="">
                 </div>
                 <div class="info-container">
                     <div class="image-container">
@@ -124,11 +124,11 @@
                     </div>
                     <div class="monthly-output">
                         <h4>Monthly Output:</h4>
-                        <p>50 tons GHG/year</p>
+                        <p>{{homes[homeIndex].homeGHG}} tons GHG/year</p>
                     </div>
                 </div>
                 <div class="rightArrow">
-                    <img class="left-arrow" src="../../assets/images/rightArrow.svg" alt="">
+                    <img (click)="increaseHomeIndex()" class="left-arrow" src="../../assets/images/rightArrow.svg" alt="">
                 </div>
             </div>
         </div>
