@@ -4,6 +4,7 @@ import { User } from '../models/User.model';
 import { Router } from '@angular/router';
 import { Subscription, map } from 'rxjs';
 
+
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
@@ -42,6 +43,8 @@ export class UserProfileComponent implements OnInit{
   currentHome;
 
   loading = true;
+  holdNewImage = null;
+  defaultImage =  "../../assets/images/demoProfile.png";
   
   ngOnInit(): void {
     this.setUserData()
@@ -82,7 +85,11 @@ export class UserProfileComponent implements OnInit{
       this.restService.getUserImage(this.user.id)
       .subscribe(
         data =>{
+          console.log(data)
           this.userImage = data;
+          if(this.userImage == null){
+            this.userImage = this.defaultImage;
+          }
           this.isLoading()
           resolve(true)
         }
@@ -192,7 +199,7 @@ export class UserProfileComponent implements OnInit{
   }
 
   addHome(){
-   
+
     this.loading = true;
     const homeBody = {
       homeType: this.homeType,
@@ -211,6 +218,35 @@ export class UserProfileComponent implements OnInit{
     })
     }
   );
+  }
+
+  setNewUserImage(e){
+    this.holdNewImage = e.target.files[0];
+    console.log(this.holdNewImage)
+    console.log(e.target.files.item(0))
+  }
+
+  updateUserImage(){
+    if(this.holdNewImage != null){
+      
+      const file: File = this.holdNewImage;
+      const formData = new FormData();
+      formData.append('file', file);
+      console.log(formData)
+
+      if(this.userImage?.userId){
+        this.restService.deleteUserImage(this.userImage.userId);
+      }
+
+      this.restService.addUserImage(this.user.id, formData)
+      .subscribe(
+        (res) =>{
+          console.log(res);
+          this.setUserImage()
+          this.holdNewImage = null;
+        }
+      )
+    }
   }
 
   // displayVehicle(){

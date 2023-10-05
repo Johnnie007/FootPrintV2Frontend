@@ -7,7 +7,7 @@
             </div>
             <div class="info-container">
                 <div class="image-container">
-                    <img class="image" src="../../assets/images/demoProfile.png" alt="profile picture">
+                    <img class="image" [src]="userImage">
                 </div>
                 <div class="user-info">
                     <h4>{{user.first_name}} {{user.last_name}}</h4>
@@ -27,10 +27,10 @@
                 </div>
                 <div class="update-user">
                     <label class="update-user__font" for="profilePic">Update Picture:</label>
-                    <input class="update-user__width" type="file" accept="image/png, image/jpeg"  name="profilePic" />
+                    <input (change)="setNewUserImage($event)" class="update-user__width" type="file" accept="image/png, image/jpeg"  name="profilePic" #imageUpload/>
                 </div>
                 <div class="user-btns">
-                    <button class="btn">Update</button>
+                    <button (click)="updateUserImage()" class="btn">Update</button>
                     <button (click)="cancelEditUser()" class="btn">Cancel</button>
                 </div>
             </div>

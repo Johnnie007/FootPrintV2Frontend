@@ -25,12 +25,26 @@ export class RestService {
     )
   }
   getUserImage(id){
-    const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)});
-    return this.httpClient.get<User>(`http://localhost:8080/api/${id}/image`, {headers})
+    //const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)}) 
+    const requestOptions: Object = {
+      headers: new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)}),
+      responseType: 'arraybuffer'
+    }
+    console.log("0")
+    return this.httpClient.get<ArrayBuffer>(`http://localhost:8080/api/${id}/image`, requestOptions)
     .pipe(
       map(
         userImage => {
-          return  userImage;
+          console.log(userImage.byteLength)
+          if(userImage.byteLength > 10){
+            const getImageArray = new Uint16Array(userImage)
+            const convertToBlob= new Blob([getImageArray], {type: "image/jpeg"})
+            let urlCreator = window.URL || window.webkitURL;
+            let imageUrl = urlCreator.createObjectURL(convertToBlob);
+            return  imageUrl;
+          }{
+            return null;
+          }
         }
       )
     )
@@ -68,5 +82,15 @@ export class RestService {
   addHome(id, home){
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)});
     return this.httpClient.post(`http://localhost:8080/api/${id}/home`,home,{headers});
+  }
+
+  addUserImage(id, userImage){
+    const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)});
+    return this.httpClient.post(`http://localhost:8080/api/${id}/upload`,userImage,{headers});
+  }
+  
+  deleteUserImage(id){
+    const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)});
+    return this.httpClient.delete(`http://localhost:8080/api/${id}/upload`,{headers});
   }
 }

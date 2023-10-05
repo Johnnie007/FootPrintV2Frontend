@@ -47,9 +47,10 @@
 }
 
 .image{
-    object-fit: contain;
+    object-fit: cover;
     width: 125px;
     height: 125px;
+    border-radius: 50%;
 }
 
 .info-container{
