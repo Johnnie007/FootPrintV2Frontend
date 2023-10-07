@@ -133,9 +133,10 @@ export class UserProfileComponent implements OnInit{
   }
   
   editVehicle(){
-    console.log(this.vehicleType)
-    console.log(this.vehicleMpg)
+    this.vehicleType = this.vehicles[this.vehicleIndex].type;
+    this.vehicleMpg = this.vehicles[this.vehicleIndex].mpg;
     this.vehicleEditMode = true;
+
   }
   
   editHome(){
@@ -166,17 +167,47 @@ export class UserProfileComponent implements OnInit{
     };
     this.restService.addVehicle(this.user.id, vehicleBody)
     .subscribe( (res)=>{
-      console.log(res)
-      //resets values
-    this.vehicleType = '';
-    this.vehicleMpg = 0;
-    
-    this.setVehicleData().then(()=>{
-      this.vehicleEditMode = false;
+        console.log(res)
+        //resets values
+      this.vehicleType = '';
+      this.vehicleMpg = 0;
+      
+      this.setVehicleData().then(()=>{
+        this.vehicleEditMode = false;
     });
     
+    });
+  }
+
+  addHome(){
+
+    this.loading = true;
+    const homeBody = {
+      homeType: this.homeType,
+      homeSize: this.homeSize,
+      userId: this.user.id,
+      homeGHG: this.calculateHomeGHG()
+    };
+   
+    this.restService.addHome(this.user.id, homeBody).subscribe( (res)=>{
+        //resets values
+      this.homeType = '';
+      this.homeSize = 0;
+      
+      this.setHomeData().then(()=>{
+        this.homeEditMode = false;
+      });
+    });
+  }
+
+  deleteVehicle(){
+    if(this.vehicleType != null || this.vehicleType != undefined){
+      console.log(this.vehicles[this.vehicleIndex]);
     }
-  );
+    else{
+      console.log(this.vehicleType)
+    }
+    
   }
 
   calculateVehicleGHG(){
@@ -202,28 +233,6 @@ export class UserProfileComponent implements OnInit{
     this.user.footprint = Math.round((this.user.footprint *100) /100);
     this.homes = null;
     return ghgPerYear;
-  }
-
-  addHome(){
-
-    this.loading = true;
-    const homeBody = {
-      homeType: this.homeType,
-      homeSize: this.homeSize,
-      userId: this.user.id,
-      homeGHG: this.calculateHomeGHG()
-    };
-   
-    this.restService.addHome(this.user.id, homeBody).subscribe( (res)=>{
-       //resets values
-    this.homeType = '';
-    this.homeSize = 0;
-    
-    this.setHomeData().then(()=>{
-      this.homeEditMode = false;
-    })
-    }
-  );
   }
 
   setNewUserImage(e){
@@ -272,11 +281,13 @@ export class UserProfileComponent implements OnInit{
 
   increaseVehicleIndex(){
     if(this.vehicleIndex === this.vehicles.length - 1){
-      this.vehicleEditMode = true
+      this.vehicleEditMode = true;
+      this.vehicleType = null;
+      this.vehicleMpg = null;
     }else if(this.vehicleIndex <= this.vehicles.length -1){
         this.vehicleIndex = this.vehicleIndex + 1;
-        this.vehicleType = this.vehicles[this.vehicleIndex].type
-        this.vehicleMpg = this.vehicles[this.vehicleIndex].mpg
+        this.vehicleType = this.vehicles[this.vehicleIndex].type;
+        this.vehicleMpg = this.vehicles[this.vehicleIndex].mpg;
     }
   }
 
