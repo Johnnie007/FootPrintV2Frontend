@@ -126,10 +126,12 @@
 }
 .list-item{
     display: flex;
-    justify-content: space-around;
-    width: 100%;
+    align-self:  center;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
 }
-.offsetter-list-item{
+.offsetter-list-item, .recommendation-list-item{
     display: flex;
 }
 
@@ -194,7 +196,8 @@
 .edit-header{
     margin: 0;
 }
-.offsetter-icon{
+
+.offsetter-icon, .recommendations-icon{
     margin-right: 0.5rem;
 }
 
@@ -206,4 +209,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.recommendation-name{
+    margin-left: 10px;
+    text-decoration: none;
+    color: black;
 }

@@ -14,11 +14,59 @@ export class UserProfileComponent implements OnInit{
   
   constructor(private restService: RestService){
   }
-  
+
   //subscription Stuff
   userSubscription: Subscription
 
-  offsetters = ['Succulent', 'Succulent', 'Succulent', 'Succulent','Succulent'];
+  offsetters = [
+    {
+      id: 1,
+      type: "plant",
+      product: "Succulent",
+      CCS: -30,
+      userId: 5
+  },
+    {
+      id: 2,
+      type: "home",
+      product: "Solar",
+      CCS: -30,
+      userId: 5
+  },
+    {
+      id: 3,
+      type: "plant",
+      product: "Succulent",
+      CCS: -30,
+      userId: 5
+  },
+]
+  recommendations = [
+    {
+      id: 1,
+      type: "plant",
+      product: "Succulent",
+      productLocation: "https://succulentsbox.com/",
+      CCS: -30,
+      userId: 5
+  },
+    {
+      id: 2,
+      type: "home",
+      product: "Solar",
+      productLocation: "https://www.sunrun.com/",
+      CCS: -30,
+      userId: 5
+  },
+    {
+      id: 3,
+      type: "plant",
+      product: "Succulent",
+      productLocation: "https://succulentsbox.com/",
+      CCS: -30,
+      userId: 5
+  },
+]
   user: User = null;
   userImage = null;
   vehicles = null;
@@ -52,14 +100,10 @@ export class UserProfileComponent implements OnInit{
       this.setUserImage()
     })
     .then(()=>{
-      this.setVehicleData().then(()=>{
-       // this.displayVehicle();
-      })
+      this.setVehicleData()
     })
     .then(()=>{
-      this.setHomeData().then(()=>{
-       // this.displayHome();
-      })
+      this.setHomeData()
     });
   }
 
@@ -75,9 +119,8 @@ export class UserProfileComponent implements OnInit{
             this.user.footprint = 0.41;
           }
           resolve(true)
-        }
-    )
-    })
+        });
+    });
   }
 
   setUserImage(): Promise<any>{
@@ -160,7 +203,7 @@ export class UserProfileComponent implements OnInit{
 
     this.loading = true;
 
-   const vehicleBody = {
+    const vehicleBody = {
       type: this.vehicleType,
       mpg: this.vehicleMpg,
       userId: this.user.id,
@@ -181,7 +224,6 @@ export class UserProfileComponent implements OnInit{
   }
 
   addHome(){
-
     this.loading = true;
     const homeBody = {
       homeType: this.homeType,
@@ -201,6 +243,14 @@ export class UserProfileComponent implements OnInit{
     });
   }
 
+  removeOffsetter(){
+    console.log(0);
+  }
+
+  addOffsetter(){
+    console.log(1);
+  }
+
   deleteVehicle(){
     if(this.vehicleType != null || this.vehicleType != undefined){
      this.restService.deleteVehicle(this.user.id, this.vehicles[this.vehicleIndex]).subscribe(
@@ -218,8 +268,7 @@ export class UserProfileComponent implements OnInit{
       ()=>{
         this.homeEditMode = false;
         this.setHomeData();
-      }
-     )
+      });
     }
   }
 
@@ -231,7 +280,6 @@ export class UserProfileComponent implements OnInit{
     //assigns number with two decimal points 
     ghgPerYear = Math.round((ghgPerYear *100) /100);
     this.user.footprint = Math.round((this.user.footprint *100) /100);
-    
     this.vehicles = null;
     return ghgPerYear;
   }

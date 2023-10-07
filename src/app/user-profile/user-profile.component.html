@@ -198,15 +198,15 @@
                 <div class="offsetter-header">
                     <h4>OFFSETTERS</h4>
                 </div>
-                    <div class="list-item" *ngFor="let x of offsetters">
+                    <div class="list-item" *ngFor="let offsetter of offsetters">
                         <div class="offsetter-list-item">
-                            <img class="offsetter-icon" src="../../assets/images/removeIcon.svg" alt="remove offsetter">
-                            <p class="offsetter-name">
-                                Succulent
+                            <img class="offsetter-icon" src="../../assets/images/removeIcon.svg" alt="remove offsetter" (click)="removeOffsetter()">
+                            <p class="offsetter-name"> 
+                                {{offsetter.product}}
                             </p>
                         </div>
                         <div class="offsetter-ghg-list-item">
-                            <p class="offsetter-ghg">-30 GHG/Year</p>
+                            <p class="offsetter-ghg">{{offsetter.CCS}} GHG/Year</p>
                         </div>
                     </div>
                 
@@ -218,15 +218,15 @@
                         <h4>RECOMMENDATIONS</h4>
                     </div>
                     <!--change div names-->
-                    <div class="list-item" *ngFor="let x of offsetters">
-                        <div class="offsetter-list-item">
-                            <img class="offsetter-icon" src="../../assets/images/addIcon.svg" alt="Add offsetter">
-                            <p class="offsetter-name">
-                                Solar
-                            </p>
+                    <div class="list-item" *ngFor="let recommendation of recommendations">
+                        <div class="recommendation-list-item">
+                            <img class="recommendation-icon" src="../../assets/images/addIcon.svg" alt="Add offsetter">
+                            <a class="recommendation-name" href="{{recommendation.productLocation}}">
+                                {{recommendation.product}}
+                            </a>
                         </div>
-                        <div class="offsetter-ghg-list-item">
-                            <p class="offsetter-ghg">-30 GHG/Year</p>
+                        <div class="recommendation-ghg-list-item">
+                            <p class="recommendation-ghg">{{recommendation.CCS}} GHG/Year</p>
                         </div>
                     </div>  
                 </div>
