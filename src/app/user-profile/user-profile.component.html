@@ -43,7 +43,10 @@
             </div>
         </div>
         
-        <div *ngIf="vehicleEditMode" class="vehicle-container">
+        <div *ngIf="vehicleEditMode" class="edit-vehicle-container">
+            <div *ngIf="vehicles.length > 1" class="leftArrow">
+                <img (click)="decreaseVehicleIndex()" class="left-arrow" src="../../assets/images/leftArrow.svg" alt="">
+            </div>
             <div class="edit-container">
                 <h2 class="edit-header">Add Vehicle</h2>
                 <div class="vehicle-type">
@@ -76,6 +79,10 @@
                     <button (click)="addVehicle()" class="btn">Add</button>
                     <button (click)="cancelEditVehicle()" class="btn">Cancel</button>
                 </div>
+
+            </div>
+            <div *ngIf="vehicles.length > 1" class="leftArrow">
+                <img (click)="increaseVehicleIndex()" class="right-arrow" src="../../assets/images/rightArrow.svg" alt="">
             </div>
         </div>
 
