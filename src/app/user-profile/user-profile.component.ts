@@ -202,10 +202,13 @@ export class UserProfileComponent implements OnInit{
 
   deleteVehicle(){
     if(this.vehicleType != null || this.vehicleType != undefined){
-      console.log(this.vehicles[this.vehicleIndex]);
-    }
-    else{
-      console.log(this.vehicleType)
+     this.restService.deleteVehicle(this.user.id, this.vehicles[this.vehicleIndex]).subscribe(
+      (res)=>{
+        console.log('test')
+        this.vehicleEditMode = false;
+        this.setVehicleData();
+      }
+     )
     }
     
   }

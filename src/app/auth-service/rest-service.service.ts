@@ -25,7 +25,6 @@ export class RestService {
     )
   }
   getUserImage(id){
-    //const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)}) 
     const requestOptions: Object = {
       headers: new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)}),
       responseType: 'arraybuffer'
@@ -92,5 +91,22 @@ export class RestService {
   deleteUserImage(id){
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)});
     return this.httpClient.delete(`http://localhost:8080/api/${id}/upload`,{headers});
+  }
+
+  deleteVehicle(id, vehicle){
+    const requestOptions: Object = {
+      headers: new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)}),
+      body:vehicle
+    }
+    return this.httpClient.delete(`http://localhost:8080/api/${id}/delete/vehicle`,requestOptions);
+  
+  }
+  
+  deleteHome(id, home){
+    const requestOptions: Object = {
+      headers: new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)}),
+      body:home
+    }
+    return this.httpClient.delete(`http://localhost:8080/api/${id}/delete/home`,requestOptions);
   }
 }
