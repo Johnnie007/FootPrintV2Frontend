@@ -144,7 +144,10 @@
             </div>
         </div>
 
-        <div *ngIf="homeEditMode" class="home-container">
+        <div *ngIf="homeEditMode" class="edit-home-container">
+            <div *ngIf="homes.length > 1" class="leftArrow">
+                <img (click)="decreaseHomeIndex()" class="left-arrow" src="../../assets/images/leftArrow.svg" alt="">
+            </div>
             <div class="edit-container">
                 <h2 class="edit-header">Add Home</h2>
                 <div class="home-type">
@@ -169,10 +172,18 @@
                         <input [(ngModel)]="homeSize"  type="number" step="0.01" name="home" id="sqft">
                 </div>
                 
-                <div class="btns">
+                <div *ngIf="this.homeType == null || this.homeType == undefined" class="btns">
                     <button (click)="addHome()" class="btn">Add</button>
                     <button (click)="cancelEditHome()" class="btn">Cancel</button>
                 </div>
+                <div *ngIf="this.homeType != null || this.homeType != undefined" class="btns">
+                    <button (click)="deleteHome()" class="btn">Delete</button>
+                    <button (click)="cancelEditHome()" class="btn">Cancel</button>
+                </div>
+                
+            </div>
+            <div *ngIf="homes.length > 1" class="leftArrow">
+                <img (click)="increaseHomeIndex()" class="right-arrow" src="../../assets/images/rightArrow.svg" alt="">
             </div>
         </div>
     </div>

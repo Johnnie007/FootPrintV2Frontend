@@ -120,7 +120,6 @@ export class UserProfileComponent implements OnInit{
       .subscribe(
         data => {
           this.homes = data;
-          console.log(data)
           this.isLoading()
           resolve(true);
         }
@@ -140,6 +139,8 @@ export class UserProfileComponent implements OnInit{
   }
   
   editHome(){
+    this.homeType = this.homes[this.homeIndex].homeType;
+    this.homeSize = this.homes[this.homeIndex].homeSize;
     this.homeEditMode = true;
   }
 
@@ -203,14 +204,23 @@ export class UserProfileComponent implements OnInit{
   deleteVehicle(){
     if(this.vehicleType != null || this.vehicleType != undefined){
      this.restService.deleteVehicle(this.user.id, this.vehicles[this.vehicleIndex]).subscribe(
-      (res)=>{
-        console.log('test')
+      ()=>{
         this.vehicleEditMode = false;
         this.setVehicleData();
       }
      )
     }
-    
+  }
+
+  deleteHome(){
+    if(this.homeType != null || this.homeType != undefined){
+     this.restService.deleteHome(this.user.id, this.homes[this.homeIndex]).subscribe(
+      ()=>{
+        this.homeEditMode = false;
+        this.setHomeData();
+      }
+     )
+    }
   }
 
   calculateVehicleGHG(){
@@ -267,21 +277,6 @@ export class UserProfileComponent implements OnInit{
     }
   }
 
-  // displayVehicle(){
-  //   if(this.currentVehicle === undefined && this.vehicles.length != 0){
-  //     this.currentVehicle = this.vehicles[0];
-  //   }else if(this.currentVehicle != undefined && this.vehicles.length != 0){
-  //     this.currentVehicle = this.vehicles[this.vehicleIndex];
-  //   } 
-  // }
-  // displayHome(){
-  //   if(this.currentHome === undefined && this.homes.length != 0){
-  //     this.currentVehicle = this.homes[0];
-  //   }else if(this.currentHome != undefined && this.homes.length != 0){
-  //     this.currentHome = this.homes[this.homeIndex];
-  //   } 
-  // }
-
   increaseVehicleIndex(){
     if(this.vehicleIndex === this.vehicles.length - 1){
       this.vehicleEditMode = true;
@@ -306,19 +301,25 @@ export class UserProfileComponent implements OnInit{
   }
   increaseHomeIndex(){
     if(this.homeIndex === this.homes.length - 1){
+      this.homeType = null;
+      this.homeSize = null;
       this.homeEditMode = true
     }else if(this.homeIndex <= this.homes.length -1){
         this.homeIndex = this.homeIndex + 1;
+        this.homeSize = this.homes[this.homeIndex].homeSize;
+        this.homeType = this.homes[this.homeIndex].homeType;
         
     }
   }
 
   decreaseHomeIndex(){
     if(this.homeIndex === this.homes.length - 1){
-      this.homeIndex = this.homeIndex -1
+      this.homeIndex = this.homeIndex - 1
       this.homeEditMode = false;
     }else if(this.homeIndex <= this.homes.length - 1 && this.homeIndex != 0){
         this.homeIndex = this.homeIndex - 1;
+        this.homeSize = this.homes[this.homeIndex].homeSize;
+        this.homeType = this.homes[this.homeIndex].homeType;
     }
   }
 
