@@ -1,4 +1,10 @@
 .chart-container{
     width: 650px;
     height: 325px;
+    @media screen and (min-width: 500px) and (max-width: 1040px) {
+        width: 500px;
+    }
+    @media screen and (max-width: 500px) {
+        width: 375px;
+    }
 }

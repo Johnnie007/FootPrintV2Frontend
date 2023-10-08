@@ -186,15 +186,19 @@ export class UserProfileComponent implements OnInit{
   }
   
   editVehicle(){
-    this.vehicleType = this.vehicles[this.vehicleIndex].type;
-    this.vehicleMpg = this.vehicles[this.vehicleIndex].mpg;
+    if(this.vehicles.length > 0){
+      this.vehicleType = this.vehicles[this.vehicleIndex].type;
+      this.vehicleMpg = this.vehicles[this.vehicleIndex].mpg;
+    }
     this.vehicleEditMode = true;
 
   }
   
   editHome(){
-    this.homeType = this.homes[this.homeIndex].homeType;
-    this.homeSize = this.homes[this.homeIndex].homeSize;
+    if(this.homes.length > 0){
+      this.homeType = this.homes[this.homeIndex].homeType;
+      this.homeSize = this.homes[this.homeIndex].homeSize;
+    }
     this.homeEditMode = true;
   }
 
