@@ -1,8 +1,21 @@
+.home-container{
+    @media screen and (max-width: 1040px) {
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+}
 .about-container{
     display:flex;
     justify-content: center;
     align-items: center;
     margin-top: 5rem;
+
+    @media screen and (max-width: 1040px) {
+        flex-direction: column;
+        align-items: center;
+    }
 }
 .about-text{
     width: 590px;
@@ -10,11 +23,25 @@
     margin-left: 5rem;
     font-size: 24px;
     line-height: 30px;
+
+    @media screen and (min-width: 500px) and (max-width: 1040px) {
+        width: 500px;
+        height: auto;
+    }
+    @media screen and (max-width: 500px) {
+        width: 375px;
+        height: auto;
+    }
 }
 
 .image{
     width: 460px;
     height: 300px;
+
+    @media screen and (max-width: 500px) {
+        width: 375px;
+        height: 230px;
+    }
 }
 
 .example-container{
@@ -22,12 +49,26 @@
     justify-content: center;
     margin-top: 10rem;
     height: 500px;
+    @media screen and (max-width: 1040px) {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 5rem;
+        margin-bottom: 5rem;
+    }
+
 }
 .imageContainer{
     margin-top: 5rem;
     margin-right: 5rem;
+    @media screen and (max-width: 1040px) {
+        margin-right: 0;
+        margin-top: 0;
+    }
 }
 .chart-container{
     margin-left: 10rem;
+    
+    @media screen and (max-width: 1040px) {
+        margin-left: 0;
+    }
 }
-

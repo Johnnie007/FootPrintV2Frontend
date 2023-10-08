@@ -2,12 +2,28 @@
     display: flex;
     flex-direction: column;
     margin-left: 4rem;
+    @media screen and (max-width: 1040px) {
+        margin-left: 0;
+    }
 }
 .info{
     width: 700px;
     font-size: 20px;
+    @media screen and (min-width: 500) and (max-width: 1040px) {
+        width: 500px;
+    }
+    @media screen and (max-width: 500px) {
+        width: 350px;
+    }
 }
 .request-info{
     width: 700px;
     font-size: 16px;
+
+    @media screen and (min-width: 500) and (max-width: 1040px) {
+        width: 500px;
+    }
+    @media screen and (max-width: 500px) {
+        width: 350px;
+    }
 }
