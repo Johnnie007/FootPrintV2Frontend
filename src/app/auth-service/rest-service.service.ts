@@ -73,6 +73,26 @@ export class RestService {
     )
   }
 
+  getRecommendations(){
+    const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)});
+    return this.httpClient.get(`http://localhost:8080/api/recommendations`, {headers})
+    .pipe(
+      map(
+        recommendationData =>{
+          return recommendationData;
+        }));
+  }
+
+  getOffsetters(id){
+    const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)});
+    return this.httpClient.get(`http://localhost:8080/api/${id}/offsetters`, {headers})
+    .pipe(
+      map(
+        offsettersData =>{
+          return offsettersData;
+        }));
+  }
+
   addVehicle(id, vehicle){
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)});
     return this.httpClient.post(`http://localhost:8080/api/${id}/add/vehicle`,vehicle,{headers});
@@ -86,6 +106,11 @@ export class RestService {
   addUserImage(id, userImage){
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)});
     return this.httpClient.post(`http://localhost:8080/api/${id}/upload`,userImage,{headers});
+  }
+
+  addOffsetters(id, offsetters){
+    const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)});
+    return this.httpClient.post(`http://localhost:8080/api/${id}/offsetters`,offsetters, {headers});
   }
   
   deleteUserImage(id){
@@ -108,5 +133,13 @@ export class RestService {
       body:home
     }
     return this.httpClient.delete(`http://localhost:8080/api/${id}/delete/home`,requestOptions);
+  }
+
+  deleteOffsetters(id, offsetters){
+    const requestOptions: Object = {
+      headers: new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)}),
+      body: offsetters
+    }
+    return this.httpClient.delete(`http://localhost:8080/api/${id}/offsetters`, requestOptions)
   }
 }

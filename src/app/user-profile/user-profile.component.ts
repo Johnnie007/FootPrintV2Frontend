@@ -18,29 +18,8 @@ export class UserProfileComponent implements OnInit{
   //subscription Stuff
   userSubscription: Subscription
 
-  offsetters = [
-    {
-      id: 1,
-      type: "plant",
-      product: "Succulent",
-      CCS: -30,
-      userId: 5
-  },
-    {
-      id: 2,
-      type: "home",
-      product: "Solar",
-      CCS: -30,
-      userId: 5
-  },
-    {
-      id: 3,
-      type: "plant",
-      product: "Succulent",
-      CCS: -30,
-      userId: 5
-  },
-]
+  offsetters;
+  
   recommendations = [
     {
       id: 1,
@@ -104,6 +83,12 @@ export class UserProfileComponent implements OnInit{
     })
     .then(()=>{
       this.setHomeData()
+    })
+    .then(()=>{
+      this.setOffsettersData()
+    })
+    .then(()=>{
+      this.setRecommendationData()
     });
   }
 
@@ -170,6 +155,32 @@ export class UserProfileComponent implements OnInit{
     });
   }
 
+  setRecommendationData():Promise<any>{
+    return new  Promise((resolve)=>{
+      this.restService.getRecommendations()
+      .subscribe(
+        data => {
+          console.log(data);
+        
+          resolve(true);
+        }
+      )
+    });
+  }
+
+  setOffsettersData():Promise<any>{
+    return new  Promise((resolve)=>{
+      this.restService.getOffsetters(this.user.id)
+      .subscribe(
+        data => {
+          console.log(data);
+          this.offsetters = data
+          resolve(true);
+        }
+      )
+    });
+  }
+
   editUser(){
     this.userEditMode = true;
   }
@@ -200,9 +211,7 @@ export class UserProfileComponent implements OnInit{
   }
   
   addVehicle(){
-
     this.loading = true;
-
     const vehicleBody = {
       type: this.vehicleType,
       mpg: this.vehicleMpg,
@@ -243,12 +252,18 @@ export class UserProfileComponent implements OnInit{
     });
   }
 
-  removeOffsetter(){
-    console.log(0);
-  }
-
-  addOffsetter(){
-    console.log(1);
+  addOffsetter(id){
+    console.log(id)
+    let offsetter = {
+     type: this.recommendations[id].type,
+     product: this.recommendations[id].product,
+     CCS: this.recommendations[id].CCS,
+     userId: this.user.id
+    };
+    this.restService.addOffsetters(this.user.id, offsetter).subscribe((res)=>{
+      
+      this.setOffsettersData()
+    });
   }
 
   deleteVehicle(){
@@ -270,6 +285,15 @@ export class UserProfileComponent implements OnInit{
         this.setHomeData();
       });
     }
+  }
+
+  deleteOffsetter(id){
+    let offsetter = this.offsetters[id]
+    this.restService.deleteOffsetters(this.user.id, offsetter).subscribe(
+      ()=>{
+        this.setOffsettersData();
+      }
+    );
   }
 
   calculateVehicleGHG(){

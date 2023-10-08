@@ -198,9 +198,9 @@
                 <div class="offsetter-header">
                     <h4>OFFSETTERS</h4>
                 </div>
-                    <div class="list-item" *ngFor="let offsetter of offsetters">
+                    <div class="list-item" *ngFor="let offsetter of offsetters; let i = index">
                         <div class="offsetter-list-item">
-                            <img class="offsetter-icon" src="../../assets/images/removeIcon.svg" alt="remove offsetter" (click)="removeOffsetter()">
+                            <img class="offsetter-icon" src="../../assets/images/removeIcon.svg" alt="remove offsetter" (click)="deleteOffsetter(i)">
                             <p class="offsetter-name"> 
                                 {{offsetter.product}}
                             </p>
@@ -218,9 +218,9 @@
                         <h4>RECOMMENDATIONS</h4>
                     </div>
                     <!--change div names-->
-                    <div class="list-item" *ngFor="let recommendation of recommendations">
+                    <div class="list-item" *ngFor="let recommendation of recommendations; let i = index">
                         <div class="recommendation-list-item">
-                            <img class="recommendation-icon" src="../../assets/images/addIcon.svg" alt="Add offsetter">
+                            <img class="recommendation-icon" src="../../assets/images/addIcon.svg" alt="Add offsetter" (click)="addOffsetter(i)">
                             <a class="recommendation-name" href="{{recommendation.productLocation}}">
                                 {{recommendation.product}}
                             </a>
