@@ -19,9 +19,32 @@
     </div>
 </div>
 
-<div class="mobile-container">
-    <div class="home-container">Home</div>
-    <div class="demo-container">Demo</div>
-    <div class="api-container">API</div>
-    <div class="signin-container">Sign Up</div>
+
+<div class="mobile-header-container">
+    <p>FOOTPRINT</p>
+</div>
+<div *ngIf="(authenticationService.authenticate | async) === false" class="mobile-navbar-container">
+    <div class="home-section" routerLinkActive=" mobile-active-link" [routerLinkActiveOptions]="{exact: true}" routerLink="/">
+            <img class="homeIcon" src="../../assets/images/home.svg" alt="Home"/>
+            <p class="text">Home</p>
+    </div>
+    <div class="demo-section" routerLinkActive="mobile-active-link" routerLink="/demo">
+        <img class="demoIcon" src="../../assets/images/demo.svg" alt="Demo"/>
+        <p class="text">Demo</p>
+    </div>
+    <div class="api-section" routerLinkActive="mobile-active-link" routerLink="/api">
+        <img class="apiIcon" src="../../assets/images/api.svg" alt="API"/>
+        <p class="text">API</p>
+    </div>
+    <div class="signin-section" routerLinkActive="mobile-active-link" routerLink="/signin">
+        <img class="signinIcon" src="../../assets/images/login.svg" alt="Signin"/>
+        <p class="text">Sign in</p>
+    </div>
+</div>
+
+<div *ngIf="(authenticationService.authenticate | async) === true" class="mobile-navbar-container">
+    <div (click)="logOutUser()" class="sign-out-section" routerLink="/">
+        <img class="signOutIcon" src="../../assets/images/logout.svg" alt="Sign Out"/>
+        <p class="text">Sign Out</p>
+    </div>
 </div>

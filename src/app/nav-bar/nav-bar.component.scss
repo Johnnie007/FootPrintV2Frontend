@@ -51,15 +51,85 @@
     border-top: 1px solid black;
 }
 
-.mobile-container{
+.mobile-header-container{
+    display: none;
+    @media screen and (max-width: 625px) {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 25px;
+        background-color: #C6F19B;
+        position: sticky;
+        top: 0;
+    }
+}
+.mobile-navbar-container{
     display: none;
     @media screen and (max-width: 625px) {
         display: flex;
         justify-content: space-evenly;
         width: 100%;
         height: 50px;
-        background-color: #97EE62;
+        background-color: #C6F19B;
         position: fixed;
         bottom: 0;
     }
+}
+
+.home-section, .demo-section, .api-section{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-right: 1px solid black;
+    width: 25%;
+}
+
+.signin-section{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 25%;
+}
+.sign-out-section{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 25%;
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+}
+
+.homeIcon{
+    width: 30px;
+    height: 27px;
+}
+
+.apiIcon{
+    width: 30px;
+    height: 30px;
+}
+
+.signinIcon{
+    width: 25px;
+    height: 25px;
+}
+.signOutIcon{
+    width: 25px;
+    height: 25px;
+}
+.demoIcon{
+    width: 30px;
+    height: 30px;
+}
+
+.text{
+    margin: 0;
+}
+
+.mobile-active-link{
+    background-color: #8AA56E;
 }
