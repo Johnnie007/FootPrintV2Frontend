@@ -8,6 +8,11 @@
     margin-left: 2rem;
     display: flex;
     justify-content: space-around;
+
+    @media screen and (max-width: 1040px) {
+        align-items: center;
+        flex-direction: column;
+    }
 }
 
 .user-container, .vehicle-container, .home-container, .offsetter-container, .recommendations-container{
@@ -17,11 +22,50 @@
     border-radius: 40px;
     display: flex;
     flex-direction: column;
+
+    @media screen and (max-width: 1040px) {
+        width: 250px;
+        height: 300px;
+        margin: 5px;
+    }
+}
+
+.recommendations-container{
+    margin-bottom: 55px;
+}
+
+.edit-user{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.update-user{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    &__width{
+        width: 180px;
+    }
+
+    &__font{
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+}
+
+.user-btns{
+    margin-bottom: 1rem;
 }
 
 .image{
+    object-fit: cover;
     width: 125px;
     height: 125px;
+    border-radius: 50%;
 }
 
 .info-container{
@@ -29,6 +73,11 @@
     flex-direction: column;
     align-items: center;
     margin-top: 1rem;
+   
+    @media screen and (max-width: 1040px) {
+        margin-top: 0;
+    }
+
 }
 
 .user-info{
@@ -51,7 +100,7 @@
 }
 
 .output p{
-    margin: 0;
+    margin: 10px;
 }
 
 .edit-icon{
@@ -90,6 +139,12 @@
     display: flex;
     justify-content: space-around;
     margin-top: 5rem;
+    @media screen and (max-width: 1040px) {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 0;
+    }
+
 }
 
 .offsetter-header, .recommendations-header{
@@ -97,9 +152,93 @@
 }
 .list-item{
     display: flex;
-    justify-content: space-around;
-    width: 100%;
+    align-self:  center;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
 }
-.offsetter-list-item{
+.offsetter-list-item, .recommendation-list-item{
     display: flex;
+}
+
+.add-vehicle{
+    display: flex;
+    height: 60%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.add-button{
+    width: 90px;
+    height: 80px;
+}
+
+.vehicle-type-header{
+   margin-right: 1rem;
+}
+
+.vehicle-type, .home-type{
+    display: flex;
+    align-items: center;
+}
+
+.vehicle-mpg{
+    margin-top: 1rem;
+    &__bold{
+        font-weight: bold;
+    }
+}
+
+.home-sqft{
+    &__bold{
+        font-weight: bold;
+    }
+}
+
+.btns{
+    margin-top: 1rem; 
+}
+
+.btn{
+    width: 100px;
+    height: 30px;
+    border: none;
+    background-color: #027200;
+    border-radius: 50px;
+    color: white;
+    margin-left: 10px;
+}
+
+.edit-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+    margin: 10px;
+}
+
+.edit-header{
+    margin: 0;
+}
+
+.offsetter-icon, .recommendations-icon{
+    margin-right: 0.5rem;
+}
+
+.edit-vehicle-container, .edit-home-container{
+    background-color: rgba($color: #97EE62, $alpha: .65);
+    width: 300px;
+    height: 350px;
+    border-radius: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.recommendation-name{
+    margin-left: 10px;
+    text-decoration: none;
+    color: black;
 }

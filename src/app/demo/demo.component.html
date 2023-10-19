@@ -1,117 +1,238 @@
-<div class="demo-container">
-<div class="header-container">
+<div *ngIf="loading === false" class="demo-container">
+    <div class="header-container">
+        
+        <div *ngIf="userEditMode !== true" class="user-container">
+            <div class="edit-icon">
+               <img (click)="editUser()" src="../../assets/images/edit.svg" alt="edit">
+            </div>
+            <div class="info-container">
+                <div class="image-container">
+                    <img class="image" [src]="defaultImage">
+                </div>
+                <div class="user-info">
+                    <h4>{{user.first_name}} {{user.last_name}}</h4>
+                    <div class="output">
+                        <h4>Footprint:</h4>
+                        <p>{{user.footprint}} tons GHG/year</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="userEditMode === true" class="user-container">
+            <div class="edit-user">
+                <h2 class="update-header">Update User</h2>
+                <div class="image-container">
+                    <img class="image" [src]="defaultImage" alt="profile picture">
+                </div>
+                <div class="update-user">
+                    <label class="update-user__font" for="profilePic">Update Picture:</label>
+                    <input (change)="setNewUserImage($event)" class="update-user__width" type="file" accept="image/png, image/jpeg"  name="profilePic" #imageUpload/>
+                </div>
+                <div class="user-btns">
+                    <button (click)="updateUserImage()" class="btn">Update</button>
+                    <button (click)="cancelEditUser()" class="btn">Cancel</button>
+                </div>
+            </div>
+        </div>
+       
+        <div *ngIf="vehicles?.length == 0 && vehicleEditMode == false" class="vehicle-container">
+            <div class="add-vehicle">
+                <h2>Add Vehicle</h2>
+                    <img (click)="editVehicle()" class="add-button" src="../../assets/images/AddButton.svg" alt="add vehicle">
+            </div>
+        </div>
+        
+        <div *ngIf="vehicleEditMode" class="edit-vehicle-container">
+            <div *ngIf="vehicles.length > 1" class="leftArrow">
+                <img (click)="decreaseVehicleIndex()" class="left-arrow" src="../../assets/images/leftArrow.svg" alt="">
+            </div>
+            <div class="edit-container">
+                <h2 class="edit-header">Add Vehicle</h2>
+                <div class="vehicle-type">
+                    <h4 class="vehicle-type-header">Type of Vehicle:</h4>
+                    <div class="vehicle-type-inputs">
+                        <div>
+                            <input type="radio" name="vehicle" value="motorcycle" [(ngModel)]="vehicleType">
+                            <label for="motorcycle">Motorcycle</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="vehicle" value="suv" [(ngModel)]="vehicleType">
+                            <label for="suv">SUV</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="vehicle" value="car" [(ngModel)]="vehicleType">
+                            <label for="car">Car</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="vehicle" value="truck" [(ngModel)]="vehicleType">
+                            <label for="truck">Truck</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="vehicle-mpg">
+                        <label class="vehicle-mpg__bold" for="mpg">MPG: </label>
+                        <input type="number" step="0.01" name="vehicle" id="mpg" [(ngModel)]="vehicleMpg">
+                </div>
+                
+                <div  *ngIf="vehicleIndex === vehicles.length"class="btns">
+                    <button (click)="addVehicle()" class="btn">Add</button>
+                    <button (click)="cancelEditVehicle()" class="btn">Cancel</button>
+                </div>
+                <div *ngIf="vehicleIndex != vehicles.length" class="btns">
+                    <button (click)="deleteVehicle()" class="btn">Delete</button>
+                    <button (click)="cancelEditVehicle()" class="btn">Cancel</button>
+                </div>
+
+            </div>
+            <div *ngIf="vehicles.length > 1" class="leftArrow">
+                <img (click)="increaseVehicleIndex()" class="right-arrow" src="../../assets/images/rightArrow.svg" alt="">
+            </div>
+        </div>
+
+        <div *ngIf="vehicles?.length > 0 && vehicleEditMode == false" class="vehicle-container">
+            <div class="edit-icon">
+                <img (click)="editVehicle()" src="../../assets/images/edit.svg" alt="edit">
+            </div>
+            
+            <div class="vehicle-section">
+                <div *ngIf="vehicles?.length > 1" class="leftArrow">
+                    <img (click)="decreaseVehicleIndex()" class="left-arrow" src="../../assets/images/leftArrow.svg" alt="">
+                </div>
+                <div class="info-container">
+                    <div class="image-container">
+                        <img class="vehicle-image" src="../../assets/images/SUV.svg" alt="profile picture">
+                    </div>
+                    <div class="monthly-output">
+                        <h4>Monthly Output:</h4>
+                        <p>{{vehicles[vehicleIndex].vehicleGHG}} tons GHG/year</p>
+                    </div>
+                </div>
+                <div *ngIf="vehicles.length > 1" class="leftArrow">
+                    <img (click)="increaseVehicleIndex()" class="right-arrow" src="../../assets/images/rightArrow.svg" alt="">
+                </div>
+            </div>
+        </div>
+
+        <!--
     
-    <div class="user-container">
-        <div class="edit-icon">
-           <img src="../../assets/images/edit.svg" alt="edit">
-        </div>
-        <div class="info-container">
-            <div class="image-container">
-                <img class="image" src="../../assets/images/demoProfile.png" alt="profile picture">
-            </div>
-            <div class="user-info">
-                <h4>John Doe</h4>
-                <div class="output">
-                    <h4>Footprint:</h4>
-                    <p>50 tons GHG/year</p>
-                </div>
+        <div *ngIf="homes.length == 0 && homeEditMode == false" class="home-container">
+            <div class="add-vehicle">
+                <h2>Add Home</h2>
+                <img (click)="editHome()" class="add-button" src="../../assets/images/AddButton.svg" alt="add home">
             </div>
         </div>
-    </div>
-
-    <div class="vehicle-container">
-        <div class="edit-icon">
-            <img src="../../assets/images/edit.svg" alt="edit">
-        </div>
-        
-        <div class="vehicle-section">
-            <div class="leftArrow">
-                <img class="left-arrow" src="../../assets/images/leftArrow.svg" alt="">
+        <div *ngIf="homes.length != 0 && homeEditMode == false" class="home-container">
+            <div class="edit-icon">
+                <img (click)="editHome()" src="../../assets/images/edit.svg" alt="edit">
             </div>
-            <div class="info-container">
-                <div class="image-container">
-                    <img class="vehicle-image" src="../../assets/images/SUV.svg" alt="profile picture">
-                </div>
-                <div class="monthly-output">
-                    <h4>Monthly Output:</h4>
-                    <p>50 tons GHG/year</p>
-                </div>
-            </div>
-            <div class="leftArrow">
-                <img class="right-arrow" src="../../assets/images/rightArrow.svg" alt="">
-            </div>
-        </div>
-    </div>
-
-    <div class="home-container">
-        <div class="edit-icon">
-            <img src="../../assets/images/edit.svg" alt="edit">
-        </div>
-        
-        <div class="home-section">
-            <div class="leftArrow">
-                <img class="left-arrow" src="../../assets/images/leftArrow.svg" alt="">
-            </div>
-            <div class="info-container">
-                <div class="image-container">
-                    <img class="home-image" src="../../assets/images/house.svg" alt="profile picture">
-                </div>
-                <div class="monthly-output">
-                    <h4>Monthly Output:</h4>
-                    <p>50 tons GHG/year</p>
-                </div>
-            </div>
-            <div class="rightArrow">
-                <img class="left-arrow" src="../../assets/images/rightArrow.svg" alt="">
-            </div>
-        </div>
-    </div>
-</div>
-
-    <div class="chart">
-        <app-chart></app-chart>
-    </div>
-
-    <div class="offsetter-section">
-
-        <div class="offsetter-container">
-            <div class="offsetter-header">
-                <h4>OFFSETTERS</h4>
-            </div>
-                <div class="list-item" *ngFor="let x of offsetters">
-                    <div class="offsetter-list-item">
-                        <img src="../../assets/images/minus.svg" alt="remove offsetter">
-                        <p class="offsetter-name">
-                            Succulent
-                        </p>
-                    </div>
-                    <div class="offsetter-ghg-list-item">
-                        <p class="offsetter-ghg">-30 GHG/Year</p>
-                    </div>
-                </div>
             
+            <div class="home-section">
+                <div class="leftArrow">
+                    <img (click)="decreaseHomeIndex()" class="left-arrow" src="../../assets/images/leftArrow.svg" alt="">
+                </div>
+                <div class="info-container">
+                    <div class="image-container">
+                        <img class="home-image" src="../../assets/images/house.svg" alt="profile picture">
+                    </div>
+                    <div class="monthly-output">
+                        <h4>Monthly Output:</h4>
+                        <p>{{homes[homeIndex].homeGHG}} tons GHG/year</p>
+                    </div>
+                </div>
+                <div class="rightArrow">
+                    <img (click)="increaseHomeIndex()" class="left-arrow" src="../../assets/images/rightArrow.svg" alt="">
+                </div>
+            </div>
         </div>
 
-            
-            <div class="recommendations-container">
-                <div class="recommendations-header">
-                    <h4>RECOMMENDATIONS</h4>
-                </div>
-                <!--change div names-->
-                <div class="list-item" *ngFor="let x of offsetters">
-                    <div class="offsetter-list-item">
-                        <img src="../../assets/images/add.svg" alt="remove offsetter">
-                        <p class="offsetter-name">
-                            Solar
-                        </p>
-                    </div>
-                    <div class="offsetter-ghg-list-item">
-                        <p class="offsetter-ghg">-30 GHG/Year</p>
-                    </div>
-                </div>  
+        <div *ngIf="homeEditMode" class="edit-home-container">
+            <div *ngIf="homes.length > 1" class="leftArrow">
+                <img (click)="decreaseHomeIndex()" class="left-arrow" src="../../assets/images/leftArrow.svg" alt="">
             </div>
+            <div class="edit-container">
+                <h2 class="edit-header">Add Home</h2>
+                <div class="home-type">
+                    <h4 class="home-type-header">Type of Home:</h4>
+                    <div class="home-type-inputs">
+                        <div>
+                            <input type="radio"  name="home" [(ngModel)]="homeType" value="house">
+                            <label for="house">House</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="home" [(ngModel)]="homeType" value="mansion">
+                            <label for="mansion">Mansion</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="home" [(ngModel)]="homeType" value="apartment">
+                            <label for="Apartment">Apartment</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="home-sqft">
+                        <label class="home-sqft__bold" for="SQFT">SQFT: </label>
+                        <input [(ngModel)]="homeSize"  type="number" step="0.01" name="home" id="sqft">
+                </div>
+                
+                <div *ngIf="this.homeType == null || this.homeType == undefined" class="btns">
+                    <button (click)="addHome()" class="btn">Add</button>
+                    <button (click)="cancelEditHome()" class="btn">Cancel</button>
+                </div>
+                <div *ngIf="this.homeType != null || this.homeType != undefined" class="btns">
+                    <button (click)="deleteHome()" class="btn">Delete</button>
+                    <button (click)="cancelEditHome()" class="btn">Cancel</button>
+                </div>
+                
+            </div>
+            <div *ngIf="homes.length > 1" class="leftArrow">
+                <img (click)="increaseHomeIndex()" class="right-arrow" src="../../assets/images/rightArrow.svg" alt="">
+            </div>
+        </div>
+    </div> -->
 
-</div>
-
-</div>
-
+<!--     
+        <div class="chart">
+            <app-chart></app-chart>
+        </div>
+    
+        <div class="offsetter-section">
+            <div class="offsetter-container">
+                <div class="offsetter-header">
+                    <h4>OFFSETTERS</h4>
+                </div>
+                    <div class="list-item" *ngFor="let offsetter of offsetters; let i = index">
+                        <div class="offsetter-list-item">
+                            <img class="offsetter-icon" src="../../assets/images/removeIcon.svg" alt="remove offsetter" (click)="deleteOffsetter(i)">
+                            <p class="offsetter-name"> 
+                                {{offsetter.product}}
+                            </p>
+                        </div>
+                        <div class="offsetter-ghg-list-item">
+                            <p class="offsetter-ghg">{{offsetter.CCS}} GHG/Year</p>
+                        </div>
+                    </div>
+                
+            </div>
+    
+                
+                <div class="recommendations-container">
+                    <div class="recommendations-header">
+                        <h4>RECOMMENDATIONS</h4>
+                    </div>
+                    change div name
+                    <div class="list-item" *ngFor="let recommendation of recommendations; let i = index">
+                        <div class="recommendation-list-item">
+                            <img class="recommendation-icon" src="../../assets/images/addIcon.svg" alt="Add offsetter" (click)="addOffsetter(i)">
+                            <a class="recommendation-name" href="{{recommendation.productLocation}}">
+                                {{recommendation.product}}
+                            </a>
+                        </div>
+                        <div class="recommendation-ghg-list-item">
+                            <p class="recommendation-ghg">{{recommendation.CCS}} GHG/Year</p>
+                        </div>
+                    </div>  
+                </div>
+    
+    </div>
+     -->
+    </div>

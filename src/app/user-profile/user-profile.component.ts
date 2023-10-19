@@ -56,12 +56,12 @@ export class UserProfileComponent implements OnInit{
   userEditMode = false;
 
   //vehicle stuff
-  vehicleType;
-  vehicleMpg;
+  vehicleType = null;
+  vehicleMpg = null
 
   //home stuff
-  homeType;
-  homeSize;
+  homeType = null;
+  homeSize = null;
 
   //display stuff
   vehicleIndex = 0;
@@ -228,6 +228,7 @@ export class UserProfileComponent implements OnInit{
         //resets values
       this.vehicleType = '';
       this.vehicleMpg = 0;
+      this.vehicles = null;
       
       this.setVehicleData().then(()=>{
         this.vehicleEditMode = false;
@@ -308,7 +309,6 @@ export class UserProfileComponent implements OnInit{
     //assigns number with two decimal points 
     ghgPerYear = Math.round((ghgPerYear *100) /100);
     this.user.footprint = Math.round((this.user.footprint *100) /100);
-    this.vehicles = null;
     return ghgPerYear;
   }
 
@@ -326,8 +326,6 @@ export class UserProfileComponent implements OnInit{
 
   setNewUserImage(e){
     this.holdNewImage = e.target.files[0];
-    console.log(this.holdNewImage)
-    console.log(e.target.files.item(0))
   }
 
   updateUserImage(){
@@ -348,6 +346,7 @@ export class UserProfileComponent implements OnInit{
           console.log(res);
           this.setUserImage()
           this.holdNewImage = null;
+          this.userEditMode = false;
         }
       )
     }

@@ -75,11 +75,11 @@
                         <input type="number" step="0.01" name="vehicle" id="mpg" [(ngModel)]="vehicleMpg">
                 </div>
                 
-                <div  *ngIf="this.vehicleType == null || this.vehicleType == undefined"class="btns">
+                <div  *ngIf="this.vehicleType == null  "class="btns">
                     <button (click)="addVehicle()" class="btn">Add</button>
                     <button (click)="cancelEditVehicle()" class="btn">Cancel</button>
                 </div>
-                <div *ngIf="this.vehicleType != null || this.vehicleType != undefined" class="btns">
+                <div *ngIf="this.vehicleType != null" class="btns">
                     <button (click)="deleteVehicle()" class="btn">Delete</button>
                     <button (click)="cancelEditVehicle()" class="btn">Cancel</button>
                 </div>
