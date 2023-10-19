@@ -130,6 +130,14 @@ export class DemoComponent {
 
   }
 
+  editHome(){
+    if(this.homes.length > 0){
+      this.homeType = this.homes[this.homeIndex].homeType;
+      this.homeSize = this.homes[this.homeIndex].homeSize;
+    }
+    this.homeEditMode = true;
+  }
+
   setNewUserImage(e){
     this.holdNewImage = e.target.files[0];
   }
@@ -154,6 +162,14 @@ export class DemoComponent {
       this.vehicleIndex = 0;
     }
     this.vehicleEditMode = false;
+  }
+
+  cancelEditHome(){
+
+    if(this.homeIndex == this.homes.length && this.homes.length > 0){
+      this.homeIndex = 0;
+    }
+    this.homeEditMode = false;
   }
 
 
@@ -192,7 +208,6 @@ export class DemoComponent {
   }
 
   decreaseVehicleIndex(){
-    console.log(this.vehicleIndex)
     if(this.vehicleEditMode == false){
       if(this.vehicleIndex === 0){
         this.vehicleIndex = this.vehicles.length -1
@@ -214,6 +229,30 @@ export class DemoComponent {
     }
   }
 
+  increaseHomeIndex(){
+    if(this.homeIndex === this.homes.length - 1){
+      this.homeType = null;
+      this.homeSize = null;
+      this.homeEditMode = true
+    }else if(this.homeIndex <= this.homes.length -1){
+        this.homeIndex = this.homeIndex + 1;
+        this.homeSize = this.homes[this.homeIndex].homeSize;
+        this.homeType = this.homes[this.homeIndex].homeType;
+        
+    }
+  }
+
+  decreaseHomeIndex(){
+    if(this.homeIndex === this.homes.length - 1){
+      this.homeIndex = this.homeIndex - 1
+      this.homeEditMode = false;
+    }else if(this.homeIndex <= this.homes.length - 1 && this.homeIndex != 0){
+        this.homeIndex = this.homeIndex - 1;
+        this.homeSize = this.homes[this.homeIndex].homeSize;
+        this.homeType = this.homes[this.homeIndex].homeType;
+    }
+  }
+
   addVehicle(){
     const vehicleBody = {
       type: this.vehicleType,
@@ -221,8 +260,6 @@ export class DemoComponent {
       userId: this.user.id,
       vehicleGHG: this.calculateVehicleGHG()
     };
-
-
     this.vehicles.push(vehicleBody)
         //resets values
       this.vehicleType = '';
@@ -232,9 +269,31 @@ export class DemoComponent {
    
   }
 
+  addHome(){
+    const homeBody = {
+      homeType: this.homeType,
+      homeSize: this.homeSize,
+      userId: this.user.id,
+      homeGHG: this.calculateHomeGHG()
+    };
+
+    this.homes.push(homeBody)
+    
+    //resets values
+    this.homeType = '';
+    this.homeSize = 0;
+    this.homeEditMode = false;
+  }
+
   deleteVehicle(){
     if(this.vehicleType != null || this.vehicleType != undefined){
         this.vehicleEditMode = false; 
+    }
+  }
+
+  deleteHome(){
+    if(this.homeType != null || this.homeType != undefined){
+        this.homeEditMode = false;
     }
   }
 
@@ -244,9 +303,27 @@ export class DemoComponent {
     this.user.footprint = ghgPerYear + this.user.footprint;
 
     //assigns number with two decimal points 
-    ghgPerYear = Math.round((ghgPerYear *100) /100);
+    ghgPerYear = Math.round(ghgPerYear *100) /100;
     this.user.footprint = Math.round((this.user.footprint *100) /100);
     
+    return ghgPerYear;
+  }
+
+  calculateHomeGHG(){
+    let totalWatts =  this.homeSize * .75;
+    let ghgPerYear = (totalWatts * .855) / 2000;
+    this.user.footprint = ghgPerYear + this.user.footprint;
+
+    console.log(ghgPerYear)
+   
+    //assigns number with two decimal points 
+    ghgPerYear = Math.round(ghgPerYear * 100)/100;
+
+    console.log(ghgPerYear)
+    this.user.footprint = Math.round((this.user.footprint *100) /100);
+
+    console.log(ghgPerYear)
+
     return ghgPerYear;
   }
 
