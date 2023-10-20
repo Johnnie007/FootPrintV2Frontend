@@ -307,7 +307,7 @@ export class UserProfileComponent implements OnInit{
     this.user.footprint = ghgPerYear + this.user.footprint;
 
     //assigns number with two decimal points 
-    ghgPerYear = Math.round((ghgPerYear *100) /100);
+    ghgPerYear = Math.round(ghgPerYear *100) /100;
     this.user.footprint = Math.round((this.user.footprint *100) /100);
     return ghgPerYear;
   }
@@ -318,7 +318,7 @@ export class UserProfileComponent implements OnInit{
     this.user.footprint = ghgPerYear + this.user.footprint;
    
     //assigns number with two decimal points 
-    ghgPerYear = Math.round((ghgPerYear *100) /100);
+    ghgPerYear = Math.round(ghgPerYear *100) /100;
     this.user.footprint = Math.round((this.user.footprint *100) /100);
     this.homes = null;
     return ghgPerYear;
@@ -353,48 +353,102 @@ export class UserProfileComponent implements OnInit{
   }
 
   increaseVehicleIndex(){
-    if(this.vehicleIndex === this.vehicles.length - 1){
-      this.vehicleEditMode = true;
-      this.vehicleType = null;
-      this.vehicleMpg = null;
-    }else if(this.vehicleIndex <= this.vehicles.length -1){
-        this.vehicleIndex = this.vehicleIndex + 1;
-        this.vehicleType = this.vehicles[this.vehicleIndex].type;
-        this.vehicleMpg = this.vehicles[this.vehicleIndex].mpg;
+    if(this.vehicleEditMode == false){
+      if(this.vehicleIndex === this.vehicles.length - 1){
+      
+        this.vehicleIndex = 0;
+      }else if(this.vehicleIndex < this.vehicles.length - 1){
+          this.vehicleIndex = this.vehicleIndex + 1;
+          this.vehicleType = this.vehicles[this.vehicleIndex].type;
+          this.vehicleMpg = this.vehicles[this.vehicleIndex].mpg;
+      } 
     }
+      else{
+        if(this.vehicleIndex === this.vehicles.length){
+          this.vehicleIndex = 0;
+          this.vehicleType = this.vehicles[this.vehicleIndex].type;
+            this.vehicleMpg = this.vehicles[this.vehicleIndex].mpg;
+        }else if(this.vehicleIndex < this.vehicles.length -1){
+            this.vehicleIndex = this.vehicleIndex + 1;
+            this.vehicleType = this.vehicles[this.vehicleIndex].type;
+            this.vehicleMpg = this.vehicles[this.vehicleIndex].mpg;
+        }
+        else if(this.vehicleIndex === this.vehicles.length -1){
+            this.vehicleIndex = this.vehicleIndex + 1;
+            this.vehicleType = '';
+            this.vehicleMpg = '';
+        }
+      }
   }
 
   decreaseVehicleIndex(){
-    if(this.vehicleIndex === this.vehicles.length - 1){
-      this.vehicleIndex = this.vehicleIndex -1
-      this.vehicleEditMode = false;
-    }else if(this.vehicleIndex <= this.vehicles.length - 1 && this.vehicleIndex != 0){
-        this.vehicleIndex = this.vehicleIndex - 1;
-        this.vehicleType = this.vehicles[this.vehicleIndex].vehicleType
-        this.vehicleMpg = this.vehicles[this.vehicleIndex].mpg
+    if(this.vehicleEditMode == false){
+      if(this.vehicleIndex === 0){
+        this.vehicleIndex = this.vehicles.length -1
+      }else if(this.vehicleIndex > 0){
+          this.vehicleIndex = this.vehicleIndex - 1;
+          this.vehicleType = this.vehicles[this.vehicleIndex].type
+          this.vehicleMpg = this.vehicles[this.vehicleIndex].mpg
+      }
+    }else{
+      if(this.vehicleIndex === 0){
+        this.vehicleIndex = this.vehicles.length
+        this.vehicleType = ''
+        this.vehicleMpg = ''
+      }else if(this.vehicleIndex > 0){
+          this.vehicleIndex = this.vehicleIndex - 1;
+          this.vehicleType = this.vehicles[this.vehicleIndex].type
+          this.vehicleMpg = this.vehicles[this.vehicleIndex].mpg
+      }
     }
   }
   increaseHomeIndex(){
-    if(this.homeIndex === this.homes.length - 1){
-      this.homeType = null;
-      this.homeSize = null;
-      this.homeEditMode = true
-    }else if(this.homeIndex <= this.homes.length -1){
-        this.homeIndex = this.homeIndex + 1;
-        this.homeSize = this.homes[this.homeIndex].homeSize;
+    if(this.homeEditMode === false){
+      if(this.homeIndex === this.homes.length - 1){
+       this.homeIndex = 0;
+      }else if(this.homeIndex <= this.homes.length -1){
+          this.homeIndex = this.homeIndex + 1;
+          this.homeSize = this.homes[this.homeIndex].homeSize;
+          this.homeType = this.homes[this.homeIndex].homeType;
+          
+      }
+    } else{
+      if(this.homeIndex === this.homes.length){
+        this.homeIndex = 0;
         this.homeType = this.homes[this.homeIndex].homeType;
-        
+        this.homeSize = this.homes[this.homeIndex].homeSize;
+      }else if(this.homeIndex < this.homes.length -1){
+          this.homeIndex = this.homeIndex + 1;
+          this.homeType = this.homes[this.homeIndex].homeType;
+          this.homeSize = this.homes[this.homeIndex].homeSize;
+      }
+      else if(this.homeIndex === this.homes.length -1){
+          this.homeIndex = this.homeIndex + 1;
+          this.homeType = '';
+          this.homeSize = '';
+      }
     }
   }
 
   decreaseHomeIndex(){
-    if(this.homeIndex === this.homes.length - 1){
-      this.homeIndex = this.homeIndex - 1
-      this.homeEditMode = false;
-    }else if(this.homeIndex <= this.homes.length - 1 && this.homeIndex != 0){
-        this.homeIndex = this.homeIndex - 1;
-        this.homeSize = this.homes[this.homeIndex].homeSize;
-        this.homeType = this.homes[this.homeIndex].homeType;
+    if(this.homeEditMode === false){
+      if(this.homeIndex === 0){
+        this.homeIndex = this.homes.length - 1
+      }else if(this.homeIndex > 0){
+          this.homeIndex = this.homeIndex - 1;
+          this.homeSize = this.homes[this.homeIndex].homeSize;
+          this.homeType = this.homes[this.homeIndex].homeType;
+      }
+    } else{
+      if(this.homeIndex === 0){
+        this.homeIndex = this.homes.length
+        this.homeType = ''
+        this.homeSize = ''
+      }else if(this.homeIndex > 0){
+          this.homeIndex = this.homeIndex - 1;
+          this.homeType = this.homes[this.homeIndex].homeType;
+          this.homeSize = this.homes[this.homeIndex].homeSize;
+      }
     }
   }
 

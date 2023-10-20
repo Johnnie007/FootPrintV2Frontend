@@ -271,7 +271,7 @@ export class DemoComponent {
   decreaseHomeIndex(){
     if(this.homeEditMode === false){
       if(this.homeIndex === 0){
-        this.homeIndex = this.homeIndex - 1
+        this.homeIndex = this.homes.length - 1
       }else if(this.homeIndex > 0){
           this.homeIndex = this.homeIndex - 1;
           this.homeSize = this.homes[this.homeIndex].homeSize;
