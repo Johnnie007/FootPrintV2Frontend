@@ -44,7 +44,7 @@
         </div>
         
         <div *ngIf="vehicleEditMode" class="edit-vehicle-container">
-            <div *ngIf="vehicles.length > 1" class="leftArrow">
+            <div *ngIf="vehicles.length > 0" class="leftArrow">
                 <img (click)="decreaseVehicleIndex()" class="left-arrow" src="../../assets/images/leftArrow.svg" alt="">
             </div>
             <div class="edit-container">
@@ -85,7 +85,7 @@
                 </div>
 
             </div>
-            <div *ngIf="vehicles.length > 1" class="leftArrow">
+            <div *ngIf="vehicles.length > 0" class="leftArrow">
                 <img (click)="increaseVehicleIndex()" class="right-arrow" src="../../assets/images/rightArrow.svg" alt="">
             </div>
         </div>
@@ -189,11 +189,11 @@
         </div>
     </div>
 
-<!--     
+    
         <div class="chart">
             <app-chart></app-chart>
         </div>
-    
+     
         <div class="offsetter-section">
             <div class="offsetter-container">
                 <div class="offsetter-header">
@@ -218,7 +218,7 @@
                     <div class="recommendations-header">
                         <h4>RECOMMENDATIONS</h4>
                     </div>
-                    change div name
+                    <!-- change div name -->
                     <div class="list-item" *ngFor="let recommendation of recommendations; let i = index">
                         <div class="recommendation-list-item">
                             <img class="recommendation-icon" src="../../assets/images/addIcon.svg" alt="Add offsetter" (click)="addOffsetter(i)">
@@ -233,5 +233,5 @@
                 </div>
     
     </div>
-     -->
+     
     </div>

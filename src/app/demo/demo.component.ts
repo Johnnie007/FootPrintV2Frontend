@@ -18,7 +18,6 @@ export class DemoComponent {
       id: 1,
       type: "plant",
       product: "Succulent",
-      productLocation: "https://succulentsbox.com/",
       CCS: -30,
       userId: 5
   },
@@ -26,7 +25,6 @@ export class DemoComponent {
       id: 2,
       type: "home",
       product: "Solar",
-      productLocation: "https://www.sunrun.com/",
       CCS: -30,
       userId: 5
   },
@@ -34,7 +32,6 @@ export class DemoComponent {
       id: 3,
       type: "plant",
       product: "Succulent",
-      productLocation: "https://succulentsbox.com/",
       CCS: -30,
       userId: 5
   }
@@ -88,7 +85,27 @@ export class DemoComponent {
     vehicleGHG: 66
   },
 ];
-  homes = [];
+  homes = [
+    {
+    homeType: 'house',
+    homeSize: 1312,
+    homeGHG: 233,
+    userId: 10000
+    },
+    {
+    homeType: 'apartment',
+    homeSize: 112,
+    homeGHG: 123,
+    userId: 10000
+    },
+    {
+    homeType: 'house',
+    homeSize: 1232,
+    homeGHG: 1233,
+    userId: 10000
+    }
+
+  ];
 
   vehicleEditMode = false;
   homeEditMode = false;
@@ -113,7 +130,6 @@ export class DemoComponent {
   defaultImage =  "../../assets/images/demoProfile.png";
   
   ngOnInit(): void {
-    console.log(0)
     this.loading = false;
   }
 
@@ -174,32 +190,27 @@ export class DemoComponent {
 
 
   increaseVehicleIndex(){
-    console.log(this.vehicleIndex)
     if(this.vehicleEditMode == false){
       if(this.vehicleIndex === this.vehicles.length - 1){
       
         this.vehicleIndex = 0;
       }else if(this.vehicleIndex < this.vehicles.length - 1){
-        console.log(this.vehicles[this.vehicleIndex])
           this.vehicleIndex = this.vehicleIndex + 1;
           this.vehicleType = this.vehicles[this.vehicleIndex].type;
           this.vehicleMpg = this.vehicles[this.vehicleIndex].mpg;
       } 
     }
       else{
-        console.log(this.vehicles[this.vehicleIndex])
         if(this.vehicleIndex === this.vehicles.length){
           this.vehicleIndex = 0;
           this.vehicleType = this.vehicles[this.vehicleIndex].type;
             this.vehicleMpg = this.vehicles[this.vehicleIndex].mpg;
         }else if(this.vehicleIndex < this.vehicles.length -1){
-          console.log(this.vehicles[this.vehicleIndex])
             this.vehicleIndex = this.vehicleIndex + 1;
             this.vehicleType = this.vehicles[this.vehicleIndex].type;
             this.vehicleMpg = this.vehicles[this.vehicleIndex].mpg;
         }
         else if(this.vehicleIndex === this.vehicles.length -1){
-          console.log(this.vehicles[this.vehicleIndex])
             this.vehicleIndex = this.vehicleIndex + 1;
             this.vehicleType = '';
             this.vehicleMpg = '';
@@ -230,26 +241,52 @@ export class DemoComponent {
   }
 
   increaseHomeIndex(){
-    if(this.homeIndex === this.homes.length - 1){
-      this.homeType = null;
-      this.homeSize = null;
-      this.homeEditMode = true
-    }else if(this.homeIndex <= this.homes.length -1){
-        this.homeIndex = this.homeIndex + 1;
-        this.homeSize = this.homes[this.homeIndex].homeSize;
+    if(this.homeEditMode === false){
+      if(this.homeIndex === this.homes.length - 1){
+       this.homeIndex = 0;
+      }else if(this.homeIndex <= this.homes.length -1){
+          this.homeIndex = this.homeIndex + 1;
+          this.homeSize = this.homes[this.homeIndex].homeSize;
+          this.homeType = this.homes[this.homeIndex].homeType;
+          
+      }
+    } else{
+      if(this.homeIndex === this.homes.length){
+        this.homeIndex = 0;
         this.homeType = this.homes[this.homeIndex].homeType;
-        
+        this.homeSize = this.homes[this.homeIndex].homeSize;
+      }else if(this.homeIndex < this.homes.length -1){
+          this.homeIndex = this.homeIndex + 1;
+          this.homeType = this.homes[this.homeIndex].homeType;
+          this.homeSize = this.homes[this.homeIndex].homeSize;
+      }
+      else if(this.homeIndex === this.homes.length -1){
+          this.homeIndex = this.homeIndex + 1;
+          this.homeType = '';
+          this.homeSize = '';
+      }
     }
   }
 
   decreaseHomeIndex(){
-    if(this.homeIndex === this.homes.length - 1){
-      this.homeIndex = this.homeIndex - 1
-      this.homeEditMode = false;
-    }else if(this.homeIndex <= this.homes.length - 1 && this.homeIndex != 0){
-        this.homeIndex = this.homeIndex - 1;
-        this.homeSize = this.homes[this.homeIndex].homeSize;
-        this.homeType = this.homes[this.homeIndex].homeType;
+    if(this.homeEditMode === false){
+      if(this.homeIndex === 0){
+        this.homeIndex = this.homeIndex - 1
+      }else if(this.homeIndex > 0){
+          this.homeIndex = this.homeIndex - 1;
+          this.homeSize = this.homes[this.homeIndex].homeSize;
+          this.homeType = this.homes[this.homeIndex].homeType;
+      }
+    } else{
+      if(this.homeIndex === 0){
+        this.homeIndex = this.homes.length
+        this.homeType = ''
+        this.homeSize = ''
+      }else if(this.homeIndex > 0){
+          this.homeIndex = this.homeIndex - 1;
+          this.homeType = this.homes[this.homeIndex].homeType;
+          this.homeSize = this.homes[this.homeIndex].homeSize;
+      }
     }
   }
 
@@ -287,12 +324,27 @@ export class DemoComponent {
 
   deleteVehicle(){
     if(this.vehicleType != null || this.vehicleType != undefined){
-        this.vehicleEditMode = false; 
+      this.vehicles.splice(this.vehicleIndex, 1)
+      this.vehicleIndex = 0
+      if(this.vehicles.length === 0){
+        this.vehicleType = '';
+        this.vehicleMpg = 0;
+
+      }
+      this.vehicleEditMode = false; 
     }
+    
   }
 
   deleteHome(){
     if(this.homeType != null || this.homeType != undefined){
+      this.homes.splice(this.homeIndex, 1)
+        this.homeIndex = 0;
+
+        if(this.homes.length === 0){
+          this.homeType = '';
+          this.homeSize = 0;
+        }
         this.homeEditMode = false;
     }
   }
@@ -314,17 +366,30 @@ export class DemoComponent {
     let ghgPerYear = (totalWatts * .855) / 2000;
     this.user.footprint = ghgPerYear + this.user.footprint;
 
-    console.log(ghgPerYear)
    
     //assigns number with two decimal points 
     ghgPerYear = Math.round(ghgPerYear * 100)/100;
 
-    console.log(ghgPerYear)
     this.user.footprint = Math.round((this.user.footprint *100) /100);
 
-    console.log(ghgPerYear)
-
     return ghgPerYear;
+  }
+
+  deleteOffsetter(id){
+    let offsetter = this.offsetters[id]
+    this.offsetters.splice(id, 1);
+  }
+
+  addOffsetter(id){
+    let offsetter = {
+    id: Math.floor(Math.random() * 100000),
+     type: this.recommendations[id].type,
+     product: this.recommendations[id].product,
+     CCS: this.recommendations[id].CCS,
+     userId: this.user.id
+    };
+
+    this.offsetters.push(offsetter)
   }
 
 }
