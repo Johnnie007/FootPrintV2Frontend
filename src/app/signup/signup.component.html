@@ -5,19 +5,24 @@
         </div>
         <div class="inputs-container">
             <h4 class="title">Sign Up</h4>
-        <div>
-        <input class="inputs" placeholder="first name" type="text" name="firstName" [(ngModel)]="firstName">
+            <div>
+                <input class="inputs" placeholder="first name" type="text" name="firstName" [(ngModel)]="firstName">
+            </div>
+            <div>
+                <input class="inputs" placeholder="last name" type="lastName" name="lastName" [(ngModel)]="lastName">
+            </div>
+            <div>
+                <input class="inputs" placeholder="email" type="text" name="username" [(ngModel)]="email">
+            </div>
+            <div>
+                <input class="inputs" placeholder="password" type="password" name="password" [(ngModel)]="password">
+            </div>
         </div>
-        <div>
-        <input class="inputs" placeholder="last name" type="lastName" name="lastName" [(ngModel)]="lastName">
+
+        <div *ngIf="isValid == false" class="not-valid">
+            <p class="not-valid__p">Email has been taken</p>
         </div>
-        <div>
-        <input class="inputs" placeholder="email" type="text" name="username" [(ngModel)]="email">
-        </div>
-        <div>
-        <input class="inputs" placeholder="password" type="password" name="password" [(ngModel)]="password">
-        </div>
-    </div>
+
         <div>
         <button class="login-btn" (click)="validateLogin()">Sign Up</button>
         </div>

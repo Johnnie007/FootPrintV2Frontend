@@ -1,23 +1,29 @@
 <div class="login-container">
-        <div class="login-form">
-            <div class="logo-container">
-                <img class="logo" src="../../assets/images/plant.svg" alt="logo">
-            </div>
-            <div class="inputs-container">
-                <h4 class="title">Sign In</h4>
+    <div class="login-form">
+        <div class="logo-container">
+            <img class="logo" src="../../assets/images/plant.svg" alt="logo">
+        </div>
+        <div class="inputs-container">
+            <h4 class="title">Sign In</h4>
             <div>
-            <input class="inputs" placeholder="email" type="text" name="username" [(ngModel)]="email">
+                <input class="inputs" placeholder="email" type="text" name="username" [(ngModel)]="email">
             </div>
             <div>
-            <input class="inputs" placeholder="password" type="password" name="password" [(ngModel)]="password">
+                <input class="inputs" placeholder="password" type="password" name="password" [(ngModel)]="password">
             </div>
         </div>
-            <div>
+
+        <div *ngIf="isValid == false" class="not-valid">
+            <p class="not-valid__p">Invalid email and/or password</p>
+        </div>
+
+
+        <div>
             <button class="login-btn" (click)="validateLogin()">Sign In</button>
-            </div>
-            <div class="signup">
-            <a class="signup" routerLink="/signup">Need to Sign Up?</a>
-            </div>
-            
         </div>
+        <div class="signup">
+            <a class="signup" routerLink="/signup">Need to Sign Up?</a>
+        </div>
+            
+    </div>
 </div>
