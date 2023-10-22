@@ -65,9 +65,7 @@ export class UserProfileComponent implements OnInit{
 
   //display stuff
   vehicleIndex = 0;
-  currentVehicle;
   homeIndex = 0;
-  currentHome;
 
   loading = true;
   holdNewImage = null;
@@ -131,10 +129,9 @@ export class UserProfileComponent implements OnInit{
       .subscribe(
         data =>{
           this.vehicles = data;
-          if(this.vehicles.length > 0){
-            this.vehicleType = this.vehicles[this.vehicleIndex].type
-            this.vehicleMpg = this.vehicles[this.vehicleIndex].mpg
-          }
+            this.vehicleType = null;
+            this.vehicleMpg = null;
+          
           this.isLoading()
           resolve(true);
         }
@@ -148,6 +145,9 @@ export class UserProfileComponent implements OnInit{
       .subscribe(
         data => {
           this.homes = data;
+          this.homeIndex = 0;
+          this.homeSize = null;
+          this.homeType = null;
           this.isLoading()
           resolve(true);
         }

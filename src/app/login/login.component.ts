@@ -22,7 +22,7 @@ export class LoginComponent {
             this.isValid = false
           }else{
             this.isValid = null;
-            //this.router.navigate(['/userprofile']);
+            this.router.navigate(['/userprofile']);
           }
         },
         error =>{

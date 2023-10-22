@@ -28,7 +28,11 @@
                 <div class="update-user">
                     <label class="update-user__font" for="profilePic">Update Picture:</label>
                     <input (change)="setNewUserImage($event)" class="update-user__width" type="file" accept="image/png, image/jpeg"  name="profilePic" #imageUpload/>
+                    <div class="image-type">
+                        <p class="image-type__p">PNG or JPEG Images only</p>
+                    </div>
                 </div>
+                
                 <div class="user-btns">
                     <button (click)="updateUserImage()" class="btn">Update</button>
                     <button (click)="cancelEditUser()" class="btn">Cancel</button>
@@ -53,26 +57,26 @@
                     <h4 class="vehicle-type-header">Type of Vehicle:</h4>
                     <div class="vehicle-type-inputs">
                         <div>
-                            <input type="radio" name="vehicle" value="motorcycle" [(ngModel)]="vehicleType">
+                            <input [disabled]="vehicleIndex !== vehicles.length" type="radio" name="vehicle" value="motorcycle" [(ngModel)]="vehicleType">
                             <label for="motorcycle">Motorcycle</label>
                         </div>
                         <div>
-                            <input type="radio" name="vehicle" value="suv" [(ngModel)]="vehicleType">
+                            <input [disabled]="vehicleIndex !== vehicles.length" type="radio" name="vehicle" value="suv" [(ngModel)]="vehicleType">
                             <label for="suv">SUV</label>
                         </div>
                         <div>
-                            <input type="radio" name="vehicle" value="car" [(ngModel)]="vehicleType">
+                            <input [disabled]="vehicleIndex !== vehicles.length" type="radio" name="vehicle" value="car" [(ngModel)]="vehicleType">
                             <label for="car">Car</label>
                         </div>
                         <div>
-                            <input type="radio" name="vehicle" value="truck" [(ngModel)]="vehicleType">
+                            <input [disabled]="vehicleIndex !== vehicles.length" type="radio" name="vehicle" value="truck" [(ngModel)]="vehicleType">
                             <label for="truck">Truck</label>
                         </div>
                     </div>
                 </div>
                 <div class="vehicle-mpg">
                         <label class="vehicle-mpg__bold" for="mpg">MPG: </label>
-                        <input type="number" step="0.01" name="vehicle" id="mpg" [(ngModel)]="vehicleMpg">
+                        <input [disabled]="vehicleIndex !== vehicles.length" type="number" step="0.01" name="vehicle" id="mpg" [(ngModel)]="vehicleMpg">
                 </div>
                 
                 <div  *ngIf="vehicleIndex === vehicles.length"class="btns">
@@ -155,22 +159,22 @@
                     <h4 class="home-type-header">Type of Home:</h4>
                     <div class="home-type-inputs">
                         <div>
-                            <input type="radio"  name="home" [(ngModel)]="homeType" value="house">
+                            <input [disabled]="homeIndex !== homes.length" type="radio"  name="home" [(ngModel)]="homeType" value="house">
                             <label for="house">House</label>
                         </div>
                         <div>
-                            <input type="radio" name="home" [(ngModel)]="homeType" value="mansion">
+                            <input [disabled]="homeIndex !== homes.length" type="radio" name="home" [(ngModel)]="homeType" value="mansion">
                             <label for="mansion">Mansion</label>
                         </div>
                         <div>
-                            <input type="radio" name="home" [(ngModel)]="homeType" value="apartment">
+                            <input [disabled]="homeIndex !== homes.length" type="radio" name="home" [(ngModel)]="homeType" value="apartment">
                             <label for="Apartment">Apartment</label>
                         </div>
                     </div>
                 </div>
                 <div class="home-sqft">
                         <label class="home-sqft__bold" for="SQFT">SQFT: </label>
-                        <input [(ngModel)]="homeSize"  type="number" step="0.01" name="home" id="sqft">
+                        <input [disabled]="homeIndex !== homes.length" [(ngModel)]="homeSize"  type="number" step="0.01" name="home" id="sqft">
                 </div>
                 
                 <div *ngIf="homeIndex === homes.length" class="btns">
