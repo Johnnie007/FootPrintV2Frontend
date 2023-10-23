@@ -13,17 +13,19 @@ export class SignupComponent {
   firstName = '';
   lastName = '';
   isValid: boolean;
+  warningMessage: string
 
   constructor(private router:Router, private authenticationService: AuthencationService){}
 
   validateLogin(){
 
-    
+    if(this.email != '' && this.password != '' && this.firstName != '' && this.lastName != ''){
+
     this.authenticationService.createUser(this.firstName, this.lastName, this.email, this.password).subscribe(
       data =>{
-        console.log(data)
         if(data.status == 226){
           this.isValid = false
+          this.warningMessage = "Email has been taken"
         }else{
           this.isValid = null;
           this.router.navigate(['/userprofile']);
@@ -31,7 +33,11 @@ export class SignupComponent {
       },
       error =>{
         console.log(error)
-      }
-    )
+      });
+    }else{
+      this.isValid = false;
+      this.warningMessage = "All fields are required"
+    }  
   }
+
 }

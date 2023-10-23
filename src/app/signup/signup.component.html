@@ -12,7 +12,7 @@
                 <input class="inputs" placeholder="last name" type="lastName" name="lastName" [(ngModel)]="lastName">
             </div>
             <div>
-                <input class="inputs" placeholder="email" type="text" name="username" [(ngModel)]="email">
+                <input class="inputs" placeholder="username" type="text" name="username" [(ngModel)]="email">
             </div>
             <div>
                 <input class="inputs" placeholder="password" type="password" name="password" [(ngModel)]="password">
@@ -20,7 +20,7 @@
         </div>
 
         <div *ngIf="isValid == false" class="not-valid">
-            <p class="not-valid__p">Email has been taken</p>
+            <p class="not-valid__p">{{warningMessage}}</p>
         </div>
 
         <div>

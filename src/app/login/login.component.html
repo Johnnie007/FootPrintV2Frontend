@@ -6,18 +6,16 @@
         <div class="inputs-container">
             <h4 class="title">Sign In</h4>
             <div>
-                <input class="inputs" placeholder="email" type="text" name="username" [(ngModel)]="email">
+                <input class="inputs" placeholder="username" type="text" name="username" [(ngModel)]="email">
             </div>
             <div>
                 <input class="inputs" placeholder="password" type="password" name="password" [(ngModel)]="password">
-            </div>
+            </div>  
         </div>
-
+        
         <div *ngIf="isValid == false" class="not-valid">
-            <p class="not-valid__p">Invalid email and/or password</p>
+            <p class="not-valid__p">{{warningMessage}}</p>
         </div>
-
-
         <div>
             <button class="login-btn" (click)="validateLogin()">Sign In</button>
         </div>

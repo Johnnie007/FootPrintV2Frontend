@@ -7,7 +7,7 @@
             </div>
             <div class="info-container">
                 <div class="image-container">
-                    <img class="image" [src]="defaultImage">
+                    <img class="image" [src]="holdNewImage">
                 </div>
                 <div class="user-info">
                     <h4>{{user.first_name}} {{user.last_name}}</h4>
@@ -23,7 +23,7 @@
             <div class="edit-user">
                 <h2 class="update-header">Update User</h2>
                 <div class="image-container">
-                    <img class="image" [src]="defaultImage" alt="profile picture">
+                    <img class="image" [src]="holdNewImage" alt="profile picture">
                 </div>
                 <div class="update-user">
                     <label class="update-user__font" for="profilePic">Update Picture:</label>
@@ -76,7 +76,7 @@
                 </div>
                 <div class="vehicle-mpg">
                         <label class="vehicle-mpg__bold" for="mpg">MPG: </label>
-                        <input [disabled]="vehicleIndex !== vehicles.length" type="number" step="0.01" name="vehicle" id="mpg" [(ngModel)]="vehicleMpg">
+                        <input [disabled]="vehicleIndex !== vehicles.length" type="number" step="0.1" name="vehicle" id="mpg" [(ngModel)]="vehicleMpg">
                 </div>
                 
                 <div  *ngIf="vehicleIndex === vehicles.length"class="btns">
@@ -105,7 +105,10 @@
                 </div>
                 <div class="info-container">
                     <div class="image-container">
-                        <img class="vehicle-image" src="../../assets/images/SUV.svg" alt="profile picture">
+                        <img *ngIf="this.vehicleType == 'suv'" class="vehicle-image" src="../../assets/images/SUV.svg" alt="profile picture">
+                        <img *ngIf="this.vehicleType == 'car'" class="vehicle-image" src="../../assets/images/car.svg" alt="profile picture">
+                        <img *ngIf="this.vehicleType == 'motorcycle'" class="vehicle-image" src="../../assets/images/motorcycle.svg" alt="profile picture">
+                        <img *ngIf="this.vehicleType == 'truck'" class="vehicle-image" src="../../assets/images/truck.svg" alt="profile picture">
                     </div>
                     <div class="monthly-output">
                         <h4>Monthly Output:</h4>
@@ -136,7 +139,9 @@
                 </div>
                 <div class="info-container">
                     <div class="image-container">
-                        <img class="home-image" src="../../assets/images/house.svg" alt="profile picture">
+                        <img *ngIf="homeType === 'house'" class="home-image" src="../../assets/images/house.svg" alt="profile picture">
+                        <img *ngIf="homeType === 'apartment'"  class="home-image" src="../../assets/images/apartment.svg" alt="profile picture">
+                        <img *ngIf="homeType === 'mansion'" class="home-image" src="../../assets/images/mansion.svg" alt="profile picture">
                     </div>
                     <div class="monthly-output">
                         <h4>Monthly Output:</h4>
@@ -174,7 +179,7 @@
                 </div>
                 <div class="home-sqft">
                         <label class="home-sqft__bold" for="SQFT">SQFT: </label>
-                        <input [disabled]="homeIndex !== homes.length" [(ngModel)]="homeSize"  type="number" step="0.01" name="home" id="sqft">
+                        <input [disabled]="homeIndex !== homes.length" [(ngModel)]="homeSize"  type="number" step="0.1" name="home" id="sqft">
                 </div>
                 
                 <div *ngIf="homeIndex === homes.length" class="btns">

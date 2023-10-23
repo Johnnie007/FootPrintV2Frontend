@@ -130,7 +130,12 @@ export class DemoComponent {
   defaultImage =  "../../assets/images/demoProfile.png";
   
   ngOnInit(): void {
+    this.holdNewImage = this.defaultImage
     this.loading = false;
+    this.vehicleType = this.vehicles[this.vehicleIndex].type;
+    this.vehicleMpg = this.vehicles[this.vehicleIndex].mpg;
+    this.homeType = this.homes[this.homeIndex].homeType;
+    this.homeSize = this.homes[this.homeIndex].homeSize;
   }
 
   editUser(){
@@ -155,18 +160,17 @@ export class DemoComponent {
   }
 
   setNewUserImage(e){
-    this.holdNewImage = e.target.files[0];
+    let reader = new FileReader();
+    let file = e.target.files[0];
+    reader.readAsDataURL(file);
+
+    reader.onload = () =>{
+      this.holdNewImage = reader.result
+    }
   }
 
   updateUserImage(){
-    if(this.holdNewImage != null){
-      const file: File = this.holdNewImage;
-      const formData = new FormData();
-      formData.append('file', file);
-
-      //exits edit mode
-      this.userEditMode = false;
-    }
+   this.userEditMode = false;
   }
 
   cancelEditUser(){
@@ -192,8 +196,9 @@ export class DemoComponent {
   increaseVehicleIndex(){
     if(this.vehicleEditMode == false){
       if(this.vehicleIndex === this.vehicles.length - 1){
-      
         this.vehicleIndex = 0;
+        this.vehicleType = this.vehicles[this.vehicleIndex].type;
+        this.vehicleMpg = this.vehicles[this.vehicleIndex].mpg;
       }else if(this.vehicleIndex < this.vehicles.length - 1){
           this.vehicleIndex = this.vehicleIndex + 1;
           this.vehicleType = this.vehicles[this.vehicleIndex].type;
@@ -221,7 +226,9 @@ export class DemoComponent {
   decreaseVehicleIndex(){
     if(this.vehicleEditMode == false){
       if(this.vehicleIndex === 0){
-        this.vehicleIndex = this.vehicles.length -1
+        this.vehicleIndex = this.vehicles.length -1;
+        this.vehicleType = this.vehicles[this.vehicleIndex].type
+        this.vehicleMpg = this.vehicles[this.vehicleIndex].mpg
       }else if(this.vehicleIndex > 0){
           this.vehicleIndex = this.vehicleIndex - 1;
           this.vehicleType = this.vehicles[this.vehicleIndex].type
@@ -243,7 +250,9 @@ export class DemoComponent {
   increaseHomeIndex(){
     if(this.homeEditMode === false){
       if(this.homeIndex === this.homes.length - 1){
-       this.homeIndex = 0;
+        this.homeIndex = 0;
+        this.homeType = this.homes[this.homeIndex].homeType;
+        this.homeSize = this.homes[this.homeIndex].homeSize;
       }else if(this.homeIndex <= this.homes.length -1){
           this.homeIndex = this.homeIndex + 1;
           this.homeSize = this.homes[this.homeIndex].homeSize;
@@ -271,7 +280,9 @@ export class DemoComponent {
   decreaseHomeIndex(){
     if(this.homeEditMode === false){
       if(this.homeIndex === 0){
-        this.homeIndex = this.homes.length - 1
+        this.homeIndex = this.homes.length - 1;
+        this.homeType = this.homes[this.homeIndex].homeType;
+        this.homeSize = this.homes[this.homeIndex].homeSize;
       }else if(this.homeIndex > 0){
           this.homeIndex = this.homeIndex - 1;
           this.homeSize = this.homes[this.homeIndex].homeSize;
@@ -298,11 +309,12 @@ export class DemoComponent {
       vehicleGHG: this.calculateVehicleGHG()
     };
     this.vehicles.push(vehicleBody)
-        //resets values
-      this.vehicleType = '';
-      this.vehicleMpg = 0;
-      this.vehicleEditMode = false;
+        //resets value
       this.vehicleIndex = 0;
+
+      this.vehicleType = this.vehicles[this.vehicleIndex].type;
+      this.vehicleMpg = this.vehicles[this.vehicleIndex].mpg;
+      this.vehicleEditMode = false;
    
   }
 
@@ -317,8 +329,9 @@ export class DemoComponent {
     this.homes.push(homeBody)
     
     //resets values
-    this.homeType = '';
-    this.homeSize = 0;
+    this.homeIndex = 0;
+    this.homeType = this.homes[this.homeIndex].homeType;
+    this.homeSize = this.homes[this.homeIndex].homeSize;
     this.homeEditMode = false;
   }
 
@@ -326,10 +339,11 @@ export class DemoComponent {
     if(this.vehicleType != null || this.vehicleType != undefined){
       this.vehicles.splice(this.vehicleIndex, 1)
       this.vehicleIndex = 0
+      this.vehicleType = this.vehicles[this.vehicleIndex].type
+      this.vehicleMpg = this.vehicles[this.vehicleIndex].mpg
       if(this.vehicles.length === 0){
         this.vehicleType = '';
         this.vehicleMpg = 0;
-
       }
       this.vehicleEditMode = false; 
     }
@@ -340,6 +354,8 @@ export class DemoComponent {
     if(this.homeType != null || this.homeType != undefined){
       this.homes.splice(this.homeIndex, 1)
         this.homeIndex = 0;
+        this.homeType = this.homes[this.homeIndex].homeType;
+        this.homeSize = this.homes[this.homeIndex].homeSize;
 
         if(this.homes.length === 0){
           this.homeType = '';

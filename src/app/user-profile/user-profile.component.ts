@@ -111,12 +111,12 @@ export class UserProfileComponent implements OnInit{
       this.restService.getUserImage(this.user.id)
       .subscribe(
         data =>{
-          console.log(data)
           this.userImage = data;
           if(this.userImage == null){
             this.userImage = this.defaultImage;
           }
           this.isLoading()
+          this.holdNewImage = this.userImage;
           resolve(true)
         }
       )
@@ -129,8 +129,9 @@ export class UserProfileComponent implements OnInit{
       .subscribe(
         data =>{
           this.vehicles = data;
-            this.vehicleType = null;
-            this.vehicleMpg = null;
+          this.vehicleIndex = 0;
+          this.vehicleType = this.vehicles[this.vehicleIndex]?.type;
+          this.vehicleMpg = this.vehicles[this.vehicleIndex]?.mpg;
           
           this.isLoading()
           resolve(true);
@@ -146,8 +147,8 @@ export class UserProfileComponent implements OnInit{
         data => {
           this.homes = data;
           this.homeIndex = 0;
-          this.homeSize = null;
-          this.homeType = null;
+          this.homeSize = this.homes[this.homeIndex]?.homeSize;
+          this.homeType = this.homes[this.homeIndex]?.homeType;
           this.isLoading()
           resolve(true);
         }
@@ -325,7 +326,14 @@ export class UserProfileComponent implements OnInit{
   }
 
   setNewUserImage(e){
-    this.holdNewImage = e.target.files[0];
+    let reader = new FileReader();
+    let file = e.target.files[0];
+    reader.readAsDataURL(file);
+
+    reader.onload = () =>{
+      this.holdNewImage = reader.result
+    }
+    
   }
 
   updateUserImage(){
@@ -355,8 +363,9 @@ export class UserProfileComponent implements OnInit{
   increaseVehicleIndex(){
     if(this.vehicleEditMode == false){
       if(this.vehicleIndex === this.vehicles.length - 1){
-      
         this.vehicleIndex = 0;
+        this.vehicleType = this.vehicles[this.vehicleIndex].type;
+        this.vehicleMpg = this.vehicles[this.vehicleIndex].mpg;
       }else if(this.vehicleIndex < this.vehicles.length - 1){
           this.vehicleIndex = this.vehicleIndex + 1;
           this.vehicleType = this.vehicles[this.vehicleIndex].type;
@@ -384,7 +393,9 @@ export class UserProfileComponent implements OnInit{
   decreaseVehicleIndex(){
     if(this.vehicleEditMode == false){
       if(this.vehicleIndex === 0){
-        this.vehicleIndex = this.vehicles.length -1
+        this.vehicleIndex = this.vehicles.length - 1;
+        this.vehicleType = this.vehicles[this.vehicleIndex].type;
+        this.vehicleMpg = this.vehicles[this.vehicleIndex].mpg;
       }else if(this.vehicleIndex > 0){
           this.vehicleIndex = this.vehicleIndex - 1;
           this.vehicleType = this.vehicles[this.vehicleIndex].type
@@ -406,6 +417,8 @@ export class UserProfileComponent implements OnInit{
     if(this.homeEditMode === false){
       if(this.homeIndex === this.homes.length - 1){
        this.homeIndex = 0;
+       this.homeSize = this.homes[this.homeIndex].homeSize;
+       this.homeType = this.homes[this.homeIndex].homeType;
       }else if(this.homeIndex <= this.homes.length -1){
           this.homeIndex = this.homeIndex + 1;
           this.homeSize = this.homes[this.homeIndex].homeSize;
@@ -433,7 +446,9 @@ export class UserProfileComponent implements OnInit{
   decreaseHomeIndex(){
     if(this.homeEditMode === false){
       if(this.homeIndex === 0){
-        this.homeIndex = this.homes.length - 1
+        this.homeIndex = this.homes.length - 1;
+        this.homeSize = this.homes[this.homeIndex].homeSize;
+        this.homeType = this.homes[this.homeIndex].homeType;
       }else if(this.homeIndex > 0){
           this.homeIndex = this.homeIndex - 1;
           this.homeSize = this.homes[this.homeIndex].homeSize;
