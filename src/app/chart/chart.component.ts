@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Chart, registerables } from 'chart.js';
+import { Component, OnInit, Input} from '@angular/core';
+import { Chart, registerables} from 'chart.js';
 Chart.register(...registerables);
 
 @Component({
@@ -9,7 +9,20 @@ Chart.register(...registerables);
 })
 export class ChartComponent implements OnInit {
 
+  @Input()
+  homeData;
+
+  @Input()
+  vehicleData;
+
+  @Input()
+  userData;
+
+
   ngOnInit(): void {
+    console.log(this.homeData)
+    console.log(this.vehicleData)
+    console.log(this.userData)
     let chart = new Chart("chart", {
       type: 'line',
       data: {
@@ -38,7 +51,7 @@ export class ChartComponent implements OnInit {
           },
             {
               label: 'Vehicle',
-              data: [400, 300, 493, 330, 432, 432],
+              data: [0, 0, 0],
               borderColor: [
                   'rgba(177, 25, 25, 1)'
               ]

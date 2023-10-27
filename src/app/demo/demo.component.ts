@@ -70,7 +70,9 @@ export class DemoComponent {
     lifeStyle: "null",
     footprint: .41
   }
+  
   userImage = null;
+  
   vehicles = [
     {
     type: "car",
@@ -83,8 +85,8 @@ export class DemoComponent {
     mpg: 10,
     userId: 10000,
     vehicleGHG: 66
-  },
-];
+  }];
+
   homes = [
     {
     homeType: 'house',
@@ -103,9 +105,7 @@ export class DemoComponent {
     homeSize: 1232,
     homeGHG: 1233,
     userId: 10000
-    }
-
-  ];
+    }];
 
   vehicleEditMode = false;
   homeEditMode = false;
@@ -130,7 +130,10 @@ export class DemoComponent {
   defaultImage =  "../../assets/images/demoProfile.png";
   
   ngOnInit(): void {
-    this.holdNewImage = this.defaultImage
+    if(this.userImage == null){
+      this.userImage = this.defaultImage
+    }
+    this.holdNewImage = this.userImage
     this.loading = false;
     this.vehicleType = this.vehicles[this.vehicleIndex].type;
     this.vehicleMpg = this.vehicles[this.vehicleIndex].mpg;
@@ -170,11 +173,13 @@ export class DemoComponent {
   }
 
   updateUserImage(){
+    this.userImage = this.holdNewImage;
    this.userEditMode = false;
   }
 
   cancelEditUser(){
     this.userEditMode = false;
+    this.holdNewImage = this.userImage;
   }
 
   cancelEditVehicle(){

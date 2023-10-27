@@ -7,7 +7,7 @@
             </div>
             <div class="info-container">
                 <div class="image-container">
-                    <img class="image" [src]="holdNewImage">
+                    <img class="image" [src]="userImage">
                 </div>
                 <div class="user-info">
                     <h4>{{user.first_name}} {{user.last_name}}</h4>
@@ -200,7 +200,7 @@
 
     
         <div class="chart">
-            <app-chart></app-chart>
+            <app-chart [homeData]="homes" [vehicleData]="vehicles" [userData]="user"></app-chart>
         </div>
      
         <div class="offsetter-section">
