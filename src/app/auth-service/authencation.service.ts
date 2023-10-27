@@ -34,15 +34,19 @@ export class AuthencationService {
     .pipe(
      map(
        userData => {
-        this.logInUser()
-         sessionStorage.setItem('username', username)
-         sessionStorage.setItem('password', password)
-         console.log(userData)
-         return userData;
-       }
-     )
-    )
-  }
+        if(userData.status == 203){
+          console.log("User not found")
+          return userData
+        }
+        else{
+          this.logInUser()
+          sessionStorage.setItem('username', username)
+          sessionStorage.setItem('password', password)
+          console.log(userData)
+          return userData;
+        }
+       })
+    )}
 
   createUser(first, last, username, password){
     let user = {
@@ -56,10 +60,14 @@ export class AuthencationService {
     .pipe(
      map(
        userData => {
+        if(userData.status == 401){
+          console.log("User not found")
+          return userData
+        }
         this.logInUser()
         sessionStorage.setItem('username', username)
         sessionStorage.setItem('password', password)
-         return userData;
+        return userData;
        }
      )
     )

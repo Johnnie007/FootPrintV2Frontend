@@ -69,6 +69,7 @@ export class UserProfileComponent implements OnInit{
 
   loading = true;
   holdNewImage = null;
+  previewImage = null;
   defaultImage =  "../../assets/images/demoProfile.png";
   
   ngOnInit(): void {
@@ -116,7 +117,7 @@ export class UserProfileComponent implements OnInit{
             this.userImage = this.defaultImage;
           }
           this.isLoading()
-          this.holdNewImage = this.userImage;
+          this.previewImage = this.userImage;
           resolve(true)
         }
       )
@@ -204,7 +205,10 @@ export class UserProfileComponent implements OnInit{
   }
 
   cancelEditUser(){
+    this.previewImage = this.userImage
+    this.holdNewImage = null;
     this.userEditMode = false;
+    
   }
 
   cancelEditVehicle(){
@@ -328,10 +332,11 @@ export class UserProfileComponent implements OnInit{
   setNewUserImage(e){
     let reader = new FileReader();
     let file = e.target.files[0];
+    this.holdNewImage = e.target.files[0]
     reader.readAsDataURL(file);
 
     reader.onload = () =>{
-      this.holdNewImage = reader.result
+      this.previewImage = reader.result
     }
     
   }
@@ -351,10 +356,11 @@ export class UserProfileComponent implements OnInit{
       this.restService.addUserImage(this.user.id, formData)
       .subscribe(
         (res) =>{
-          console.log(res);
-          this.setUserImage()
-          this.holdNewImage = null;
-          this.userEditMode = false;
+          this.setUserImage().then(()=>{
+            this.holdNewImage = null;
+            this.userEditMode = false;
+          })
+         
         }
       )
     }

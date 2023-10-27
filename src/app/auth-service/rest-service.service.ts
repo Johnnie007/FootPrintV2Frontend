@@ -36,7 +36,7 @@ export class RestService {
         userImage => {
           console.log(userImage.byteLength)
           if(userImage.byteLength > 10){
-            const getImageArray = new Uint16Array(userImage)
+            const getImageArray = new Uint8Array(userImage)
             const convertToBlob= new Blob([getImageArray], {type: "image/jpeg"})
             let urlCreator = window.URL || window.webkitURL;
             let imageUrl = urlCreator.createObjectURL(convertToBlob);
@@ -105,6 +105,7 @@ export class RestService {
 
   addUserImage(id, userImage){
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)});
+    console.log(userImage)
     return this.httpClient.post(`http://localhost:8080/api/${id}/upload`,userImage,{headers});
   }
 
