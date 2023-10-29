@@ -48,8 +48,9 @@ export class AuthencationService {
        })
     )}
 
-  createUser(first, last, username, password){
+  createUser(first, last, username, password, month){
     let user = {
+      month_joined: month,
       firstName: first,
       lastName: last,
       email: username,

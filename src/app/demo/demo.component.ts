@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RestService } from '../auth-service/rest-service.service';
+import { months } from 'src/assets/variables/variables';
 import { Subscription } from 'rxjs';
 import { User } from '../models/User.model';
 
@@ -12,10 +13,14 @@ export class DemoComponent {
 
   constructor(private restService: RestService){
   }
+  year = new Date().getFullYear();
+  month = new Date().getMonth();
+  currentMonth = `${months[this.month]} ${this.year}`;
 
   offsetters = [
     {
       id: 1,
+      month_added: this.currentMonth,
       type: "plant",
       product: "Succulent",
       CCS: -30,
@@ -23,6 +28,7 @@ export class DemoComponent {
   },
     {
       id: 2,
+      month_added: this.currentMonth,
       type: "home",
       product: "Solar",
       CCS: -30,
@@ -30,6 +36,7 @@ export class DemoComponent {
   },
     {
       id: 3,
+      month_added: this.currentMonth,
       type: "plant",
       product: "Succulent",
       CCS: -30,
@@ -76,12 +83,14 @@ export class DemoComponent {
   vehicles = [
     {
     type: "car",
+    month_added: this.currentMonth,
     mpg: 4,
     userId: 10000,
     vehicleGHG: 65
   },
     {
     type: "truck",
+    month_added: null,
     mpg: 10,
     userId: 10000,
     vehicleGHG: 66
@@ -90,18 +99,21 @@ export class DemoComponent {
   homes = [
     {
     homeType: 'house',
+    month_added: null,
     homeSize: 1312,
     homeGHG: 233,
     userId: 10000
     },
     {
     homeType: 'apartment',
+    month_added: null,
     homeSize: 112,
     homeGHG: 123,
     userId: 10000
     },
     {
     homeType: 'house',
+    month_added: null,
     homeSize: 1232,
     homeGHG: 1233,
     userId: 10000
@@ -130,6 +142,7 @@ export class DemoComponent {
   defaultImage =  "../../assets/images/demoProfile.png";
   
   ngOnInit(): void {
+
     if(this.userImage == null){
       this.userImage = this.defaultImage
     }
@@ -309,6 +322,7 @@ export class DemoComponent {
   addVehicle(){
     const vehicleBody = {
       type: this.vehicleType,
+      month_added: this.currentMonth,
       mpg: this.vehicleMpg,
       userId: this.user.id,
       vehicleGHG: this.calculateVehicleGHG()
@@ -326,6 +340,7 @@ export class DemoComponent {
   addHome(){
     const homeBody = {
       homeType: this.homeType,
+      month_added: this.currentMonth,
       homeSize: this.homeSize,
       userId: this.user.id,
       homeGHG: this.calculateHomeGHG()
@@ -404,7 +419,8 @@ export class DemoComponent {
   addOffsetter(id){
     let offsetter = {
     id: Math.floor(Math.random() * 100000),
-     type: this.recommendations[id].type,
+    month_added: this.currentHome,
+    type: this.recommendations[id].type,
      product: this.recommendations[id].product,
      CCS: this.recommendations[id].CCS,
      userId: this.user.id

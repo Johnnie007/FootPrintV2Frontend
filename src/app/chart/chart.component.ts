@@ -20,9 +20,12 @@ export class ChartComponent implements OnInit {
 
 
   ngOnInit(): void {
-    console.log(this.homeData)
-    console.log(this.vehicleData)
-    console.log(this.userData)
+    let year = new Date().getFullYear();
+    let month = new Date().getMonth();
+    console.log(`${month} ${year}`)
+    console.log(this.homeData);
+    console.log(this.vehicleData);
+    console.log(this.userData);
     let chart = new Chart("chart", {
       type: 'line',
       data: {

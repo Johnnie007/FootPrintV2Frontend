@@ -22,7 +22,7 @@ export class LoginComponent {
             console.log(data)
             if(data.status == 203){
               this.isValid = false;
-              this.warningMessage = 'Invalid email and/or password'
+              this.warningMessage = 'Invalid username and/or password'
             }else{
               this.isValid = null;
               this.router.navigate(['/userprofile']);
@@ -32,12 +32,12 @@ export class LoginComponent {
             console.log(error)
             if(error.status == 401){
               this.isValid = false;
-              this.warningMessage = 'Invalid email and/or password'
+              this.warningMessage = 'Invalid username and/or password'
             }
           });
     }else{
       this.isValid = false
-      this.warningMessage = "Please enter an Email or Password"
+      this.warningMessage = "Please enter an username or Password"
     } 
   }
 
