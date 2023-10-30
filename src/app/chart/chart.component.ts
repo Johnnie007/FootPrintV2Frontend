@@ -1,5 +1,6 @@
 import { Component, OnInit, Input} from '@angular/core';
 import { Chart, registerables} from 'chart.js';
+import { months } from 'src/assets/variables/variables';
 Chart.register(...registerables);
 
 @Component({
@@ -18,29 +19,33 @@ export class ChartComponent implements OnInit {
   @Input()
   userData;
 
+  @Input()
+  currentMonth
+
+  homeOutput = [];
+  vehicleOutput = [];
+  totalOutput = [];
+
 
   ngOnInit(): void {
-    let year = new Date().getFullYear();
-    let month = new Date().getMonth();
-    console.log(`${month} ${year}`)
     console.log(this.homeData);
     console.log(this.vehicleData);
     console.log(this.userData);
-    let chart = new Chart("chart", {
+    console.log(this.currentMonth)
+    this.calculateHomeData();
+    this.calculateVehicleData();
+    this.generateChart();
+  }
+
+  generateChart(){
+   let chart = new Chart("chart", {
       type: 'line',
       data: {
-          labels: [
-            'January',
-            'February',
-            'March',
-            'April',
-            'May',
-            'June'
-          ],
+          labels: months,
           datasets: [
             {
               label: 'Output',
-              data: [245, 250,223 , 275, 230, 220],
+              data: [245, 250, 223 , 275, 230, 220],
               borderColor: [
                   'rgba(3, 130, 0, 1)'
               ]
@@ -73,8 +78,55 @@ export class ChartComponent implements OnInit {
           }
         }
       },
-  });
-  
+    });
   }
+
+  calculateHomeData(){
+    
+    if(this.homeData.length > 0){
+     let iterator = new Date().getMonth();
+     let year = new Date().getFullYear()
+     for(let i = iterator; i >= 0; i--){
+      let total = 0;
+      let dateCompare = `${months[i]} ${year}`;
+      console.log(dateCompare)
+      console.log(months[i])
+      console.log(i)
+      this.homeData.map((data)=>{
+        if(data.month_added == dateCompare){
+          console.log(data.ghg);
+          total = data.homeGHG + total;
+        }
+      })
+      this.homeOutput.push(total)
+      console.log(this.homeOutput)
+     }
+  
+    }
+  }
+  calculateVehicleData(){
+    
+    if(this.vehicleData.length > 0){
+     let iterator = new Date().getMonth();
+     let year = new Date().getFullYear()
+     for(let i = iterator; i >= 0; i--){
+      let total = 0;
+      let dateCompare = `${months[i]} ${year}`;
+      console.log(dateCompare)
+      console.log(months[i])
+      console.log(i)
+      this.vehicleData.map((data)=>{
+        if(data.month_added == dateCompare){
+          console.log(data.ghg);
+          total = data.vehicleGHG + total;
+        }
+      })
+      this.vehicleOutput.push(total)
+      console.log(this.vehicleOutput)
+     }
+  
+    }
+  }
+
 
 }

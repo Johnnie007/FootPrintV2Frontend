@@ -72,6 +72,7 @@ export class DemoComponent {
 ]
   user = {
     id: 100000,
+    month_joined: this.currentMonth,
     first_name: "John",
     last_name: "Doe",
     lifeStyle: "null",
@@ -90,7 +91,7 @@ export class DemoComponent {
   },
     {
     type: "truck",
-    month_added: null,
+    month_added: this.currentMonth,
     mpg: 10,
     userId: 10000,
     vehicleGHG: 66
@@ -99,21 +100,21 @@ export class DemoComponent {
   homes = [
     {
     homeType: 'house',
-    month_added: null,
+    month_added: this.currentMonth,
     homeSize: 1312,
     homeGHG: 233,
     userId: 10000
     },
     {
     homeType: 'apartment',
-    month_added: null,
+    month_added: this.currentMonth,
     homeSize: 112,
     homeGHG: 123,
     userId: 10000
     },
     {
     homeType: 'house',
-    month_added: null,
+    month_added: this.currentMonth,
     homeSize: 1232,
     homeGHG: 1233,
     userId: 10000
@@ -142,7 +143,6 @@ export class DemoComponent {
   defaultImage =  "../../assets/images/demoProfile.png";
   
   ngOnInit(): void {
-
     if(this.userImage == null){
       this.userImage = this.defaultImage
     }
