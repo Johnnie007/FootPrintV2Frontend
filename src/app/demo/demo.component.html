@@ -200,7 +200,7 @@
 
     
         <div class="chart">
-            <app-chart [homeData]="homes" [vehicleData]="vehicles" [userData]="user" [currentMonth]="currentMonth"></app-chart>
+            <app-chart [monthlyStorage]="GHGStorage" [totalFootprint]="user.footprint"></app-chart>
         </div>
      
         <div class="offsetter-section">
