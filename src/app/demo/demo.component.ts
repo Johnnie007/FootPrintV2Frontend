@@ -185,7 +185,7 @@ export class DemoComponent {
       userId: 10000
     },
       {
-      vehicleTotal: 131,
+      vehicleTotal: 0,
       homeTotal: 0,
       month: 'Dec',
       userId: 10000
