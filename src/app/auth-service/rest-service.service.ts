@@ -93,6 +93,16 @@ export class RestService {
         }));
   }
 
+  getStorage(id){
+    const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)});
+    return this.httpClient.get(`http://localhost:8080/api/${id}/storage`, {headers})
+    .pipe(
+      map(
+        data =>{
+          return data;
+        }));
+  }
+
   addVehicle(id, vehicle){
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)});
     return this.httpClient.post(`http://localhost:8080/api/${id}/add/vehicle`,vehicle,{headers});
@@ -112,6 +122,15 @@ export class RestService {
   addOffsetters(id, offsetters){
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)});
     return this.httpClient.post(`http://localhost:8080/api/${id}/offsetters`,offsetters, {headers});
+  }
+  
+  addStorageData(id, data){
+    const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)});
+    return this.httpClient.post(`http://localhost:8080/api/${id}/storage`,data, {headers});
+  }
+  updateStorageData(id, data){
+    const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)});
+    return this.httpClient.put(`http://localhost:8080/api/${id}/storage`,data, {headers});
   }
   
   deleteUserImage(id){

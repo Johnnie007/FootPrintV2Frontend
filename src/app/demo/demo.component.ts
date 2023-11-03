@@ -117,35 +117,30 @@ export class DemoComponent {
       vehicleTotal: 65,
       homeTotal: 1233,
       month: 'Jan',
-      year: this.currentMonth.split(" ")[1],
       userId: 10000
     },
       {
       vehicleTotal: 131,
       homeTotal: 1233,
       month: 'Feb',
-      year: this.currentMonth.split(" ")[1],
       userId: 10000
     },
       {
       vehicleTotal: 131,
       homeTotal: 1466,
       month: "Mar",
-      year: this.currentMonth.split(" ")[1],
       userId: 10000
     },
       {
       vehicleTotal: 131,
       homeTotal: 1589,
       month: 'Apr',
-      year: this.currentMonth.split(" ")[1],
       userId: 10000
     },
       {
       vehicleTotal: 0,
       homeTotal: 0,
       month: 'May',
-      year: this.currentMonth.split(" ")[1],
       userId: 10000
     },
       {

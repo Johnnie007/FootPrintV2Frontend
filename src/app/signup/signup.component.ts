@@ -21,7 +21,6 @@ export class SignupComponent implements OnInit {
   ngOnInit(): void {
     let month = new Date().getMonth();
     this.currentMonth = months[month];
-    console.log(this.currentMonth);
   }
 
   validateLogin(){
@@ -35,6 +34,9 @@ export class SignupComponent implements OnInit {
           this.warningMessage = "Email has been taken"
         }else{
           this.isValid = null;
+
+          //post storage here
+
           this.router.navigate(['/userprofile']);
         }
       },

@@ -85,7 +85,6 @@ export class ChartComponent implements OnInit {
      for(let i = 0; i < this.monthlyStorage.length; i++){
     
       if(indicator == dataIndex || proceed === "true"){
-      //  console.log(this.monthlyStorage[indicator].homeTotal)
         this.vehicleOutput.unshift(this.monthlyStorage[indicator].vehicleTotal);
         this.homeOutput.unshift(this.monthlyStorage[indicator].homeTotal);
  
