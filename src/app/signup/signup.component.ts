@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthencationService } from '../auth-service/authencation.service';
+import { RestService } from '../auth-service/rest-service.service';
 import {months} from '../../assets/variables/variables'
 
 @Component({
@@ -14,10 +15,10 @@ export class SignupComponent implements OnInit {
   firstName = '';
   lastName = '';
   isValid: boolean;
-  currentMonth = null
-  warningMessage: string
+  currentMonth = null;
+  warningMessage: string;
 
-  constructor(private router:Router, private authenticationService: AuthencationService){}
+  constructor(private router:Router, private authenticationService: AuthencationService, private restService: RestService){}
   ngOnInit(): void {
     let month = new Date().getMonth();
     this.currentMonth = months[month];
@@ -34,10 +35,7 @@ export class SignupComponent implements OnInit {
           this.warningMessage = "Email has been taken"
         }else{
           this.isValid = null;
-
-          //post storage here
-
-          this.router.navigate(['/userprofile']);
+          this.router.navigate(['/userprofile', {newUser: "true"}]);
         }
       },
       error =>{
@@ -48,5 +46,4 @@ export class SignupComponent implements OnInit {
       this.warningMessage = "All fields are required"
     }  
   }
-
 }

@@ -3,6 +3,7 @@ import { RestService } from '../auth-service/rest-service.service';
 import { User } from '../models/User.model';
 import { Router } from '@angular/router';
 import { Subscription, map } from 'rxjs';
+import {months} from '../../assets/variables/variables';
 
 
 @Component({
@@ -10,10 +11,9 @@ import { Subscription, map } from 'rxjs';
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.scss']
 })
-export class UserProfileComponent implements OnInit{
+
   
-  constructor(private restService: RestService){
-  }
+export class UserProfileComponent implements OnInit{
 
   //subscription Stuff
   userSubscription: Subscription
@@ -50,6 +50,7 @@ export class UserProfileComponent implements OnInit{
   userImage = null;
   vehicles = null;
   homes = null;
+  userStatus
 
   vehicleEditMode = false;
   homeEditMode = false;
@@ -67,28 +68,39 @@ export class UserProfileComponent implements OnInit{
   vehicleIndex = 0;
   homeIndex = 0;
 
+  GHGStorage: any = []
+
   loading = true;
   holdNewImage = null;
   previewImage = null;
   defaultImage =  "../../assets/images/demoProfile.png";
+
+  constructor(private restService: RestService, private route: Router){
+    this.userStatus = this.route.getCurrentNavigation().extras.state;
+  }
   
   ngOnInit(): void {
     this.setUserData()
     .then(()=>{
-      this.setUserImage()
+      if(this.userStatus?.newUser == "false"){
+      console.log("we are here")
+    }
+      this.setUserImage();
     })
     .then(()=>{
-      this.setVehicleData()
+      this.setVehicleData();
     })
     .then(()=>{
-      this.setHomeData()
+      this.setHomeData();
     })
     .then(()=>{
-      this.setOffsettersData()
+      this.setOffsettersData();
     })
     .then(()=>{
-      this.setRecommendationData()
+      this.setRecommendationData();
     });
+
+    console.log(this.GHGStorage)
   }
 
   setUserData():Promise<any>{
@@ -183,6 +195,20 @@ export class UserProfileComponent implements OnInit{
     });
   }
 
+  setStorage():Promise<any>{
+    
+    return new Promise((resolve) =>{
+      this.restService.getStorage(this.user.id)
+      .subscribe(
+        data => {
+          console.log(data)
+          this.GHGStorage = data;
+          resolve(true);
+        }
+      )
+    })
+  }
+
   editUser(){
     this.userEditMode = true;
   }
@@ -274,6 +300,30 @@ export class UserProfileComponent implements OnInit{
       
       this.setOffsettersData()
     });
+  }
+
+  addStorageData(): Promise<any>{
+
+     //stores monthly storage
+     months.forEach((month)=>{
+      let storage = {
+        vehicleTotal: 0,
+        homeTotal: 0,
+        month: month,
+        userId: 10000
+      }
+
+      this.GHGStorage.push(storage)
+    });
+
+    return new Promise((resolve) => {
+      this.restService.addStorageData(1, this.GHGStorage)
+      .subscribe(
+        data => {
+          console.log(data);
+        }
+      )
+    })
   }
 
   deleteVehicle(){

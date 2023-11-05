@@ -115,7 +115,6 @@ export class RestService {
 
   addUserImage(id, userImage){
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)});
-    console.log(userImage)
     return this.httpClient.post(`http://localhost:8080/api/${id}/upload`,userImage,{headers});
   }
 

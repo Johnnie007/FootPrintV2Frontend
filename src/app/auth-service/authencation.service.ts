@@ -68,6 +68,7 @@ export class AuthencationService {
         this.logInUser()
         sessionStorage.setItem('username', username)
         sessionStorage.setItem('password', password)
+        console.log(userData)
         return userData;
        }
      )
