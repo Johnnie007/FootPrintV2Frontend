@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RestService } from '../auth-service/rest-service.service';
 import { User } from '../models/User.model';
 import { Router } from '@angular/router';
-import { Subscription, map } from 'rxjs';
+import { Subscription, map, tap } from 'rxjs';
 import {months} from '../../assets/variables/variables';
 
 
@@ -82,8 +82,14 @@ export class UserProfileComponent implements OnInit{
   ngOnInit(): void {
     this.setUserData()
     .then(()=>{
-      if(this.userStatus?.newUser == "false"){
-      console.log("we are here")
+      if(this.userStatus?.newUser == "true"){
+      this.addStorageData()
+      .then(()=>{
+        this.setStorage()
+      })
+    }
+    else{
+      this.setStorage()
     }
       this.setUserImage();
     })
@@ -174,7 +180,6 @@ export class UserProfileComponent implements OnInit{
       this.restService.getRecommendations()
       .subscribe(
         data => {
-          console.log(data);
         
           resolve(true);
         }
@@ -187,7 +192,6 @@ export class UserProfileComponent implements OnInit{
       this.restService.getOffsetters(this.user.id)
       .subscribe(
         data => {
-          console.log(data);
           this.offsetters = data
           resolve(true);
         }
@@ -255,7 +259,6 @@ export class UserProfileComponent implements OnInit{
     };
     this.restService.addVehicle(this.user.id, vehicleBody)
     .subscribe( (res)=>{
-        console.log(res)
         //resets values
       this.vehicleType = '';
       this.vehicleMpg = 0;
@@ -289,7 +292,6 @@ export class UserProfileComponent implements OnInit{
   }
 
   addOffsetter(id){
-    console.log(id)
     let offsetter = {
      type: this.recommendations[id].type,
      product: this.recommendations[id].product,
@@ -303,26 +305,43 @@ export class UserProfileComponent implements OnInit{
   }
 
   addStorageData(): Promise<any>{
-
+    let tracker = 0;
      //stores monthly storage
      months.forEach((month)=>{
       let storage = {
         vehicleTotal: 0,
-        homeTotal: 0,
-        month: month,
-        userId: 10000
+        homeTotal: 0.0,
+        storageMonth: month,
+        userId: this.user.id
       }
 
       this.GHGStorage.push(storage)
     });
 
     return new Promise((resolve) => {
-      this.restService.addStorageData(1, this.GHGStorage)
+      this.GHGStorage.
+        map((data , x)=>{
+          this.restService.addStorageData(this.user.id, data)
       .subscribe(
         data => {
-          console.log(data);
+         console.log(data)
+         if(tracker === this.GHGStorage.length - 1){
+          console.log("we are here")
+          resolve(true);
+         }
+         tracker++
         }
       )
+        })
+        
+      
+      // this.restService.addStorageData(this.user.id, this.GHGStorage)
+      // .subscribe(
+      //   data => {
+      //     console.log(data);
+      //     resolve(true);
+      //   }
+      // )
     })
   }
 
@@ -397,7 +416,6 @@ export class UserProfileComponent implements OnInit{
       const file: File = this.holdNewImage;
       const formData = new FormData();
       formData.append('file', file);
-      console.log(formData)
 
       if(this.userImage?.userId){
         this.restService.deleteUserImage(this.userImage.userId);

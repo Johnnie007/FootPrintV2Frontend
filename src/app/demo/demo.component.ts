@@ -116,73 +116,73 @@ export class DemoComponent {
       {
       vehicleTotal: 65,
       homeTotal: 1233,
-      month: 'Jan',
+      storageMonth: 'Jan',
       userId: 10000
     },
       {
       vehicleTotal: 131,
       homeTotal: 1233,
-      month: 'Feb',
+      storageMonth: 'Feb',
+      userId: 10000
+    },
+    {
+      vehicleTotal: 0,
+      homeTotal: 0,
+      storageMonth: 'Jun',
+      userId: 10000
+    },
+      {
+      vehicleTotal: 0,
+      homeTotal: 0,
+      storageMonth: 'Jul',
       userId: 10000
     },
       {
       vehicleTotal: 131,
       homeTotal: 1466,
-      month: "Mar",
+      storageMonth: "Mar",
       userId: 10000
     },
       {
       vehicleTotal: 131,
       homeTotal: 1589,
-      month: 'Apr',
+      storageMonth: 'Apr',
+      userId: 10000
+    },
+      {
+      vehicleTotal: 131,
+      homeTotal: 1589,
+      storageMonth: 'May',
+      userId: 10000
+    },
+      {
+      vehicleTotal: 131,
+      homeTotal: 1589,
+      storageMonth: 'Aug',
+      userId: 10000
+    },
+      {
+      vehicleTotal: 131,
+      homeTotal: 1589,
+      storageMonth: 'Sep',
       userId: 10000
     },
       {
       vehicleTotal: 0,
       homeTotal: 0,
-      month: 'May',
+      storageMonth: 'Oct',
+      userId: 10000
+    },
+      {
+      vehicleTotal: 131,
+      homeTotal: 1589,
+      storageMonth: 'Nov',
       userId: 10000
     },
       {
       vehicleTotal: 0,
       homeTotal: 0,
-      month: 'Jun',
-      userId: 10000
-    },
-      {
-      vehicleTotal: 0,
-      homeTotal: 0,
-      month: 'Jul',
-      userId: 10000
-    },
-      {
-      vehicleTotal: 0,
-      homeTotal: 0,
-      month: 'Aug',
-      userId: 10000
-    },
-      {
-      vehicleTotal: 0,
-      homeTotal: 0,
-      month: 'Sep',
-      userId: 10000
-    },
-      {
-      vehicleTotal: 0,
-      homeTotal: 0,
-      month: 'Oct',
-      userId: 10000
-    },
-      {
-      vehicleTotal: 0,
-      homeTotal: 0,
-      month: 'Nov',
-      userId: 10000
-    },
-      {
-      vehicleTotal: 0,
-      homeTotal: 0,
-      month: 'Dec',
+      storageMonth: 'Dec',
       userId: 10000
     },
   ]

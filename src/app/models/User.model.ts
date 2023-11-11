@@ -4,4 +4,5 @@ export class User{
     last_name: string
     lifeStyle: string
     footprint: number
+    month_joined: string
 }

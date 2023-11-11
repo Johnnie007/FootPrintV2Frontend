@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import { map } from 'rxjs';
+import { concat, concatMap, from, map } from 'rxjs';
 import { User } from '../models/User.model';
 
 @Injectable({
@@ -29,12 +29,10 @@ export class RestService {
       headers: new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)}),
       responseType: 'arraybuffer'
     }
-    console.log("0")
     return this.httpClient.get<ArrayBuffer>(`http://localhost:8080/api/${id}/image`, requestOptions)
     .pipe(
       map(
         userImage => {
-          console.log(userImage.byteLength)
           if(userImage.byteLength > 10){
             const getImageArray = new Uint8Array(userImage)
             const convertToBlob= new Blob([getImageArray], {type: "image/jpeg"})
@@ -123,10 +121,23 @@ export class RestService {
     return this.httpClient.post(`http://localhost:8080/api/${id}/offsetters`,offsetters, {headers});
   }
   
-  addStorageData(id, data){
+  addStorageData(id, storage){
+    console.log(storage);
+    // const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)});
+    // from(storage)
+    // .pipe(
+    //   map( (data) =>{
+    //     console.log(data)
+    //     this.httpClient.post(`http://localhost:8080/api/${id}/storage`, data, { headers }); 
+    //   })
+    //   //this.httpClient.post(`http://localhost:8080/api/${id}/storage`,storage, {headers})
+    //   )
+    // .subscribe(data=>{
+    //   console.log(data)
+    // })
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)});
-    return this.httpClient.post(`http://localhost:8080/api/${id}/storage`,data, {headers});
-  }
+    return this.httpClient.post(`http://localhost:8080/api/${id}/storage`,storage, {headers, observe: 'response'});
+   }
   updateStorageData(id, data){
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)});
     return this.httpClient.put(`http://localhost:8080/api/${id}/storage`,data, {headers});
