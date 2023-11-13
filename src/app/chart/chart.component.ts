@@ -30,9 +30,13 @@ export class ChartComponent implements OnInit {
   totalOutput = [];
   labels = []
 
+  signupMonth;
+  signupYear;
 
   ngOnInit(): void {
-    console.log(this.monthlyStorage)
+    this.signupMonth = this.userJoinedDate.split(" ")[0];
+    this.signupYear = this.userJoinedDate.split(" ")[1];
+
     this.setData();
     console.log(this.monthlyStorage)
 
@@ -84,13 +88,15 @@ export class ChartComponent implements OnInit {
   }
 
   setData(){
-    let indicator =new Date().getMonth();
-    //find object
+    let indicator = new Date().getMonth();
+    let currentYear = new Date().getFullYear();
     let currentStorageMonth = this.monthlyStorage.find((x) =>  x.storageMonth == months[indicator]);
     let total = currentStorageMonth.vehicleTotal + currentStorageMonth.homeTotal + 0.41;
 
-    if(false){
-   // if(this.totalFootprint != total){
+    if(this.signupMonth == currentStorageMonth.storageMonth && this.signupYear == currentYear){
+      console.log("we are")
+    }
+    if(this.totalFootprint != total){
       let correctTotal = this.monthlyStorage.find((x) =>  (x.vehicleTotal + x.homeTotal + 0.41) == this.totalFootprint);
       let index = this.monthlyStorage.findIndex((x) =>  (x.vehicleTotal + x.homeTotal + 0.41) == this.totalFootprint);
       let vTotal = correctTotal.vehicleTotal;
@@ -126,14 +132,56 @@ export class ChartComponent implements OnInit {
       }
     }
     else{
+      // for(let i = 0; i < this.monthlyStorage.length; i++){
+      //   let storage = this.monthlyStorage.find((x) =>  x.storageMonth == months[indicator]);
+      //     this.vehicleOutput.unshift(storage.vehicleTotal);
+      //     this.homeOutput.unshift(storage.homeTotal);
+  
+      //     this.labels.unshift(storage.storageMonth);
+      //     this.totalOutput.unshift(storage.homeTotal + storage.vehicleTotal + 0.41);
+        
+
+      //   if(indicator == 0){
+      //     indicator = this.monthlyStorage.length - 1
+      //   }else{
+      //     indicator--
+      //   }
+      // }
+      let holdHomeOutput = [];
+        let holdVehicleOutput = [];
+        let holdOutput = [];
+        let holdLabels = [];
       for(let i = 0; i < this.monthlyStorage.length; i++){
         let storage = this.monthlyStorage.find((x) =>  x.storageMonth == months[indicator]);
-          this.vehicleOutput.unshift(storage.vehicleTotal);
-          this.homeOutput.unshift(storage.homeTotal);
+        
+
+        if(i == 0){
+          holdVehicleOutput.unshift(storage.vehicleTotal);
+          holdHomeOutput.unshift(storage.homeTotal);
+  
+          holdLabels.unshift(storage.storageMonth);
+          holdOutput.unshift(storage.homeTotal + storage.vehicleTotal + 0.41);
+        }
+        else if(i == 1){
+          holdVehicleOutput.unshift(0);
+          holdHomeOutput.unshift(0);
+  
+          holdLabels.unshift(storage.storageMonth);
+          holdOutput.unshift(0);
+        }
+        else{
   
           this.labels.unshift(storage.storageMonth);
-          this.totalOutput.unshift(storage.homeTotal + storage.vehicleTotal + 0.41);
-        
+        }
+        if(i === this.monthlyStorage.length -1){
+         this.labels = holdLabels.concat(this.labels);
+         this.homeOutput = this.checkOutputValue(holdHomeOutput) ?  [] : holdHomeOutput.concat(this.homeOutput) ;
+         this.vehicleOutput =  this.checkOutputValue(this.vehicleOutput) ? [] : holdVehicleOutput.concat(this.vehicleOutput);
+         this.totalOutput = holdOutput.concat(this.totalOutput);
+
+         //checks the value of the array
+        this.checkOutputValue(this.homeOutput);
+        }
 
         if(indicator == 0){
           indicator = this.monthlyStorage.length - 1
@@ -142,74 +190,11 @@ export class ChartComponent implements OnInit {
         }
       }
     }
-    console.log(this.vehicleOutput)
-    console.log(this.userJoinedDate)
-    console.log(this.month)
-    console.log(this.year)
-
   }
-  // setData(){
-  //   let indicator =new Date().getMonth();
-  //   let index = (this.monthlyStorage.length - indicator) + indicator;
-  //   let total = this.monthlyStorage[indicator].vehicleTotal + this.monthlyStorage[indicator].homeTotal + 0.41;
-    
-  //   if(this.totalFootprint != total){
-  //    let dataIndex =this.updateData(indicator, index, this.totalFootprint);
-  //    let proceed = "false";
-  //    let vTotal = this.monthlyStorage[dataIndex].vehicleTotal;
-  //    let hTotal = this.monthlyStorage[dataIndex].homeTotal;
-  //    for(let i = 0; i < this.monthlyStorage.length; i++){
-    
-  //     if(indicator == dataIndex || proceed === "true"){
-  //       this.vehicleOutput.unshift(this.monthlyStorage[indicator].vehicleTotal);
-  //       this.homeOutput.unshift(this.monthlyStorage[indicator].homeTotal);
- 
-  //       this.labels.unshift(this.monthlyStorage[indicator].month);
-  //       this.totalOutput.unshift(this.monthlyStorage[indicator].homeTotal + this.monthlyStorage[indicator].vehicleTotal + 0.41);
-       
-  //       proceed = "true";
-  //     }else{
-  //       this.monthlyStorage[indicator].vehicleTotal = vTotal
-  //       this.monthlyStorage[indicator].homeTotal = hTotal
-
-  //       this.vehicleOutput.unshift(this.monthlyStorage[indicator].vehicleTotal);
-  //       this.homeOutput.unshift(this.monthlyStorage[indicator].homeTotal);
-  //       this.totalOutput.unshift(this.monthlyStorage[indicator].homeTotal + this.monthlyStorage[indicator].vehicleTotal+ 0.41);
-  //       this.labels.unshift(this.monthlyStorage[indicator].month);
-
-
-  //     }
-
-  //     if(indicator == 0){
-  //       indicator = index - 1
-  //     }else{
-  //       indicator--
-  //     }
-  //    }
-  //   }
-
-  //   else{
-  //   for(let i = 0; i < this.monthlyStorage.length; i++){
-  //       this.vehicleOutput.unshift(this.monthlyStorage[indicator].vehicleTotal);
-  //       this.homeOutput.unshift(this.monthlyStorage[indicator].homeTotal);
-  //       this.totalOutput.unshift(this.monthlyStorage[indicator].homeTotal + this.monthlyStorage[indicator].vehicleTotal+ 0.41)
-  //       this.labels.unshift(this.monthlyStorage[indicator].month);
-
-  //       if(indicator == 0){
-  //         indicator = index - 1
-  //       }else{
-  //         indicator--
-  //       }
-  //     }
-  //   }
-  // }
-  
-  
 
   updateData(indicator, index, total){
     for(let i = 0; i < this.monthlyStorage.length; i++){
       if(total === (this.monthlyStorage[indicator].homeTotal + this.monthlyStorage[indicator].vehicleTotal) + 0.41){
-        console.log(indicator)
         return indicator
       }
 
@@ -219,6 +204,20 @@ export class ChartComponent implements OnInit {
         indicator--
       }
     }
+  }
+
+  checkOutputValue(arr1: number[]){
+    let total = 0;
+
+    let checkNumber = arr1.reduce((acc, value)=>
+    acc + value,
+    total
+    );
+
+    if(checkNumber === 0){
+      return true;
+    }
+      return false;
   }
 
 
