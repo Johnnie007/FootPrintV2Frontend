@@ -73,7 +73,7 @@ export class DemoComponent {
     first_name: "John",
     last_name: "Doe",
     lifeStyle: "null",
-    footprint: 1720.41
+    footprint: 1721.41
   }
   
   userImage = null;
@@ -114,14 +114,14 @@ export class DemoComponent {
 
     GHGStorage = [
       {
-      vehicleTotal: 65,
-      homeTotal: 1233,
+      vehicleTotal: 0,
+      homeTotal: 0,
       storageMonth: 'Jan',
       userId: 10000
     },
       {
-      vehicleTotal: 131,
-      homeTotal: 1233,
+      vehicleTotal: 0,
+      homeTotal: 0,
       storageMonth: 'Feb',
       userId: 10000
     },
@@ -138,32 +138,32 @@ export class DemoComponent {
       userId: 10000
     },
       {
-      vehicleTotal: 131,
-      homeTotal: 1466,
+      vehicleTotal: 0,
+      homeTotal: 0,
       storageMonth: "Mar",
       userId: 10000
     },
       {
-      vehicleTotal: 131,
-      homeTotal: 1589,
+      vehicleTotal: 0,
+      homeTotal: 0,
       storageMonth: 'Apr',
       userId: 10000
     },
       {
-      vehicleTotal: 131,
-      homeTotal: 1589,
+      vehicleTotal: 0,
+      homeTotal: 0,
       storageMonth: 'May',
       userId: 10000
     },
       {
-      vehicleTotal: 131,
-      homeTotal: 1589,
+      vehicleTotal: 1590,
+      homeTotal: 131,
       storageMonth: 'Aug',
       userId: 10000
     },
       {
-      vehicleTotal: 131,
-      homeTotal: 1589,
+      vehicleTotal: 0,
+      homeTotal: 0,
       storageMonth: 'Sep',
       userId: 10000
     },

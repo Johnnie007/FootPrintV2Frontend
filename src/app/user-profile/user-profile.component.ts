@@ -75,20 +75,23 @@ export class UserProfileComponent implements OnInit{
   previewImage = null;
   defaultImage =  "../../assets/images/demoProfile.png";
 
-  constructor(private restService: RestService, private route: Router){
-    this.userStatus = this.route.getCurrentNavigation().extras.state;
+  constructor(private restService: RestService, private router: Router){
+    this.userStatus = this.router.getCurrentNavigation().extras.state;
   }
   
   ngOnInit(): void {
     this.setUserData()
     .then(()=>{
+
       if(this.userStatus?.newUser == "true"){
+        
       this.addStorageData()
       .then(()=>{
         this.setStorage()
       })
     }
     else{
+
       this.setStorage()
     }
       this.setUserImage();
@@ -106,7 +109,7 @@ export class UserProfileComponent implements OnInit{
       this.setRecommendationData();
     });
 
-    console.log(this.GHGStorage)
+   
   }
 
   setUserData():Promise<any>{
@@ -205,8 +208,9 @@ export class UserProfileComponent implements OnInit{
       this.restService.getStorage(this.user.id)
       .subscribe(
         data => {
-          console.log(data)
+     
           this.GHGStorage = data;
+          this.isLoading()
           resolve(true);
         }
       )
@@ -324,9 +328,9 @@ export class UserProfileComponent implements OnInit{
           this.restService.addStorageData(this.user.id, data)
       .subscribe(
         data => {
-         console.log(data)
+     
          if(tracker === this.GHGStorage.length - 1){
-          console.log("we are here")
+        
           resolve(true);
          }
          tracker++
@@ -542,7 +546,8 @@ export class UserProfileComponent implements OnInit{
   }
 
   isLoading(){
-    if(this.homes != null && this.vehicles != null && this.user != null){
+    
+    if(this.homes != null && this.vehicles != null && this.user != null && this.GHGStorage.length === 12){
       this.loading = false;
     }
   }

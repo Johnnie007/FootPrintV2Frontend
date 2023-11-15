@@ -25,7 +25,7 @@ export class LoginComponent {
               this.warningMessage = 'Invalid username and/or password'
             }else{
               this.isValid = null;
-              this.router.navigate(['/userprofile'], {state:{newUser: "true"}});
+              this.router.navigate(['/userprofile']);
             }
           },
           error =>{

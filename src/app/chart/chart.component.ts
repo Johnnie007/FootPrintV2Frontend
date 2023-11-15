@@ -38,7 +38,6 @@ export class ChartComponent implements OnInit {
     this.signupYear = this.userJoinedDate.split(" ")[1];
 
     this.setData();
-    console.log(this.monthlyStorage)
 
     this.generateChart();
   }
@@ -92,62 +91,9 @@ export class ChartComponent implements OnInit {
     let currentYear = new Date().getFullYear();
     let currentStorageMonth = this.monthlyStorage.find((x) =>  x.storageMonth == months[indicator]);
     let total = currentStorageMonth.vehicleTotal + currentStorageMonth.homeTotal + 0.41;
-
+    
     if(this.signupMonth == currentStorageMonth.storageMonth && this.signupYear == currentYear){
-      console.log("we are")
-    }
-    if(this.totalFootprint != total){
-      let correctTotal = this.monthlyStorage.find((x) =>  (x.vehicleTotal + x.homeTotal + 0.41) == this.totalFootprint);
-      let index = this.monthlyStorage.findIndex((x) =>  (x.vehicleTotal + x.homeTotal + 0.41) == this.totalFootprint);
-      let vTotal = correctTotal.vehicleTotal;
-      let hTotal = correctTotal.homeTotal;
-      let proceed = 'false'
-      for(let i = 0; i < this.monthlyStorage.length; i++){
-        let storage = this.monthlyStorage.find((x) =>  x.storageMonth == months[indicator]);
-
-        if(indicator == index || proceed === "true"){
-          this.vehicleOutput.unshift(storage.vehicleTotal);
-          this.homeOutput.unshift(storage.homeTotal);
-   
-          this.labels.unshift(storage.storageMonth);
-          this.totalOutput.unshift(storage.homeTotal + storage.vehicleTotal + 0.41);
-
-                proceed = "true";
-              }
-        else{
-          storage.vehicleTotal = vTotal;
-          storage.homeTotal = hTotal;
-          this.vehicleOutput.unshift(storage.vehicleTotal);
-          this.homeOutput.unshift(storage.homeTotal);
-  
-          this.labels.unshift(storage.storageMonth);
-          this.totalOutput.unshift(storage.homeTotal + storage.vehicleTotal + 0.41);
-        }
-
-        if(indicator == 0){
-          indicator = this.monthlyStorage.length - 1
-        }else{
-          indicator--
-        }
-      }
-    }
-    else{
-      // for(let i = 0; i < this.monthlyStorage.length; i++){
-      //   let storage = this.monthlyStorage.find((x) =>  x.storageMonth == months[indicator]);
-      //     this.vehicleOutput.unshift(storage.vehicleTotal);
-      //     this.homeOutput.unshift(storage.homeTotal);
-  
-      //     this.labels.unshift(storage.storageMonth);
-      //     this.totalOutput.unshift(storage.homeTotal + storage.vehicleTotal + 0.41);
-        
-
-      //   if(indicator == 0){
-      //     indicator = this.monthlyStorage.length - 1
-      //   }else{
-      //     indicator--
-      //   }
-      // }
-      let holdHomeOutput = [];
+       let holdHomeOutput = [];
         let holdVehicleOutput = [];
         let holdOutput = [];
         let holdLabels = [];
@@ -190,6 +136,60 @@ export class ChartComponent implements OnInit {
         }
       }
     }
+    else{
+    if(this.totalFootprint != total){
+      let correctTotal = this.monthlyStorage.find((x) =>  (x.vehicleTotal + x.homeTotal + 0.41) == this.totalFootprint);
+      let index = this.monthlyStorage.findIndex((x) =>  (x.vehicleTotal + x.homeTotal + 0.41) == this.totalFootprint);
+      let vTotal = correctTotal.vehicleTotal;
+      let hTotal = correctTotal.homeTotal;
+      let proceed = 'false'
+      for(let i = 0; i < this.monthlyStorage.length; i++){
+        let storage = this.monthlyStorage.find((x) =>  x.storageMonth == months[indicator]);
+
+        if(indicator == index || proceed === "true"){
+          this.vehicleOutput.unshift(storage.vehicleTotal);
+          this.homeOutput.unshift(storage.homeTotal);
+   
+          this.labels.unshift(storage.storageMonth);
+          this.totalOutput.unshift(storage.homeTotal + storage.vehicleTotal + 0.41);
+
+                proceed = "true";
+              }
+        else{
+          storage.vehicleTotal = vTotal;
+          storage.homeTotal = hTotal;
+          this.vehicleOutput.unshift(storage.vehicleTotal);
+          this.homeOutput.unshift(storage.homeTotal);
+  
+          this.labels.unshift(storage.storageMonth);
+          this.totalOutput.unshift(storage.homeTotal + storage.vehicleTotal + 0.41);
+        }
+
+        if(indicator == 0){
+          indicator = this.monthlyStorage.length - 1
+        }else{
+          indicator--
+        }
+      }
+    }
+    else{
+      for(let i = 0; i < this.monthlyStorage.length; i++){
+        let storage = this.monthlyStorage.find((x) =>  x.storageMonth == months[indicator]);
+          this.vehicleOutput.unshift(storage.vehicleTotal);
+          this.homeOutput.unshift(storage.homeTotal);
+  
+          this.labels.unshift(storage.storageMonth);
+          this.totalOutput.unshift(storage.homeTotal + storage.vehicleTotal + 0.41);
+        
+
+        if(indicator == 0){
+          indicator = this.monthlyStorage.length - 1
+        }else{
+          indicator--
+        }
+      }
+    }
+  }
   }
 
   updateData(indicator, index, total){

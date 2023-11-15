@@ -21,7 +21,8 @@ export class SignupComponent implements OnInit {
   constructor(private router:Router, private authenticationService: AuthencationService, private restService: RestService){}
   ngOnInit(): void {
     let month = new Date().getMonth();
-    this.currentMonth = months[month];
+    let year = new Date().getFullYear();
+    this.currentMonth = `${months[month]} ${year}`;
   }
 
   validateLogin(){
@@ -35,7 +36,7 @@ export class SignupComponent implements OnInit {
           this.warningMessage = "Email has been taken"
         }else{
           this.isValid = null;
-          this.router.navigate(['/userprofile', {newUser: "true"}]);
+          this.router.navigate(['/userprofile'], {state:{newUser: "true"}});
         }
       },
       error =>{
