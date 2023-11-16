@@ -254,6 +254,8 @@ export class UserProfileComponent implements OnInit{
   }
   
   addVehicle(){
+    let index = new Date().getMonth();
+
     this.loading = true;
     const vehicleBody = {
       type: this.vehicleType,
@@ -263,6 +265,8 @@ export class UserProfileComponent implements OnInit{
     };
     this.restService.addVehicle(this.user.id, vehicleBody)
     .subscribe( (res)=>{
+      
+      this.GHGStorage[index].vehicleTotal = vehicleBody.vehicleGHG + this.GHGStorage[index].vehicleTotal;
         //resets values
       this.vehicleType = '';
       this.vehicleMpg = 0;
@@ -276,6 +280,8 @@ export class UserProfileComponent implements OnInit{
   }
 
   addHome(){
+    let index = new Date().getMonth();
+
     this.loading = true;
     const homeBody = {
       homeType: this.homeType,
@@ -288,6 +294,9 @@ export class UserProfileComponent implements OnInit{
         //resets values
       this.homeType = '';
       this.homeSize = 0;
+
+      //updates Monthly GHG Totals
+      this.GHGStorage[index].homeTotal = this.GHGStorage[index].homeTotal + homeBody.homeGHG;
       
       this.setHomeData().then(()=>{
         this.homeEditMode = false;
@@ -350,10 +359,13 @@ export class UserProfileComponent implements OnInit{
   }
 
   deleteVehicle(){
+    let index = new Date().getMonth();
+
     if(this.vehicleType != null || this.vehicleType != undefined){
      this.restService.deleteVehicle(this.user.id, this.vehicles[this.vehicleIndex]).subscribe(
       ()=>{
         this.vehicleEditMode = false;
+        this.GHGStorage[index].vehicleTotal = this.GHGStorage[index].vehicleTotal - this.vehicles[this.vehicleIndex].vehicleGHG;
         this.setVehicleData();
       }
      )
@@ -361,10 +373,12 @@ export class UserProfileComponent implements OnInit{
   }
 
   deleteHome(){
+    let index = new Date().getMonth();
     if(this.homeType != null || this.homeType != undefined){
      this.restService.deleteHome(this.user.id, this.homes[this.homeIndex]).subscribe(
       ()=>{
         this.homeEditMode = false;
+        this.GHGStorage[index].homeTotal = this.GHGStorage[index].homeTotal - this.homes[this.homeIndex].homeGHG;
         this.setHomeData();
       });
     }
@@ -386,7 +400,7 @@ export class UserProfileComponent implements OnInit{
 
     //assigns number with two decimal points 
     ghgPerYear = Math.round(ghgPerYear *100) /100;
-    this.user.footprint = Math.round((this.user.footprint *100) /100);
+    this.user.footprint = Math.round((this.user.footprint * 100) /100);
     return ghgPerYear;
   }
 
@@ -397,7 +411,7 @@ export class UserProfileComponent implements OnInit{
    
     //assigns number with two decimal points 
     ghgPerYear = Math.round(ghgPerYear *100) /100;
-    this.user.footprint = Math.round((this.user.footprint *100) /100);
+    this.user.footprint = Math.round((this.user.footprint * 100) /100);
     this.homes = null;
     return ghgPerYear;
   }
