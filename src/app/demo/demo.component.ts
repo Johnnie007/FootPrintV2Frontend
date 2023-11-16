@@ -399,9 +399,10 @@ export class DemoComponent {
 
     this.GHGStorage[index].vehicleTotal = vehicleBody.vehicleGHG + this.GHGStorage[index].vehicleTotal;
 
+
     //adds values
     this.vehicles.push(vehicleBody);
-        //resets value
+    //resets value
     this.vehicleIndex = 0;
     this.vehicleType = this.vehicles[this.vehicleIndex].type;
     this.vehicleMpg = this.vehicles[this.vehicleIndex].mpg;
@@ -421,8 +422,6 @@ export class DemoComponent {
     let index = new Date().getMonth();
     this.GHGStorage[index].homeTotal = this.GHGStorage[index].homeTotal + homeBody.homeGHG;
 
-    console.log(this.GHGStorage[index]);
-
     this.homes.push(homeBody)
     
     //resets values
@@ -440,7 +439,6 @@ export class DemoComponent {
 
     this.GHGStorage[index].vehicleTotal = this.GHGStorage[index].vehicleTotal - this.vehicles[this.vehicleIndex].vehicleGHG;
 
-      console.log(this.GHGStorage[index])
       this.vehicles.splice(this.vehicleIndex, 1)
       this.vehicleIndex = 0
       this.vehicleType = this.vehicles[this.vehicleIndex].type
@@ -459,8 +457,6 @@ export class DemoComponent {
       //updates Monthly GHG Totals
     let index = new Date().getMonth();
     this.GHGStorage[index].homeTotal = this.GHGStorage[index].homeTotal - this.homes[this.homeIndex].homeGHG;
-
-    console.log(this.GHGStorage[index]);
 
       this.homes.splice(this.homeIndex, 1)
         this.homeIndex = 0;

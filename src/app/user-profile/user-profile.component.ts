@@ -50,7 +50,7 @@ export class UserProfileComponent implements OnInit{
   userImage = null;
   vehicles = null;
   homes = null;
-  userStatus
+  userStatus;
 
   vehicleEditMode = false;
   homeEditMode = false;

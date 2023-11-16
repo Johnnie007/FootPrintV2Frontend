@@ -1,4 +1,4 @@
-import { Component, OnInit, Input} from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges} from '@angular/core';
 import { Chart, registerables} from 'chart.js';
 import { months } from 'src/assets/variables/variables';
 Chart.register(...registerables);
@@ -8,7 +8,7 @@ Chart.register(...registerables);
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.scss']
 })
-export class ChartComponent implements OnInit {
+export class ChartComponent implements OnInit, OnChanges {
 
   @Input()
   monthlyStorage;
@@ -32,6 +32,7 @@ export class ChartComponent implements OnInit {
 
   signupMonth;
   signupYear;
+  chart: Chart;
 
   ngOnInit(): void {
     this.signupMonth = this.userJoinedDate.split(" ")[0];
@@ -42,8 +43,19 @@ export class ChartComponent implements OnInit {
     this.generateChart();
   }
 
-  generateChart(){
-   let chart = new Chart("chart", {
+  ngOnChanges(changes: SimpleChanges): void { 
+   if(changes['monthlyStorage']?.isFirstChange() === false || changes['totalFootprint']?.isFirstChange() === false){
+    this.totalOutput = [];
+    this.homeOutput = [];
+    this.vehicleOutput = [];
+    this.setData();
+    this.chart.destroy();
+    this.generateChart();
+   }
+  }
+
+  generateChart = ()=>{
+   this.chart = new Chart("chart", {
       type: 'line',
       data: {
           labels: this.labels,
@@ -99,7 +111,6 @@ export class ChartComponent implements OnInit {
         let holdLabels = [];
       for(let i = 0; i < this.monthlyStorage.length; i++){
         let storage = this.monthlyStorage.find((x) =>  x.storageMonth == months[indicator]);
-        
 
         if(i == 0){
           holdVehicleOutput.unshift(storage.vehicleTotal);
@@ -122,7 +133,8 @@ export class ChartComponent implements OnInit {
         if(i === this.monthlyStorage.length -1){
          this.labels = holdLabels.concat(this.labels);
          this.homeOutput = this.checkOutputValue(holdHomeOutput) ?  [] : holdHomeOutput.concat(this.homeOutput) ;
-         this.vehicleOutput =  this.checkOutputValue(this.vehicleOutput) ? [] : holdVehicleOutput.concat(this.vehicleOutput);
+        
+         this.vehicleOutput =  this.checkOutputValue(holdVehicleOutput) ? [] : holdVehicleOutput.concat(this.vehicleOutput);
          this.totalOutput = holdOutput.concat(this.totalOutput);
 
          //checks the value of the array
