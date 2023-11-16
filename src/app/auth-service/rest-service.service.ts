@@ -24,6 +24,12 @@ export class RestService {
       )
     )
   }
+
+  updateUser(id, user){
+    const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)});
+    return this.httpClient.put(`http://localhost:8080/api/update/${id}`,user, {headers})
+    
+  };
   getUserImage(id){
     const requestOptions: Object = {
       headers: new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)}),
