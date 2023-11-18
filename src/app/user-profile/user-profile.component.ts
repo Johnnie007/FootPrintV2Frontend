@@ -254,54 +254,62 @@ export class UserProfileComponent implements OnInit{
   }
   
   addVehicle(){
-    let index = new Date().getMonth();
 
-    this.loading = true;
-    const vehicleBody = {
-      type: this.vehicleType,
-      mpg: this.vehicleMpg,
-      userId: this.user.id,
-      vehicleGHG: this.calculateVehicleGHG()
-    };
-    this.restService.addVehicle(this.user.id, vehicleBody)
-    .subscribe( (res)=>{
+    if(this.vehicleType != null  && this.vehicleType == '' && this.vehicleMpg != null  && this.vehicleMpg == ''){
+      alert("All Fields are required")
+    }
+    else{
+      this.loading = true;
+      const vehicleBody = {
+        type: this.vehicleType,
+        mpg: this.vehicleMpg,
+        userId: this.user.id,
+        vehicleGHG: this.calculateVehicleGHG()
+      };
+      this.restService.addVehicle(this.user.id, vehicleBody)
+      .subscribe( (res)=>{
+
+        this.GHGStorage[this.findStorageMonth()].vehicleTotal = vehicleBody.vehicleGHG + this.GHGStorage[this.findStorageMonth()].vehicleTotal;
+          //resets values
+        this.vehicleType = '';
+        this.vehicleMpg = 0;
+        this.vehicles = null;
+        
+        this.setVehicleData().then(()=>{
+          this.vehicleEditMode = false;
+      });
       
-      this.GHGStorage[index].vehicleTotal = vehicleBody.vehicleGHG + this.GHGStorage[index].vehicleTotal;
-        //resets values
-      this.vehicleType = '';
-      this.vehicleMpg = 0;
-      this.vehicles = null;
-      
-      this.setVehicleData().then(()=>{
-        this.vehicleEditMode = false;
-    });
-    
-    });
+      });
+    }
   }
 
   addHome(){
-    let index = new Date().getMonth();
 
-    this.loading = true;
-    const homeBody = {
-      homeType: this.homeType,
-      homeSize: this.homeSize,
-      userId: this.user.id,
-      homeGHG: this.calculateHomeGHG()
-    };
-   
-    this.restService.addHome(this.user.id, homeBody).subscribe( (res)=>{
-        //resets values
-      this.homeType = '';
-      this.homeSize = 0;
+    if(this.homeType != null  && this.homeType == '' && this.homeSize != null  && this.homeSize == ''){
+      alert("All Fields are required")
+    }
+    else{
+      this.loading = true;
+      const homeBody = {
+        homeType: this.homeType,
+        homeSize: this.homeSize,
+        userId: this.user.id,
+        homeGHG: this.calculateHomeGHG()
+      };
+    
+      this.restService.addHome(this.user.id, homeBody).subscribe( (res)=>{
+          //resets values
+        this.homeType = '';
+        this.homeSize = 0;
 
-      //updates Monthly GHG Totals
-      this.GHGStorage[index].homeTotal = this.GHGStorage[index].homeTotal + homeBody.homeGHG;
-      
-      this.setHomeData().then(()=>{
-        this.homeEditMode = false;
+        //updates Monthly GHG Totals ****** THIS WILL NOT WORK NEEDS TO  BE UPDATED
+        this.GHGStorage[this.findStorageMonth()].homeTotal = this.GHGStorage[this.findStorageMonth()].homeTotal + homeBody.homeGHG;
+        
+        this.setHomeData().then(()=>{
+          this.homeEditMode = false;
+        });
       });
-    });
+    }
   }
 
   addOffsetter(id){
@@ -312,7 +320,6 @@ export class UserProfileComponent implements OnInit{
      userId: this.user.id
     };
     this.restService.addOffsetters(this.user.id, offsetter).subscribe((res)=>{
-      
       this.setOffsettersData()
     });
   }
@@ -346,15 +353,6 @@ export class UserProfileComponent implements OnInit{
         }
       )
         })
-        
-      
-      // this.restService.addStorageData(this.user.id, this.GHGStorage)
-      // .subscribe(
-      //   data => {
-      //     console.log(data);
-      //     resolve(true);
-      //   }
-      // )
     })
   }
 
@@ -394,14 +392,21 @@ export class UserProfileComponent implements OnInit{
   }
 
   calculateVehicleGHG(){
+
+    if(this.vehicleMpg > 0){
     let gasUsed =  12000/ this.vehicleMpg;
     let ghgPerYear =(8.89 * (10**-3) * gasUsed);
     this.user.footprint = ghgPerYear + this.user.footprint;
 
     //assigns number with two decimal points 
     ghgPerYear = Math.round(ghgPerYear *100) /100;
+
     this.user.footprint = Math.round((this.user.footprint * 100) /100);
     return ghgPerYear;
+    }
+    else{
+      return 0;
+    }
   }
 
   calculateHomeGHG(){
@@ -410,7 +415,8 @@ export class UserProfileComponent implements OnInit{
     this.user.footprint = ghgPerYear + this.user.footprint;
    
     //assigns number with two decimal points 
-    ghgPerYear = Math.round(ghgPerYear *100) /100;
+    ghgPerYear = Math.round(ghgPerYear * 100) /100;
+
     this.user.footprint = Math.round((this.user.footprint * 100) /100);
     this.homes = null;
     return ghgPerYear;
@@ -560,10 +566,17 @@ export class UserProfileComponent implements OnInit{
   }
 
   isLoading(){
-    
+
     if(this.homes != null && this.vehicles != null && this.user != null && this.GHGStorage.length === 12){
       this.loading = false;
     }
+  }
+
+  findStorageMonth(){
+    let indicator = new Date().getMonth();
+    let currentStorageMonth = this.GHGStorage.findIndex((x) =>  x.storageMonth == months[indicator]);
+
+    return currentStorageMonth
   }
 
 }

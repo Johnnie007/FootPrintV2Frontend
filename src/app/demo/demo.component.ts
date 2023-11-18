@@ -387,48 +387,60 @@ export class DemoComponent {
   }
 
   addVehicle(){
-    const vehicleBody = {
-      type: this.vehicleType,
-      mpg: this.vehicleMpg,
-      userId: this.user.id,
-      vehicleGHG: this.calculateVehicleGHG()
-    };
 
-    //updates GHG Totals
-    let index = new Date().getMonth();
+    if(this.vehicleType != null  && this.vehicleType == '' && this.vehicleMpg != null  && this.vehicleMpg == ''){
+      alert("All Fields are required")
+    }
+    else{
+      const vehicleBody = {
+        type: this.vehicleType,
+        mpg: this.vehicleMpg,
+        userId: this.user.id,
+        vehicleGHG: this.calculateVehicleGHG()
+      };
 
-    this.GHGStorage[index].vehicleTotal = vehicleBody.vehicleGHG + this.GHGStorage[index].vehicleTotal;
+      //updates GHG Totals
+      let index = new Date().getMonth();
+
+      this.GHGStorage[index].vehicleTotal = vehicleBody.vehicleGHG + this.GHGStorage[index].vehicleTotal;
 
 
-    //adds values
-    this.vehicles.push(vehicleBody);
-    //resets value
-    this.vehicleIndex = 0;
-    this.vehicleType = this.vehicles[this.vehicleIndex].type;
-    this.vehicleMpg = this.vehicles[this.vehicleIndex].mpg;
-    this.vehicleEditMode = false;
+      //adds values
+      this.vehicles.push(vehicleBody);
+      //resets value
+      this.vehicleIndex = 0;
+      this.vehicleType = this.vehicles[this.vehicleIndex].type;
+      this.vehicleMpg = this.vehicles[this.vehicleIndex].mpg;
+      this.vehicleEditMode = false;
+    }
    
   }
 
   addHome(){
-    const homeBody = {
-      homeType: this.homeType,
-      homeSize: this.homeSize,
-      userId: this.user.id,
-      homeGHG: this.calculateHomeGHG()
-    };
 
-    //updates Monthly GHG Totals
-    let index = new Date().getMonth();
-    this.GHGStorage[index].homeTotal = this.GHGStorage[index].homeTotal + homeBody.homeGHG;
+    if(this.homeType != null  && this.homeType == '' && this.homeSize != null  && this.homeSize == ''){
+      alert("All Fields are required")
+    }
+    else{
+      const homeBody = {
+        homeType: this.homeType,
+        homeSize: this.homeSize,
+        userId: this.user.id,
+        homeGHG: this.calculateHomeGHG()
+      };
 
-    this.homes.push(homeBody)
-    
-    //resets values
-    this.homeIndex = 0;
-    this.homeType = this.homes[this.homeIndex].homeType;
-    this.homeSize = this.homes[this.homeIndex].homeSize;
-    this.homeEditMode = false;
+      //updates Monthly GHG Totals
+      let index = new Date().getMonth();
+      this.GHGStorage[index].homeTotal = this.GHGStorage[index].homeTotal + homeBody.homeGHG;
+
+      this.homes.push(homeBody)
+      
+      //resets values
+      this.homeIndex = 0;
+      this.homeType = this.homes[this.homeIndex].homeType;
+      this.homeSize = this.homes[this.homeIndex].homeSize;
+      this.homeEditMode = false;
+    }
   }
 
   deleteVehicle(){
@@ -472,15 +484,19 @@ export class DemoComponent {
   }
 
   calculateVehicleGHG(){
-    let gasUsed =  12000/ this.vehicleMpg;
-    let ghgPerYear =(8.89 * (10**-3) * gasUsed);
-    this.user.footprint = ghgPerYear + this.user.footprint;
+    if(this.vehicleMpg > 0){
+      let gasUsed =  12000/ this.vehicleMpg;
+      let ghgPerYear =(8.89 * (10**-3) * gasUsed);
+      this.user.footprint = ghgPerYear + this.user.footprint;
 
-    //assigns number with two decimal points 
-    ghgPerYear = Math.round(ghgPerYear *100) /100;
-    this.user.footprint = Math.round(this.user.footprint *100) /100;
-    
-    return ghgPerYear;
+      //assigns number with two decimal points 
+      ghgPerYear = Math.round(ghgPerYear *100) /100;
+      this.user.footprint = Math.round(this.user.footprint *100) /100;
+      
+      return ghgPerYear;
+    }else{
+      return 0;
+    }
   }
 
   calculateHomeGHG(){
