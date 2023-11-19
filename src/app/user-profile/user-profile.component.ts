@@ -266,10 +266,13 @@ export class UserProfileComponent implements OnInit{
         userId: this.user.id,
         vehicleGHG: this.calculateVehicleGHG()
       };
+
+      this.GHGStorage[this.findStorageMonth()].vehicleTotal = vehicleBody.vehicleGHG + this.GHGStorage[this.findStorageMonth()].vehicleTotal;
+      this.user.footprint = this.user.footprint - vehicleBody.vehicleGHG;
+        
       this.restService.addVehicle(this.user.id, vehicleBody)
       .subscribe( (res)=>{
 
-        this.GHGStorage[this.findStorageMonth()].vehicleTotal = vehicleBody.vehicleGHG + this.GHGStorage[this.findStorageMonth()].vehicleTotal;
           //resets values
         this.vehicleType = '';
         this.vehicleMpg = 0;
@@ -278,7 +281,8 @@ export class UserProfileComponent implements OnInit{
         this.setVehicleData().then(()=>{
           this.vehicleEditMode = false;
       }).then(()=>{
-        this.restService.updateStorageData(this.user.id, this.GHGStorage[this.findStorageMonth()])
+        this.restService.updateStorageData(this.user.id, this.GHGStorage[this.findStorageMonth()]);
+        this.restService.updateUser(this.user);
       });
       
       });
@@ -298,20 +302,21 @@ export class UserProfileComponent implements OnInit{
         userId: this.user.id,
         homeGHG: this.calculateHomeGHG()
       };
+
+      this.user.footprint = this.user.footprint - homeBody.homeGHG;
+      this.GHGStorage[this.findStorageMonth()].homeTotal = this.GHGStorage[this.findStorageMonth()].homeTotal + homeBody.homeGHG;
+       
     
       this.restService.addHome(this.user.id, homeBody).subscribe( (res)=>{
           //resets values
         this.homeType = '';
         this.homeSize = 0;
 
-        //updates Monthly GHG Totals ****** THIS WILL NOT WORK NEEDS TO  BE UPDATED
-        this.GHGStorage[this.findStorageMonth()].homeTotal = this.GHGStorage[this.findStorageMonth()].homeTotal + homeBody.homeGHG;
-        
         this.setHomeData().then(()=>{
           this.homeEditMode = false;
         }).then(()=>{
           this.restService.updateStorageData(this.user.id, this.GHGStorage[this.findStorageMonth()]);
-          
+          this.restService.updateUser(this.user);
         });
       });
     }
@@ -324,11 +329,14 @@ export class UserProfileComponent implements OnInit{
      CCS: this.recommendations[id].CCS,
      userId: this.user.id
     };
-
+    
+    this.user.footprint = this.user.footprint - offsetter.CCS;
+      
     this.GHGStorage[this.findStorageMonth()].homeTotal = this.GHGStorage[this.findStorageMonth()].homeTotal - offsetter.CCS;
        
     this.restService.addOffsetters(this.user.id, offsetter).subscribe((res)=>{
-      this.setOffsettersData()
+      this.setOffsettersData();
+      this.restService.updateUser(this.user);
     });
 
     this.restService.updateStorageData(this.user.id, this.GHGStorage[this.findStorageMonth()])
@@ -369,11 +377,17 @@ export class UserProfileComponent implements OnInit{
 
   deleteVehicle(){
     if(this.vehicleType != null || this.vehicleType != undefined){
+
+      this.user.footprint = this.user.footprint - this.vehicles[this.vehicleIndex].vehicleTotal;
+      this.GHGStorage[this.findStorageMonth()].vehicleTotal = this.GHGStorage[this.findStorageMonth()].vehicleTotal - this.vehicles[this.vehicleIndex].vehicleGHG;
+       
+      
      this.restService.deleteVehicle(this.user.id, this.vehicles[this.vehicleIndex]).subscribe(
       ()=>{
         this.vehicleEditMode = false;
-        this.GHGStorage[this.findStorageMonth()].vehicleTotal = this.GHGStorage[this.findStorageMonth()].vehicleTotal - this.vehicles[this.vehicleIndex].vehicleGHG;
         this.setVehicleData();
+        this.restService.updateStorageData(this.user.id, this.GHGStorage[this.findStorageMonth()]);
+        this.restService.updateUser(this.user);
       }
      )
     }
@@ -381,11 +395,16 @@ export class UserProfileComponent implements OnInit{
 
   deleteHome(){
     if(this.homeType != null || this.homeType != undefined){
+      
+      this.user.footprint = this.user.footprint - this.homes[this.homeIndex].homeTotal;
+      this.GHGStorage[this.findStorageMonth()].homeTotal = this.GHGStorage[this.findStorageMonth()].homeTotal - this.homes[this.homeIndex].homeGHG;
+        
+   
      this.restService.deleteHome(this.user.id, this.homes[this.homeIndex]).subscribe(
       ()=>{
         this.homeEditMode = false;
-        this.GHGStorage[this.findStorageMonth()].homeTotal = this.GHGStorage[this.findStorageMonth()].homeTotal - this.homes[this.homeIndex].homeGHG;
         this.setHomeData();
+        this.restService.updateUser(this.user);
         this.restService.updateStorageData(this.user.id, this.GHGStorage[this.findStorageMonth()])
     
       });
@@ -396,10 +415,12 @@ export class UserProfileComponent implements OnInit{
     let offsetter = this.offsetters[id];
 
     this.GHGStorage[this.findStorageMonth()].homeTotal = this.GHGStorage[this.findStorageMonth()].homeTotal + offsetter.CCS;
+    this.user.footprint = this.user.footprint + offsetter.CCS
     
     this.restService.deleteOffsetters(this.user.id, offsetter).subscribe(
       ()=>{
         this.setOffsettersData();
+        this.restService.updateUser(this.user);
       }
     );
 

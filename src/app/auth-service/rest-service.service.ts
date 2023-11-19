@@ -25,11 +25,12 @@ export class RestService {
     )
   }
 
-  updateUser(id, user){
+  updateUser(user){
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)});
-    return this.httpClient.put(`http://localhost:8080/api/update/${id}`,user, {headers})
+    return this.httpClient.put(`http://localhost:8080/api/update/${user.id}`,user, {headers})
     
   };
+
   getUserImage(id){
     const requestOptions: Object = {
       headers: new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)}),
@@ -128,22 +129,10 @@ export class RestService {
   }
   
   addStorageData(id, storage){
-    console.log(storage);
-    // const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)});
-    // from(storage)
-    // .pipe(
-    //   map( (data) =>{
-    //     console.log(data)
-    //     this.httpClient.post(`http://localhost:8080/api/${id}/storage`, data, { headers }); 
-    //   })
-    //   //this.httpClient.post(`http://localhost:8080/api/${id}/storage`,storage, {headers})
-    //   )
-    // .subscribe(data=>{
-    //   console.log(data)
-    // })
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)});
     return this.httpClient.post(`http://localhost:8080/api/${id}/storage`,storage, {headers, observe: 'response'});
    }
+
   updateStorageData(id, data){
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)});
     return this.httpClient.put(`http://localhost:8080/api/${id}/storage`,data, {headers});
