@@ -277,6 +277,8 @@ export class UserProfileComponent implements OnInit{
         
         this.setVehicleData().then(()=>{
           this.vehicleEditMode = false;
+      }).then(()=>{
+        this.restService.updateStorageData(this.user.id, this.GHGStorage[this.findStorageMonth()])
       });
       
       });
@@ -307,6 +309,9 @@ export class UserProfileComponent implements OnInit{
         
         this.setHomeData().then(()=>{
           this.homeEditMode = false;
+        }).then(()=>{
+          this.restService.updateStorageData(this.user.id, this.GHGStorage[this.findStorageMonth()]);
+          
         });
       });
     }
@@ -319,9 +324,15 @@ export class UserProfileComponent implements OnInit{
      CCS: this.recommendations[id].CCS,
      userId: this.user.id
     };
+
+    this.GHGStorage[this.findStorageMonth()].homeTotal = this.GHGStorage[this.findStorageMonth()].homeTotal - offsetter.CCS;
+       
     this.restService.addOffsetters(this.user.id, offsetter).subscribe((res)=>{
       this.setOffsettersData()
     });
+
+    this.restService.updateStorageData(this.user.id, this.GHGStorage[this.findStorageMonth()])
+       
   }
 
   addStorageData(): Promise<any>{
@@ -357,13 +368,11 @@ export class UserProfileComponent implements OnInit{
   }
 
   deleteVehicle(){
-    let index = new Date().getMonth();
-
     if(this.vehicleType != null || this.vehicleType != undefined){
      this.restService.deleteVehicle(this.user.id, this.vehicles[this.vehicleIndex]).subscribe(
       ()=>{
         this.vehicleEditMode = false;
-        this.GHGStorage[index].vehicleTotal = this.GHGStorage[index].vehicleTotal - this.vehicles[this.vehicleIndex].vehicleGHG;
+        this.GHGStorage[this.findStorageMonth()].vehicleTotal = this.GHGStorage[this.findStorageMonth()].vehicleTotal - this.vehicles[this.vehicleIndex].vehicleGHG;
         this.setVehicleData();
       }
      )
@@ -371,24 +380,31 @@ export class UserProfileComponent implements OnInit{
   }
 
   deleteHome(){
-    let index = new Date().getMonth();
     if(this.homeType != null || this.homeType != undefined){
      this.restService.deleteHome(this.user.id, this.homes[this.homeIndex]).subscribe(
       ()=>{
         this.homeEditMode = false;
-        this.GHGStorage[index].homeTotal = this.GHGStorage[index].homeTotal - this.homes[this.homeIndex].homeGHG;
+        this.GHGStorage[this.findStorageMonth()].homeTotal = this.GHGStorage[this.findStorageMonth()].homeTotal - this.homes[this.homeIndex].homeGHG;
         this.setHomeData();
+        this.restService.updateStorageData(this.user.id, this.GHGStorage[this.findStorageMonth()])
+    
       });
     }
   }
 
   deleteOffsetter(id){
-    let offsetter = this.offsetters[id]
+    let offsetter = this.offsetters[id];
+
+    this.GHGStorage[this.findStorageMonth()].homeTotal = this.GHGStorage[this.findStorageMonth()].homeTotal + offsetter.CCS;
+    
     this.restService.deleteOffsetters(this.user.id, offsetter).subscribe(
       ()=>{
         this.setOffsettersData();
       }
     );
+
+    this.restService.updateStorageData(this.user.id, this.GHGStorage[this.findStorageMonth()])
+    
   }
 
   calculateVehicleGHG(){

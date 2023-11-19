@@ -513,11 +513,16 @@ export class DemoComponent {
   }
 
   deleteOffsetter(id){
-    let offsetter = this.offsetters[id]
+    let offsetter = this.offsetters[id];
+    let index = new Date().getMonth();
+
+    this.GHGStorage[index].homeTotal = this.GHGStorage[index].homeTotal + offsetter.CCS;
+
     this.offsetters.splice(id, 1);
   }
 
   addOffsetter(id){
+
     let offsetter = {
     id: Math.floor(Math.random() * 100000),
     type: this.recommendations[id].type,
@@ -525,6 +530,9 @@ export class DemoComponent {
      CCS: this.recommendations[id].CCS,
      userId: this.user.id
     };
+
+    let index = new Date().getMonth();
+    this.GHGStorage[index].homeTotal = this.GHGStorage[index].homeTotal - offsetter.CCS;
 
     this.offsetters.push(offsetter)
   }
