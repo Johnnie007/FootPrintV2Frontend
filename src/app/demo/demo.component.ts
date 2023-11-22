@@ -536,5 +536,4 @@ export class DemoComponent {
 
     this.offsetters.push(offsetter)
   }
-
 }

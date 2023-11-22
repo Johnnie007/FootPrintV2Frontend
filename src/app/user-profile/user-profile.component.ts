@@ -277,14 +277,12 @@ export class UserProfileComponent implements OnInit{
         this.vehicleType = '';
         this.vehicleMpg = 0;
         this.vehicles = null;
-        
-        this.setVehicleData().then(()=>{
-          this.vehicleEditMode = false;
-      }).then(()=>{
-        this.restService.updateStorageData(this.user.id, this.GHGStorage[this.findStorageMonth()]);
-        this.restService.updateUser(this.user);
-      });
-      
+
+        this.vehicleEditMode = false;
+
+        this.updateUserTotal().then(()=>{
+          this.setVehicleData()
+        });
       });
     }
   }
@@ -311,12 +309,9 @@ export class UserProfileComponent implements OnInit{
           //resets values
         this.homeType = '';
         this.homeSize = 0;
-
-        this.setHomeData().then(()=>{
-          this.homeEditMode = false;
-        }).then(()=>{
-          this.restService.updateStorageData(this.user.id, this.GHGStorage[this.findStorageMonth()]);
-          this.restService.updateUser(this.user);
+        this.homeEditMode = false;
+        this.updateUserTotal().then(()=>{
+          this.setHomeData()
         });
       });
     }
@@ -334,12 +329,11 @@ export class UserProfileComponent implements OnInit{
       
     this.GHGStorage[this.findStorageMonth()].homeTotal = this.GHGStorage[this.findStorageMonth()].homeTotal - offsetter.CCS;
        
-    this.restService.addOffsetters(this.user.id, offsetter).subscribe((res)=>{
-      this.setOffsettersData();
-      this.restService.updateUser(this.user);
+    this.restService.addOffsetters(this.user.id, offsetter).subscribe((res)=>{   
+      this.updateUserTotal().then(()=>{
+        this.setOffsettersData();
+      });
     });
-
-    this.restService.updateStorageData(this.user.id, this.GHGStorage[this.findStorageMonth()])
        
   }
 
@@ -382,14 +376,12 @@ export class UserProfileComponent implements OnInit{
       this.GHGStorage[this.findStorageMonth()].vehicleTotal = this.GHGStorage[this.findStorageMonth()].vehicleTotal - this.vehicles[this.vehicleIndex].vehicleGHG;
        
       
-     this.restService.deleteVehicle(this.user.id, this.vehicles[this.vehicleIndex]).subscribe(
-      ()=>{
+     this.restService.deleteVehicle(this.user.id, this.vehicles[this.vehicleIndex]).subscribe(()=>{
         this.vehicleEditMode = false;
-        this.setVehicleData();
-        this.restService.updateStorageData(this.user.id, this.GHGStorage[this.findStorageMonth()]);
-        this.restService.updateUser(this.user);
-      }
-     )
+        this.updateUserTotal().then(()=>{
+          this.setVehicleData();
+        });
+      });
     }
   }
 
@@ -403,10 +395,9 @@ export class UserProfileComponent implements OnInit{
      this.restService.deleteHome(this.user.id, this.homes[this.homeIndex]).subscribe(
       ()=>{
         this.homeEditMode = false;
-        this.setHomeData();
-        this.restService.updateUser(this.user);
-        this.restService.updateStorageData(this.user.id, this.GHGStorage[this.findStorageMonth()])
-    
+        this.updateUserTotal().then(()=>{
+          this.setHomeData();
+        })
       });
     }
   }
@@ -419,13 +410,10 @@ export class UserProfileComponent implements OnInit{
     
     this.restService.deleteOffsetters(this.user.id, offsetter).subscribe(
       ()=>{
-        this.setOffsettersData();
-        this.restService.updateUser(this.user);
-      }
-    );
-
-    this.restService.updateStorageData(this.user.id, this.GHGStorage[this.findStorageMonth()])
-    
+        this.updateUserTotal().then(()=>{
+          this.setOffsettersData();
+        });
+      });  
   }
 
   calculateVehicleGHG(){
@@ -614,6 +602,14 @@ export class UserProfileComponent implements OnInit{
     let currentStorageMonth = this.GHGStorage.findIndex((x) =>  x.storageMonth == months[indicator]);
 
     return currentStorageMonth
+  }
+
+   updateUserTotal(): Promise<any>{
+    return new Promise (async (resolve) =>{
+        await this.restService.updateUser(this.user);
+        await this.restService.updateStorageData(this.user.id, this.GHGStorage[this.findStorageMonth()]);
+        resolve(true); 
+    })
   }
 
 }
