@@ -17,8 +17,10 @@ export class AuthencationService {
   }
 
   logOutUser(){
-    sessionStorage.removeItem('username');
-    sessionStorage.removeItem('password');
+    // sessionStorage.removeItem('username');
+    // sessionStorage.removeItem('password');
+    sessionStorage.clear();
+    console.log(sessionStorage)
     //clears headers Saved in Browser
     window.location.reload();
     this.authenticate.next(false);
@@ -39,10 +41,10 @@ export class AuthencationService {
           return userData
         }
         else{
-          this.logInUser()
           sessionStorage.setItem('username', username)
           sessionStorage.setItem('password', password)
           console.log(userData)
+          this.logInUser()
           return userData;
         }
        })
@@ -65,10 +67,15 @@ export class AuthencationService {
           console.log("User not found")
           return userData
         }
-        this.logInUser()
+        if(userData.status == 226){
+          console.log("Username taken")
+          return userData
+        }
+        
         sessionStorage.setItem('username', username)
         sessionStorage.setItem('password', password)
-        console.log(userData)
+        console.log(sessionStorage);
+        this.logInUser()
         return userData;
        }
      )

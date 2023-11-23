@@ -7,18 +7,29 @@ import { User } from '../models/User.model';
   providedIn: 'root'
 })
 export class RestService {
+  username;
+  password;
+  userCredentials(){
+    this.username = sessionStorage.getItem("username");
+    this.password = sessionStorage.getItem("password");
+  }
 
-  username = sessionStorage.getItem("username");
-  password = sessionStorage.getItem("password");
 
-  constructor(private httpClient:HttpClient) { }
+  constructor(private httpClient:HttpClient) {
+    this.username = sessionStorage.getItem("username");
+    this.password = sessionStorage.getItem("password");
+   }
 
   getUser(){
-    const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)});
+   this.userCredentials();
+    const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username+ ':' + this.password)});
+    console.log(this.username);
+    console.log(this.password);
     return this.httpClient.get<User>('http://localhost:8080/api/user', {headers})
     .pipe(
       map(
         userData => {
+          console.log(userData)
           return userData;
         }
       )
@@ -26,8 +37,9 @@ export class RestService {
   }
 
   updateUser(user){
+    console.log(user)
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)});
-    return this.httpClient.put(`http://localhost:8080/api/update/${user.id}`,user, {headers})
+    return this.httpClient.post(`http://localhost:8080/api/update/${user.id}`,user, {headers})
     
   };
 
@@ -135,7 +147,7 @@ export class RestService {
 
   updateStorageData(id, data){
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)});
-    return this.httpClient.put(`http://localhost:8080/api/${id}/storage`,data, {headers});
+    return this.httpClient.post(`http://localhost:8080/api/${id}/storage`,data, {headers});
   }
   
   deleteUserImage(id){
@@ -165,6 +177,15 @@ export class RestService {
       headers: new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)}),
       body: offsetters
     }
-    return this.httpClient.delete(`http://localhost:8080/api/${id}/offsetters`, requestOptions)
+    return this.httpClient.delete(`http://localhost:8080/api/${id}/offsetters`, requestOptions);
+  }
+ 
+  deleteStorage(id){
+    
+    const requestOptions: Object = {
+      headers: new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)})
+    }
+    
+    return this.httpClient.delete(`http://localhost:8080/api/storage/${id}`, requestOptions);
   }
 }

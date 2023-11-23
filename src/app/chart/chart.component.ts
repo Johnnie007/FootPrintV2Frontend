@@ -35,6 +35,7 @@ export class ChartComponent implements OnInit, OnChanges {
   chart: Chart;
 
   ngOnInit(): void {
+    console.log(this.userJoinedDate)
     this.signupMonth = this.userJoinedDate.split(" ")[0];
     this.signupYear = this.userJoinedDate.split(" ")[1];
 
