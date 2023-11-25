@@ -1,16 +1,16 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthencationService } from '../auth-service/authencation.service';
 import { RestService } from '../auth-service/rest-service.service';
 import {months} from '../../assets/variables/variables'
-import { Subscription } from 'rxjs';
+
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss']
 })
-export class SignupComponent implements OnInit, OnDestroy {
+export class SignupComponent implements OnInit{
   email = '';
   password = '';
   firstName = '';
@@ -18,9 +18,6 @@ export class SignupComponent implements OnInit, OnDestroy {
   isValid: boolean;
   currentMonth = null;
   warningMessage: string;
-
-  subscription: Subscription
-
   constructor(private router:Router, private authenticationService: AuthencationService, private restService: RestService){}
  
   ngOnInit(): void {
@@ -34,7 +31,7 @@ export class SignupComponent implements OnInit, OnDestroy {
 
     if(this.email != '' && this.password != '' && this.firstName != '' && this.lastName != ''){
 
-    this.subscription = this.authenticationService.createUser(this.firstName, this.lastName, this.email, this.password, this.currentMonth).subscribe(
+  this.authenticationService.createUser(this.firstName, this.lastName, this.email, this.password, this.currentMonth).subscribe(
       data =>{
         if(data.status == 226){
           this.isValid = false
@@ -48,7 +45,9 @@ export class SignupComponent implements OnInit, OnDestroy {
         }
       },
       error =>{
-        console.log(error)
+        if(error.status == 0){
+          alert("Server is down. Try again later")
+        }
       });
     }else{
       this.isValid = false;
@@ -56,9 +55,5 @@ export class SignupComponent implements OnInit, OnDestroy {
       this.password = ''
       this.warningMessage = "All fields are required"
     }  
-  }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe()
   }
 }

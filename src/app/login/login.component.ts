@@ -29,7 +29,9 @@ export class LoginComponent {
             }
           },
           error =>{
-            console.log(error)
+            if(error.status == 0){
+              alert("Server is down. Try again later")
+            }
             if(error.status == 401){
               this.isValid = false;
               this.warningMessage = 'Invalid username and/or password'

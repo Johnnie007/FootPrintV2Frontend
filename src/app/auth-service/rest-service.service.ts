@@ -37,7 +37,7 @@ export class RestService {
   }
 
   updateUser(user){
-    console.log(user)
+    user.email = this.username
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)});
     return this.httpClient.post(`http://localhost:8080/api/update/${user.id}`,user, {headers})
     

@@ -248,3 +248,38 @@
     margin: 0;
     font-size: 12px;
 }
+
+.loading{
+    width: 100%;
+    height: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading-animation{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70px;
+    width: 70px;
+    border: 5px solid #97EE62;
+    border-radius: 50%;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+    40% {
+        transform:  scale(1.1);
+        box-shadow: 0 0 0 20px rgba(151, 238, 98, .5);
+    }
+    80% {
+        transform:  scale(1);
+        box-shadow: 0 0 0 40px rgba(151, 238, 98, 0);
+    }
+
+    100% {
+   
+        box-shadow: 0 0 0 20px rgba(151, 238, 98, 0);
+    }
+}

@@ -108,7 +108,6 @@ export class UserProfileComponent implements OnInit{
     .then(()=>{
       this.setRecommendationData();
     });
-    console.log(this.user)
    
   }
 
@@ -119,24 +118,21 @@ export class UserProfileComponent implements OnInit{
         data =>{
           
           this.user = data;
-          console.log(4)
-          console.log(this.user.footprint)
+          console.log(this.user);
           if(this.user.footprint === 0 || this.user.footprint === undefined){
             //default user Footprint
             this.user.footprint = 0.41;
-            console.log(this.user.footprint)
           }
           resolve(true)
         },
         (err)=>{
         if(err.status === 401 && this.errorIndicator < 5){
-          setTimeout(()=>{
             this.errorIndicator++
-            this.ngOnInit();
-          }, 500);  
+            this.ngOnInit(); 
         }
         else{
           //show error message
+          alert("An error has occured! Please try refresh the page and sign in.")
         }
         });
     });
@@ -147,9 +143,7 @@ export class UserProfileComponent implements OnInit{
       this.restService.getUserImage(this.user.id)
       .subscribe(
         data =>{
-          console.log(5)
           this.userImage = data;
-          console.log(this.user.footprint)
           if(this.userImage == null){
             this.userImage = this.defaultImage;
           }
@@ -166,10 +160,8 @@ export class UserProfileComponent implements OnInit{
       this.restService.getVehicle(this.user.id)
       .subscribe(
         data =>{
-          console.log(6)
           this.vehicles = data;
           this.vehicleIndex = 0;
-          console.log(this.user.footprint)
           this.vehicleType = this.vehicles[this.vehicleIndex]?.type;
           this.vehicleMpg = this.vehicles[this.vehicleIndex]?.mpg;
           
@@ -185,10 +177,8 @@ export class UserProfileComponent implements OnInit{
       this.restService.getHome(this.user.id)
       .subscribe(
         data => {
-          console.log(7)
           this.homes = data;
           this.homeIndex = 0;
-          console.log(this.user.footprint)
           this.homeSize = this.homes[this.homeIndex]?.homeSize;
           this.homeType = this.homes[this.homeIndex]?.homeType;
           this.isLoading()
@@ -203,7 +193,6 @@ export class UserProfileComponent implements OnInit{
       this.restService.getRecommendations()
       .subscribe(
         data => {
-          console.log(this.user.footprint)
           resolve(true);
         }
       )
@@ -230,7 +219,6 @@ export class UserProfileComponent implements OnInit{
       .subscribe(
         data => {
           this.GHGStorage = data;
-          console.log(this.GHGStorage);
           this.verifyStorage();
           this.isLoading()
           resolve(true);
@@ -288,11 +276,10 @@ export class UserProfileComponent implements OnInit{
         userId: this.user.id,
         vehicleGHG: this.calculateVehicleGHG()
       };
-      console.log(vehicleBody);
+      console.log(this.user);
       this.GHGStorage[this.findStorageMonth()].vehicleTotal = vehicleBody.vehicleGHG + this.GHGStorage[this.findStorageMonth()].vehicleTotal;
 
-      console.log(this.user.footprint);
-      console.log(vehicleBody.vehicleGHG);
+      console.log(this.user);
         
       this.restService.addVehicle(this.user.id, vehicleBody)
       .subscribe( (res)=>{
@@ -448,6 +435,8 @@ export class UserProfileComponent implements OnInit{
 
     //assigns number with two decimal points 
     ghgPerYear = Math.round(ghgPerYear *100) /100;
+
+    console.log(this.user);
 
     this.user.footprint = Math.round(this.user.footprint * 100) /100;
     return ghgPerYear;
@@ -634,7 +623,8 @@ export class UserProfileComponent implements OnInit{
           console.log(res)
         });
         await this.restService.updateStorageData(this.user.id, this.GHGStorage[this.findStorageMonth()]).subscribe((res)=>{
-          console.log(res)
+          console.log(res);
+          console.log(this.GHGStorage);
         });
         resolve(true); 
     })
@@ -642,6 +632,7 @@ export class UserProfileComponent implements OnInit{
 
   verifyStorage(){
     if(this.GHGStorage.length != 12 && this.GHGStorage.length > 0){
+      this.GHGStorage = []
       this.restService.deleteStorage(this.user.id).subscribe(()=>{
         this.addStorageData().then(()=>{
           this.setStorage()
