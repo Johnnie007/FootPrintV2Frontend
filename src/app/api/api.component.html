@@ -2,32 +2,57 @@
     <div class="header">
         <H1>FootPrint API</H1>
         <p class="info">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vehicula ipsum a arcu cursus vitae congue. Vitae suscipit tellus mauris a diam maecenas. Risus ultricies tristique nulla aliquet enim tortor at auctor. Dignissim enim sit amet vessa vitae tortor condimentu
+            Footprint API utilizes Spring Boot, Java, and MySQL. The API will require you to create a Footprint account to use the endpoints. And the data that will be accessible to you will be your data. Enjoy using API, and reach out if you have any questions. Here is the link for the Github Repository:<a class="repo" href="https://github.com/Johnnie007/FootPrintV2">FootPrint Backend </a>
          </p>
     </div>
     <div class="requests-info-container">
         <div class="requests-info-container__Header">
             <h4>GET Request</h4>
             <p class="request-info">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vehicula ipsum a arcu cursus vitae congue. Vitae suscipit tellus mauris a diam maecenas. Risus ultricies tristique nulla aliquet enim tortor at auctor. Dignissim enim sit amet vessa vitae tortor condimentu
-             </p>
+                The GET Request will allow you to retrieve your data for home, vehicle, user, and monthly storage data stored in the database. To GET your data, you must use the Basic Auth Token (your username and password) and user ID. You should visit the GitHub repository to understand the API better. 
+                </p>
+                <h4>The Endpoints are:</h4>
+                <ul class="request-info">
+                    <li>/api/email to get your user account.</li>
+                    <li>/api/footprint/(your id) will retrieve all of your data for vehicle, home, and user</li>
+                    <li>/api/(your userID)/vehicle to GET your vehicle</li>
+                    <li>/api/(your userID)/home to GET your home</li>
+                    <li>/api/(your userID)/offsetters to GET your carbon offsetters</li>
+                    <li>/api/(your userID)/image to GET your Profile Image</li>
+                    <li>/api/(your userID)/storage to GET you monthly carbon storage</li>
+                </ul>       
         </div>
     </div>
 
     <div class="requests-info-container">
         <div class="requests-info-container__Header">
-            <h4>PUT/POST request</h4>
+            <h4>POST request</h4>
             <p class="request-info">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vehicula ipsum a arcu cursus vitae congue. Vitae suscipit tellus mauris a diam maecenas. Risus ultricies tristique nulla aliquet enim tortor at auctor. Dignissim enim sit amet vessa vitae tortor condimentu
-             </p>
+                The POST Request will allow you to add your data for home, vehicle, and user stored in the database. To POST your data, you must use the Basic Auth Token (username and password) and user ID. You should visit the GitHub repository to understand the API better.
+            </p>
+            <h4>The Endpoints are:</h4>
+            <ul class="request-info">
+                <li>/api/signup to create a user account.</li>
+                <li>/api/(your userID)/add/vehicle - to add your vehicle information to your account * A vehicle object is required.</li>
+                <li>/api/(your userID)/home - to add your home information * A home object is required.</li>
+                <li>/api/(your userID)/offsetters - to add your carbon offsetters  * A offsetters object is required.</li>
+                <li>/api/(your userID)/upload to upload your Profile Image * A multipart file is required</li>
+            </ul>
         </div>
     </div>
     <div class="requests-info-container">
         <div class="requests-info-container__Header">
             <h4>DELETE Request</h4>
             <p class="request-info">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vehicula ipsum a arcu cursus vitae congue. Vitae suscipit tellus mauris a diam maecenas. Risus ultricies tristique nulla aliquet enim tortor at auctor. Dignissim enim sit amet vessa vitae tortor condimentu
-             </p>
+                The DELETE Request will allow you to delete any home, vehicle, or user data stored in the database. To delete your data, you must use the Basic Auth Token (your username and password) and user ID. Please visit the GitHub repository to understand the API better. </p>
+                <h4>The Endpoints are:</h4>
+                <ul class="request-info">
+                    <li>/api/(your userID) to delete user account</li>
+                    <li>/api/(your userID)/vehicle to delete your vehicle * Vehicle Object must be sent with request</li>
+                    <li>/api/(your userID)/delete/home to delete your home * Home Object must be sent with request</li>
+                    <li>/api/(your userID)/offsetters to delete your carbon offsetters * Offsetter Object must be sent with request</li>
+                    <li>/api/(your userID)/image to delete your profile Image</li>
+                </ul>
         </div>
     </div>
 </div>
