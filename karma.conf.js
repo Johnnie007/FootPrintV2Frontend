@@ -12,15 +12,8 @@ module.exports = function (config) {
       require('@angular-devkit/build-angular/plugins/karma'),
       require('karma-spec-reporter')
     ],
-    client: {
-      jasmine: {
-        // you can add configuration options for Jasmine here
-        // the possible options are listed at https://jasmine.github.io/api/edge/Configuration.html
-        // for example, you can disable the random execution with `random: false`
-        // or set a specific seed with `seed: 4321`
-      },
-      clearContext: false // leave Jasmine Spec Runner output visible in browser
-    },
+    autoWatch: true,
+    
     jasmineHtmlReporter: {
       suppressAll: true // removes the duplicated traces
     },
@@ -32,9 +25,12 @@ module.exports = function (config) {
         { type: 'text-summary' }
       ]
     },
-    reporters: ['spec'],
-    browsers: ['Chrome'],
+    singleRun: true,
+    reporters: ["progress, summary", "kjhtml", "junit"],
+    browsers: ['ChromeHeadless'],
     plugins: ["karma-spec-reporter"],
     restartOnFileChange: true
   });
+
+  
 };
