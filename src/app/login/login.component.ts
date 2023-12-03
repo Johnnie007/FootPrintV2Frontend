@@ -19,7 +19,7 @@ export class LoginComponent {
     if(this.email != '' && this.password != ''){
         this.authenticationService.authenticateUser(this.email, this.password).subscribe(
           data =>{
-            console.log(data)
+           
             if(data.status == 203){
               this.isValid = false;
               this.warningMessage = 'Invalid username and/or password'

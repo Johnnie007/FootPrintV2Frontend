@@ -17,10 +17,7 @@ export class AuthencationService {
   }
 
   logOutUser(){
-    // sessionStorage.removeItem('username');
-    // sessionStorage.removeItem('password');
     sessionStorage.clear();
-    console.log(sessionStorage)
     //clears headers Saved in Browser
     window.location.reload();
     this.authenticate.next(false);
@@ -43,7 +40,6 @@ export class AuthencationService {
         else{
           sessionStorage.setItem('username', username)
           sessionStorage.setItem('password', password)
-          console.log(userData)
           this.logInUser()
           return userData;
         }
@@ -74,7 +70,6 @@ export class AuthencationService {
         
         sessionStorage.setItem('username', username)
         sessionStorage.setItem('password', password)
-        console.log(sessionStorage);
         this.logInUser()
         return userData;
        }

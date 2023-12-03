@@ -17,6 +17,10 @@ module.exports = function (config) {
     jasmineHtmlReporter: {
       suppressAll: true // removes the duplicated traces
     },
+    browserConsoleLogOptions: {
+      terminal: true,
+      level: ""
+  },
     coverageReporter: {
       dir: require('path').join(__dirname, './coverage/footprint'),
       subdir: '.',

@@ -28,8 +28,7 @@ export class SignupComponent implements OnInit{
 
 
   validateLogin(){
-
-    if(this.email != '' && this.password != '' && this.firstName != '' && this.lastName != ''){
+  if(this.email != '' && this.password != '' && this.firstName != '' && this.lastName != ''){
 
   this.authenticationService.createUser(this.firstName, this.lastName, this.email, this.password, this.currentMonth).subscribe(
       data =>{
@@ -48,7 +47,8 @@ export class SignupComponent implements OnInit{
         if(error.status == 0){
           alert("Server is down. Try again later")
         }
-      });
+      }
+      );
     }else{
       this.isValid = false;
       this.email = '';
