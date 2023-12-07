@@ -23,6 +23,24 @@ describe('ChartComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it("should run the checkOutputValue function", () => {
+    const arr = [1,2,3,3,4,5,5,6,7,7,6,5]
+    const arr2 = []
+
+    const bool = component.checkOutputValue(arr);
+    const bool2 = component.checkOutputValue(arr2);
+
+    expect(bool).toBeFalsy();
+    expect(bool2).toBeTruthy();
+  });
+
+  it("should set chart data", ()=>{
+    component.setData();
+    expect(component.homeOutput[11]).toBe(500)
+    expect(component.vehicleOutput[11]).toBe(500)
+    expect(component.totalOutput[11]).toBe(1000.41)
+  });
 });
 
 let storage = [

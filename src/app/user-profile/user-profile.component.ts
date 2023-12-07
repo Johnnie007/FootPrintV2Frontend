@@ -436,8 +436,6 @@ export class UserProfileComponent implements OnInit{
     //assigns number with two decimal points 
     ghgPerYear = Math.round(ghgPerYear *100) /100;
 
-    console.log(this.user);
-
     this.user.footprint = Math.round(this.user.footprint * 100) /100;
     return ghgPerYear;
     }
@@ -604,7 +602,6 @@ export class UserProfileComponent implements OnInit{
 
   isLoading(){
     if(this.homes != null && this.vehicles != null && this.user != null && this.GHGStorage.length === 12){
-      console.log("we are here")
       this.loading = false;
     }
   }
@@ -618,13 +615,9 @@ export class UserProfileComponent implements OnInit{
 
    updateUserTotal(): Promise<any>{
     return new Promise (async (resolve) =>{
-      console.log(this.user)
         await this.restService.updateUser(this.user).subscribe((res)=>{
-          console.log(res)
         });
         await this.restService.updateStorageData(this.user.id, this.GHGStorage[this.findStorageMonth()]).subscribe((res)=>{
-          console.log(res);
-          console.log(this.GHGStorage);
         });
         resolve(true); 
     })

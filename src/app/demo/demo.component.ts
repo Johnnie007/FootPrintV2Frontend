@@ -185,7 +185,7 @@ export class DemoComponent {
       storageMonth: 'Dec',
       userId: 10000
     },
-  ]
+  ];
 
   vehicleEditMode = false;
   homeEditMode = false;
@@ -403,7 +403,7 @@ export class DemoComponent {
       let index = new Date().getMonth();
 
       this.GHGStorage[index].vehicleTotal = vehicleBody.vehicleGHG + this.GHGStorage[index].vehicleTotal;
-
+      
 
       //adds values
       this.vehicles.push(vehicleBody);
@@ -516,7 +516,7 @@ export class DemoComponent {
     let offsetter = this.offsetters[id];
     let index = new Date().getMonth();
 
-    this.GHGStorage[index].homeTotal = this.GHGStorage[index].homeTotal + offsetter.CCS;
+    this.GHGStorage[index].homeTotal = this.GHGStorage[index].homeTotal - offsetter.CCS;
 
     this.offsetters.splice(id, 1);
   }
@@ -532,7 +532,7 @@ export class DemoComponent {
     };
 
     let index = new Date().getMonth();
-    this.GHGStorage[index].homeTotal = this.GHGStorage[index].homeTotal - offsetter.CCS;
+    this.GHGStorage[index].homeTotal = this.GHGStorage[index].homeTotal + offsetter.CCS;
 
     this.offsetters.push(offsetter)
   }

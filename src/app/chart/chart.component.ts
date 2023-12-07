@@ -35,7 +35,6 @@ export class ChartComponent implements OnInit, OnChanges {
   chart: Chart;
 
   ngOnInit(): void {
-    console.log(this.userJoinedDate)
     this.signupMonth = this.userJoinedDate.split(" ")[0];
     this.signupYear = this.userJoinedDate.split(" ")[1];
 
@@ -106,7 +105,7 @@ export class ChartComponent implements OnInit, OnChanges {
     let total = currentStorageMonth.vehicleTotal + currentStorageMonth.homeTotal + 0.41;
     
     if(this.signupMonth == currentStorageMonth.storageMonth && this.signupYear == currentYear){
-       let holdHomeOutput = [];
+        let holdHomeOutput = [];
         let holdVehicleOutput = [];
         let holdOutput = [];
         let holdLabels = [];
@@ -203,20 +202,6 @@ export class ChartComponent implements OnInit, OnChanges {
       }
     }
   }
-  }
-
-  updateData(indicator, index, total){
-    for(let i = 0; i < this.monthlyStorage.length; i++){
-      if(total === (this.monthlyStorage[indicator].homeTotal + this.monthlyStorage[indicator].vehicleTotal) + 0.41){
-        return indicator
-      }
-
-      if(indicator == 0){
-        indicator = index - 1
-      }else{
-        indicator--
-      }
-    }
   }
 
   checkOutputValue(arr1: number[]){
