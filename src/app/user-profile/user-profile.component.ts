@@ -24,27 +24,31 @@ export class UserProfileComponent implements OnInit{
     {
       id: 1,
       type: "plant",
-      product: "Succulent",
+      product: "Succulents",
       productLocation: "https://succulentsbox.com/",
-      CCS: -30,
-      userId: 5
+      CCS: -0.04
   },
     {
       id: 2,
       type: "home",
       product: "Solar",
       productLocation: "https://www.sunrun.com/",
-      CCS: -30,
-      userId: 5
+      CCS: -0.20
   },
-    {
-      id: 3,
-      type: "plant",
-      product: "Succulent",
-      productLocation: "https://succulentsbox.com/",
-      CCS: -30,
-      userId: 5
+  {
+    id: 3,
+    type: "plant",
+    product: "Bonsai Plant",
+    productLocation: "https://www.wigertsbonsai.com/bonsai-trees/",
+    CCS: -0.04
   },
+  {
+    id: 4,
+    type: "plant",
+    product: "PlantS",
+    productLocation: "https://www.plants.com/",
+    CCS: -0.04
+  }
 ]
   user: User = null;
   userImage = null;
@@ -118,7 +122,7 @@ export class UserProfileComponent implements OnInit{
         data =>{
           
           this.user = data;
-          console.log(this.user);
+
           if(this.user.footprint === 0 || this.user.footprint === undefined){
             //default user Footprint
             this.user.footprint = 0.41;

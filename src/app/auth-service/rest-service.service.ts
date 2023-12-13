@@ -25,7 +25,7 @@ export class RestService {
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username+ ':' + this.password)});
     console.log(this.username);
     console.log(this.password);
-    return this.httpClient.get<User>('http://localhost:8080/api/user', {headers})
+    return this.httpClient.get<User>('https://footprint-zo7p.onrender.com/api/user', {headers})
     .pipe(
       map(
         userData => {
@@ -39,7 +39,7 @@ export class RestService {
   updateUser(user){
     user.email = this.username
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)});
-    return this.httpClient.post(`http://localhost:8080/api/update/${user.id}`,user, {headers})
+    return this.httpClient.post(`https://footprint-zo7p.onrender.com/api/update/${user.id}`,user, {headers})
     
   };
 
@@ -48,7 +48,7 @@ export class RestService {
       headers: new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)}),
       responseType: 'arraybuffer'
     }
-    return this.httpClient.get<ArrayBuffer>(`http://localhost:8080/api/${id}/image`, requestOptions)
+    return this.httpClient.get<ArrayBuffer>(`https://footprint-zo7p.onrender.com/api/${id}/image`, requestOptions)
     .pipe(
       map(
         userImage => {
@@ -68,7 +68,7 @@ export class RestService {
 
   getVehicle(id){
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)});
-    return this.httpClient.get(`http://localhost:8080/api/${id}/vehicle`, {headers})
+    return this.httpClient.get(`https://footprint-zo7p.onrender.com/api/${id}/vehicle`, {headers})
     .pipe(
       map(
         vehicleData => {
@@ -80,7 +80,7 @@ export class RestService {
 
   getHome(id){
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)});
-    return this.httpClient.get(`http://localhost:8080/api/${id}/home`, {headers})
+    return this.httpClient.get(`https://footprint-zo7p.onrender.com/api/${id}/home`, {headers})
     .pipe(
       map(
         homeData => {
@@ -92,7 +92,7 @@ export class RestService {
 
   getRecommendations(){
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)});
-    return this.httpClient.get(`http://localhost:8080/api/recommendations`, {headers})
+    return this.httpClient.get(`https://footprint-zo7p.onrender.com/api/recommendations`, {headers})
     .pipe(
       map(
         recommendationData =>{
@@ -102,7 +102,7 @@ export class RestService {
 
   getOffsetters(id){
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)});
-    return this.httpClient.get(`http://localhost:8080/api/${id}/offsetters`, {headers})
+    return this.httpClient.get(`https://footprint-zo7p.onrender.com/api/${id}/offsetters`, {headers})
     .pipe(
       map(
         offsettersData =>{
@@ -112,7 +112,7 @@ export class RestService {
 
   getStorage(id){
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)});
-    return this.httpClient.get(`http://localhost:8080/api/${id}/storage`, {headers})
+    return this.httpClient.get(`https://footprint-zo7p.onrender.com/api/${id}/storage`, {headers})
     .pipe(
       map(
         data =>{
@@ -122,37 +122,37 @@ export class RestService {
 
   addVehicle(id, vehicle){
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)});
-    return this.httpClient.post(`http://localhost:8080/api/${id}/add/vehicle`,vehicle,{headers});
+    return this.httpClient.post(`https://footprint-zo7p.onrender.com/api/${id}/add/vehicle`,vehicle,{headers});
   }
   
   addHome(id, home){
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)});
-    return this.httpClient.post(`http://localhost:8080/api/${id}/home`,home,{headers});
+    return this.httpClient.post(`https://footprint-zo7p.onrender.com/api/${id}/home`,home,{headers});
   }
 
   addUserImage(id, userImage){
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)});
-    return this.httpClient.post(`http://localhost:8080/api/${id}/upload`,userImage,{headers});
+    return this.httpClient.post(`https://footprint-zo7p.onrender.com/api/${id}/upload`,userImage,{headers});
   }
 
   addOffsetters(id, offsetters){
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)});
-    return this.httpClient.post(`http://localhost:8080/api/${id}/offsetters`,offsetters, {headers});
+    return this.httpClient.post(`https://footprint-zo7p.onrender.com/api/${id}/offsetters`,offsetters, {headers});
   }
   
   addStorageData(id, storage){
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)});
-    return this.httpClient.post(`http://localhost:8080/api/${id}/storage`,storage, {headers, observe: 'response'});
+    return this.httpClient.post(`https://footprint-zo7p.onrender.com/api/${id}/storage`,storage, {headers, observe: 'response'});
    }
 
   updateStorageData(id, data){
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)});
-    return this.httpClient.post(`http://localhost:8080/api/${id}/storage`,data, {headers});
+    return this.httpClient.post(`https://footprint-zo7p.onrender.com/api/${id}/storage`,data, {headers});
   }
   
   deleteUserImage(id){
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)});
-    return this.httpClient.delete(`http://localhost:8080/api/${id}/upload`,{headers});
+    return this.httpClient.delete(`https://footprint-zo7p.onrender.com/api/${id}/upload`,{headers});
   }
 
   deleteVehicle(id, vehicle){
@@ -160,7 +160,7 @@ export class RestService {
       headers: new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)}),
       body:vehicle
     }
-    return this.httpClient.delete(`http://localhost:8080/api/${id}/delete/vehicle`,requestOptions);
+    return this.httpClient.delete(`https://footprint-zo7p.onrender.com/api/${id}/delete/vehicle`,requestOptions);
   
   }
   
@@ -169,7 +169,7 @@ export class RestService {
       headers: new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)}),
       body:home
     }
-    return this.httpClient.delete(`http://localhost:8080/api/${id}/delete/home`,requestOptions);
+    return this.httpClient.delete(`https://footprint-zo7p.onrender.com/api/${id}/delete/home`,requestOptions);
   }
 
   deleteOffsetters(id, offsetters){
@@ -177,7 +177,7 @@ export class RestService {
       headers: new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)}),
       body: offsetters
     }
-    return this.httpClient.delete(`http://localhost:8080/api/${id}/offsetters`, requestOptions);
+    return this.httpClient.delete(`https://footprint-zo7p.onrender.com/api/${id}/offsetters`, requestOptions);
   }
  
   deleteStorage(id){
@@ -186,6 +186,6 @@ export class RestService {
       headers: new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)})
     }
     
-    return this.httpClient.delete(`http://localhost:8080/api/storage/${id}`, requestOptions);
+    return this.httpClient.delete(`https://footprint-zo7p.onrender.com/api/storage/${id}`, requestOptions);
   }
 }

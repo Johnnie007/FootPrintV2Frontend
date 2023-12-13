@@ -29,7 +29,7 @@ export class AuthencationService {
       password: password
     }
 
-    return this.httpClient.post<void>('http://localhost:8080/api/signin',user, {responseType: 'text' as 'json', observe: 'response'})
+    return this.httpClient.post<void>('https://footprint-zo7p.onrender.com/api/signin',user, {responseType: 'text' as 'json', observe: 'response'})
     .pipe(
      map(
        userData => {
@@ -55,7 +55,7 @@ export class AuthencationService {
       password: password
     }
 
-    return this.httpClient.post<void>('http://localhost:8080/api/signup',user, {responseType: 'text' as 'json', observe: 'response'})
+    return this.httpClient.post<void>('https://footprint-zo7p.onrender.com/api/signup',user, {responseType: 'text' as 'json', observe: 'response'})
     .pipe(
      map(
        userData => {
