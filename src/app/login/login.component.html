@@ -17,7 +17,7 @@
             <p class="not-valid__p">{{warningMessage}}</p>
         </div>
         <div>
-            <button class="login-btn" (click)="validateLogin()">Sign In</button>
+            <button [ngClass]="submitted ? 'submitted-btn' : 'login-btn'" [disabled]="submitted" (click)="validateLogin()">Sign In</button>
         </div>
         <div class="signup">
             <a class="signup" routerLink="/signup">Need to Sign Up?</a>

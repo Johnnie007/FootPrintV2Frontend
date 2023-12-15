@@ -23,13 +23,12 @@ export class RestService {
   getUser(){
    this.userCredentials();
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username+ ':' + this.password)});
-    console.log(this.username);
-    console.log(this.password);
+
     return this.httpClient.get<User>('https://footprint-zo7p.onrender.com/api/user', {headers})
     .pipe(
       map(
         userData => {
-          console.log(userData)
+          
           return userData;
         }
       )
@@ -38,6 +37,7 @@ export class RestService {
 
   updateUser(user){
     user.email = this.username
+   
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)});
     return this.httpClient.post(`https://footprint-zo7p.onrender.com/api/update/${user.id}`,user, {headers})
     
@@ -147,7 +147,7 @@ export class RestService {
 
   updateStorageData(id, data){
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.username + ':' + this.password)});
-    return this.httpClient.post(`https://footprint-zo7p.onrender.com/api/${id}/storage`,data, {headers});
+    return this.httpClient.post(`https://footprint-zo7p.onrender.com/api/${id}/storage/update`,data, {headers});
   }
   
   deleteUserImage(id){

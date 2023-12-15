@@ -20,36 +20,7 @@ export class UserProfileComponent implements OnInit{
 
   offsetters;
   
-  recommendations = [
-    {
-      id: 1,
-      type: "plant",
-      product: "Succulents",
-      productLocation: "https://succulentsbox.com/",
-      CCS: -0.04
-  },
-    {
-      id: 2,
-      type: "home",
-      product: "Solar",
-      productLocation: "https://www.sunrun.com/",
-      CCS: -0.20
-  },
-  {
-    id: 3,
-    type: "plant",
-    product: "Bonsai Plant",
-    productLocation: "https://www.wigertsbonsai.com/bonsai-trees/",
-    CCS: -0.04
-  },
-  {
-    id: 4,
-    type: "plant",
-    product: "PlantS",
-    productLocation: "https://www.plants.com/",
-    CCS: -0.04
-  }
-]
+  recommendations;
   user: User = null;
   userImage = null;
   vehicles = null;
@@ -59,6 +30,10 @@ export class UserProfileComponent implements OnInit{
   vehicleEditMode = false;
   homeEditMode = false;
   userEditMode = false;
+  //enables and disables btns
+  userEdited =false;
+  vehicleEdited = false;
+  homeEdited = false;
 
   //vehicle stuff
   vehicleType = null;
@@ -123,7 +98,7 @@ export class UserProfileComponent implements OnInit{
           
           this.user = data;
 
-          if(this.user.footprint === 0 || this.user.footprint === undefined){
+          if(this.user.footprint === 0 || this.user.footprint === undefined || this.user.footprint === null){
             //default user Footprint
             this.user.footprint = 0.41;
           }
@@ -197,6 +172,8 @@ export class UserProfileComponent implements OnInit{
       this.restService.getRecommendations()
       .subscribe(
         data => {
+         
+          this.recommendations = data;
           resolve(true);
         }
       )
@@ -208,7 +185,7 @@ export class UserProfileComponent implements OnInit{
       this.restService.getOffsetters(this.user.id)
       .subscribe(
         data => {
-          console.log(this.user.footprint)
+       
           this.offsetters = data
           resolve(true);
         }
@@ -268,9 +245,10 @@ export class UserProfileComponent implements OnInit{
   }
   
   addVehicle(){
-
-    if(this.vehicleType != null  && this.vehicleType == '' && this.vehicleMpg != null  && this.vehicleMpg == ''){
+    this.vehicleEdited = true;
+    if(this.vehicleType == null  || this.vehicleType == '' || this.vehicleMpg == null || this.vehicleMpg == ''|| this.vehicleMpg == undefined || this.vehicleType == undefined){
       alert("All Fields are required")
+      this.vehicleEdited = false;
     }
     else{
       this.loading = true;
@@ -280,10 +258,8 @@ export class UserProfileComponent implements OnInit{
         userId: this.user.id,
         vehicleGHG: this.calculateVehicleGHG()
       };
-      console.log(this.user);
-      this.GHGStorage[this.findStorageMonth()].vehicleTotal = vehicleBody.vehicleGHG + this.GHGStorage[this.findStorageMonth()].vehicleTotal;
 
-      console.log(this.user);
+      this.GHGStorage[this.findStorageMonth()].vehicleTotal = vehicleBody.vehicleGHG + this.GHGStorage[this.findStorageMonth()].vehicleTotal;
         
       this.restService.addVehicle(this.user.id, vehicleBody)
       .subscribe( (res)=>{
@@ -294,18 +270,21 @@ export class UserProfileComponent implements OnInit{
         this.vehicles = null;
 
         this.vehicleEditMode = false;
+       
 
         this.updateUserTotal().then(()=>{
-          this.setVehicleData()
+          this.setVehicleData();
+          this.vehicleEdited = false;
         });
       });
     }
   }
 
   addHome(){
-
-    if(this.homeType != null  && this.homeType == '' && this.homeSize != null  && this.homeSize == ''){
+    this.homeEdited = true;
+    if(this.homeType == null || this.homeType == '' || this.homeSize == null  || this.homeSize == '' || this.homeType == undefined || this.homeSize == undefined){
       alert("All Fields are required")
+      this.homeEdited = false;
     }
     else{
       this.loading = true;
@@ -325,7 +304,8 @@ export class UserProfileComponent implements OnInit{
         this.homeSize = 0;
         this.homeEditMode = false;
         this.updateUserTotal().then(()=>{
-          this.setHomeData()
+          this.setHomeData();
+          this.homeEdited = false;
         });
       });
     }
@@ -339,7 +319,10 @@ export class UserProfileComponent implements OnInit{
      userId: this.user.id
     };
     
-    this.user.footprint = this.user.footprint - offsetter.CCS;
+    let total = this.user.footprint - offsetter.CCS;
+
+    this.user.footprint = Math.round(total * 100) / 100;
+    
       
     this.GHGStorage[this.findStorageMonth()].homeTotal = this.GHGStorage[this.findStorageMonth()].homeTotal - offsetter.CCS;
        
@@ -371,7 +354,7 @@ export class UserProfileComponent implements OnInit{
           this.restService.addStorageData(this.user.id, data)
       .subscribe(
         data => {
-          console.log("we are here")
+         
          if(tracker === this.GHGStorage.length - 1){
         
           resolve(true);
@@ -384,9 +367,12 @@ export class UserProfileComponent implements OnInit{
   }
 
   deleteVehicle(){
+    this.vehicleEdited = true;
     if(this.vehicleType != null || this.vehicleType != undefined){
+     let total = this.user.footprint - this.vehicles[this.vehicleIndex].vehicleGHG;
+    
+      this.user.footprint = Math.round(total * 100) / 100;
 
-      this.user.footprint = this.user.footprint - this.vehicles[this.vehicleIndex].vehicleTotal;
       this.GHGStorage[this.findStorageMonth()].vehicleTotal = this.GHGStorage[this.findStorageMonth()].vehicleTotal - this.vehicles[this.vehicleIndex].vehicleGHG;
        
       
@@ -394,15 +380,20 @@ export class UserProfileComponent implements OnInit{
         this.vehicleEditMode = false;
         this.updateUserTotal().then(()=>{
           this.setVehicleData();
+          this.vehicleEdited = false;
         });
       });
     }
+    this.vehicleEdited = false;
   }
 
   deleteHome(){
+    this.homeEdited = true;
     if(this.homeType != null || this.homeType != undefined){
-      
-      this.user.footprint = this.user.footprint - this.homes[this.homeIndex].homeTotal;
+
+      let total = this.user.footprint - this.homes[this.homeIndex].homeGHG;
+
+      this.user.footprint = Math.round(total * 100) / 100;
       this.GHGStorage[this.findStorageMonth()].homeTotal = this.GHGStorage[this.findStorageMonth()].homeTotal - this.homes[this.homeIndex].homeGHG;
         
    
@@ -411,17 +402,23 @@ export class UserProfileComponent implements OnInit{
         this.homeEditMode = false;
         this.updateUserTotal().then(()=>{
           this.setHomeData();
+          this.homeEdited = false;
         })
       });
     }
+    this.homeEdited = false;
   }
 
   deleteOffsetter(id){
     let offsetter = this.offsetters[id];
+    this.offsetters.splice(id, 1);
 
     this.GHGStorage[this.findStorageMonth()].homeTotal = this.GHGStorage[this.findStorageMonth()].homeTotal + offsetter.CCS;
-    this.user.footprint = this.user.footprint + offsetter.CCS
     
+    let total = this.user.footprint + offsetter.CCS;
+
+    this.user.footprint = Math.round(total * 100) / 100;
+
     this.restService.deleteOffsetters(this.user.id, offsetter).subscribe(
       ()=>{
         this.updateUserTotal().then(()=>{
@@ -474,6 +471,8 @@ export class UserProfileComponent implements OnInit{
   }
 
   updateUserImage(){
+    //disables btn
+    this.userEdited = true;
     if(this.holdNewImage != null){
       
       const file: File = this.holdNewImage;
@@ -490,11 +489,13 @@ export class UserProfileComponent implements OnInit{
           this.setUserImage().then(()=>{
             this.holdNewImage = null;
             this.userEditMode = false;
+            this.userEdited = false
           })
          
         }
       )
     }
+    this.userEdited = false;
   }
 
   increaseVehicleIndex(){

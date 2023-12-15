@@ -34,7 +34,6 @@ export class AuthencationService {
      map(
        userData => {
         if(userData.status == 203){
-          console.log("User not found")
           return userData
         }
         else{
@@ -60,11 +59,11 @@ export class AuthencationService {
      map(
        userData => {
         if(userData.status == 401){
-          console.log("User not found")
+          
           return userData
         }
         if(userData.status == 226){
-          console.log("Username taken")
+         
           return userData
         }
         

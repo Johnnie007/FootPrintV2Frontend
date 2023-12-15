@@ -37,7 +37,7 @@
                     </div>
                 </div>
                 <div class="user-btns">
-                    <button (click)="updateUserImage()" class="btn">Update</button>
+                    <button (click)="updateUserImage()" [ngClass]="userEdited ? 'disable-btn' : 'btn'" [disabled]="userEdited">Update</button>
                     <button (click)="cancelEditUser()" class="btn">Cancel</button>
                 </div>
             </div>
@@ -83,11 +83,11 @@
                 </div>
                 
                 <div  *ngIf="vehicleIndex === vehicles.length" class="btns">
-                    <button (click)="addVehicle()" class="btn">Add</button>
+                    <button (click)="addVehicle()" [ngClass]="vehicleEdited ? 'disable-btn' : 'btn'" [disabled]="vehicleEdited">Add</button>
                     <button (click)="cancelEditVehicle()" class="btn">Cancel</button>
                 </div>
                 <div *ngIf="vehicleIndex != vehicles.length" class="btns">
-                    <button (click)="deleteVehicle()" class="btn">Delete</button>
+                    <button [ngClass]="vehicleEdited ? 'disable-btn' : 'btn' " [disabled]="vehicleEdited" (click)="deleteVehicle()" >Delete</button>
                     <button (click)="cancelEditVehicle()" class="btn">Cancel</button>
                 </div>
 
@@ -185,11 +185,11 @@
                 </div>
                 
                 <div *ngIf="homeIndex === homes.length" class="btns">
-                    <button (click)="addHome()" class="btn">Add</button>
+                    <button (click)="addHome()" [ngClass]="homeEdited ? 'disable-btn' : 'btn'" [disabled]="homeEdited">Add</button>
                     <button (click)="cancelEditHome()" class="btn">Cancel</button>
                 </div>
                 <div *ngIf="homeIndex != homes.length" class="btns">
-                    <button (click)="deleteHome()" class="btn">Delete</button>
+                    <button (click)="deleteHome()" [ngClass]="homeEdited ? 'disable-btn' : 'btn'" [disabled]="homeEdited">Delete</button>
                     <button (click)="cancelEditHome()" class="btn">Cancel</button>
                 </div>
                 

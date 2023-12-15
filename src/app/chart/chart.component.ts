@@ -202,6 +202,7 @@ export class ChartComponent implements OnInit, OnChanges {
       }
     }
   }
+
   }
 
   checkOutputValue(arr1: number[]){
