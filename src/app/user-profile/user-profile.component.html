@@ -7,7 +7,7 @@
         
         <div *ngIf="userEditMode !== true" class="user-container">
             <div class="edit-icon">
-               <img (click)="editUser()" src="../../assets/images/edit.svg" alt="edit">
+               <img (click)="editUser()" src="assets/images/edit.svg" alt="edit">
             </div>
             <div class="info-container">
                 <div class="image-container">
@@ -46,13 +46,13 @@
         <div *ngIf="vehicles?.length == 0 && vehicleEditMode == false" class="vehicle-container">
             <div class="add-vehicle">
                 <h2>Add Vehicle</h2>
-                    <img (click)="editVehicle()" class="add-button" src="../../assets/images/AddButton.svg" alt="add vehicle">
+                    <img (click)="editVehicle()" class="add-button" src="assets/images/AddButton.svg" alt="add vehicle">
             </div>
         </div>
         
         <div *ngIf="vehicleEditMode" class="edit-vehicle-container">
             <div *ngIf="vehicles.length > 0" class="leftArrow">
-                <img (click)="decreaseVehicleIndex()" class="left-arrow" src="../../assets/images/leftArrow.svg" alt="">
+                <img (click)="decreaseVehicleIndex()" class="left-arrow" src="assets/images/leftArrow.svg" alt="">
             </div>
             <div class="edit-container">
                 <h2 class="edit-header">Add Vehicle</h2>
@@ -93,25 +93,25 @@
 
             </div>
             <div *ngIf="vehicles.length > 0" class="leftArrow">
-                <img (click)="increaseVehicleIndex()" class="right-arrow" src="../../assets/images/rightArrow.svg" alt="">
+                <img (click)="increaseVehicleIndex()" class="right-arrow" src="assets/images/rightArrow.svg" alt="">
             </div>
         </div>
 
         <div *ngIf="vehicles.length != 0 && vehicleEditMode == false" class="vehicle-container">
             <div class="edit-icon">
-                <img (click)="editVehicle()" src="../../assets/images/edit.svg" alt="edit">
+                <img (click)="editVehicle()" src="assets/images/edit.svg" alt="edit">
             </div>
             
             <div class="vehicle-section">
                 <div *ngIf="vehicles.length > 1" class="leftArrow">
-                    <img (click)="decreaseVehicleIndex()" class="left-arrow" src="../../assets/images/leftArrow.svg" alt="">
+                    <img (click)="decreaseVehicleIndex()" class="left-arrow" src="assets/images/leftArrow.svg" alt="">
                 </div>
                 <div class="info-container">
                     <div class="image-container">
-                        <img *ngIf="this.vehicleType == 'suv'" class="vehicle-image" src="../../assets/images/SUV.svg" alt="profile picture">
-                        <img *ngIf="this.vehicleType == 'car'" class="vehicle-image" src="../../assets/images/car.svg" alt="profile picture">
-                        <img *ngIf="this.vehicleType == 'motorcycle'" class="vehicle-image" src="../../assets/images/motorcycle.svg" alt="profile picture">
-                        <img *ngIf="this.vehicleType == 'truck'" class="vehicle-image" src="../../assets/images/truck.svg" alt="profile picture">
+                        <img *ngIf="this.vehicleType == 'suv'" class="vehicle-image" src="assets/images/SUV.svg" alt="profile picture">
+                        <img *ngIf="this.vehicleType == 'car'" class="vehicle-image" src="assets/images/car.svg" alt="profile picture">
+                        <img *ngIf="this.vehicleType == 'motorcycle'" class="vehicle-image" src="assets/images/motorcycle.svg" alt="profile picture">
+                        <img *ngIf="this.vehicleType == 'truck'" class="vehicle-image" src="assets/images/truck.svg" alt="profile picture">
                     </div>
                     <div class="monthly-output">
                         <h4>Monthly Output:</h4>
@@ -119,7 +119,7 @@
                     </div>
                 </div>
                 <div *ngIf="vehicles.length > 1" class="leftArrow">
-                    <img (click)="increaseVehicleIndex()" class="right-arrow" src="../../assets/images/rightArrow.svg" alt="">
+                    <img (click)="increaseVehicleIndex()" class="right-arrow" src="assets/images/rightArrow.svg" alt="">
                 </div>
             </div>
         </div>
@@ -127,23 +127,23 @@
         <div *ngIf="homes.length == 0 && homeEditMode == false" class="home-container">
             <div class="add-vehicle">
                 <h2>Add Home</h2>
-                <img (click)="editHome()" class="add-button" src="../../assets/images/AddButton.svg" alt="add home">
+                <img (click)="editHome()" class="add-button" src="assets/images/AddButton.svg" alt="add home">
             </div>
         </div>
         <div *ngIf="homes.length != 0 && homeEditMode == false" class="home-container">
             <div class="edit-icon">
-                <img (click)="editHome()" src="../../assets/images/edit.svg" alt="edit">
+                <img (click)="editHome()" src="assets/images/edit.svg" alt="edit">
             </div>
             
             <div class="home-section">
                 <div *ngIf="homes.length > 1"  class="leftArrow">
-                    <img (click)="decreaseHomeIndex()" class="left-arrow" src="../../assets/images/leftArrow.svg" alt="">
+                    <img (click)="decreaseHomeIndex()" class="left-arrow" src="assets/images/leftArrow.svg" alt="">
                 </div>
                 <div class="info-container">
                     <div class="image-container">
-                        <img *ngIf="homeType === 'house'" class="home-image" src="../../assets/images/house.svg" alt="profile picture">
-                        <img *ngIf="homeType === 'apartment'"  class="home-image" src="../../assets/images/apartment.svg" alt="profile picture">
-                        <img *ngIf="homeType === 'mansion'" class="home-image" src="../../assets/images/mansion.svg" alt="profile picture">
+                        <img *ngIf="homeType === 'house'" class="home-image" src="assets/images/house.svg" alt="profile picture">
+                        <img *ngIf="homeType === 'apartment'"  class="home-image" src="assets/images/apartment.svg" alt="profile picture">
+                        <img *ngIf="homeType === 'mansion'" class="home-image" src="assets/images/mansion.svg" alt="profile picture">
                     </div>
                     <div class="monthly-output">
                         <h4>Monthly Output:</h4>
@@ -151,14 +151,14 @@
                     </div>
                 </div>
                 <div *ngIf="homes.length > 1" class="rightArrow">
-                    <img (click)="increaseHomeIndex()" class="left-arrow" src="../../assets/images/rightArrow.svg" alt="">
+                    <img (click)="increaseHomeIndex()" class="left-arrow" src="assets/images/rightArrow.svg" alt="">
                 </div>
             </div>
         </div>
 
         <div *ngIf="homeEditMode" class="edit-home-container">
             <div *ngIf="homes.length > 0" class="leftArrow">
-                <img (click)="decreaseHomeIndex()" class="left-arrow" src="../../assets/images/leftArrow.svg" alt="">
+                <img (click)="decreaseHomeIndex()" class="left-arrow" src="assets/images/leftArrow.svg" alt="">
             </div>
             <div class="edit-container">
                 <h2 class="edit-header">Add Home</h2>
@@ -195,7 +195,7 @@
                 
             </div>
             <div *ngIf="homes.length > 0" class="leftArrow">
-                <img (click)="increaseHomeIndex()" class="right-arrow" src="../../assets/images/rightArrow.svg" alt="">
+                <img (click)="increaseHomeIndex()" class="right-arrow" src="assets/images/rightArrow.svg" alt="">
             </div>
         </div>
     </div>
@@ -212,7 +212,7 @@
                 </div>
                     <div class="list-item" *ngFor="let offsetter of offsetters; let i = index">
                         <div class="offsetter-list-item">
-                            <img class="offsetter-icon" src="../../assets/images/removeIcon.svg" alt="remove offsetter" (click)="deleteOffsetter(i)">
+                            <img class="offsetter-icon" src="assets/images/removeIcon.svg" alt="remove offsetter" (click)="deleteOffsetter(i)">
                             <p class="offsetter-name"> 
                                 {{offsetter.product}}
                             </p>
@@ -232,7 +232,7 @@
                     <!--change div names-->
                     <div class="list-item" *ngFor="let recommendation of recommendations; let i = index">
                         <div class="recommendation-list-item">
-                            <img class="recommendation-icon" src="../../assets/images/addIcon.svg" alt="Add offsetter" (click)="addOffsetter(i)">
+                            <img class="recommendation-icon" src="assets/images/addIcon.svg" alt="Add offsetter" (click)="addOffsetter(i)">
                             <a class="recommendation-name" href="{{recommendation.productLocation}}">
                                 {{recommendation.product}}
                             </a>
