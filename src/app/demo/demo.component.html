@@ -209,9 +209,14 @@
      
         <div class="offsetter-section">
             <div class="offsetter-container">
-                <div class="offsetter-header">
+                <div *ngIf="offsetterLoading === true" class="loader-container">
+                    <div class="loader"></div>
+                </div>
+                
+                <div *ngIf="offsetterLoading === false" class="offsetter-header">
                     <h4>OFFSETTERS</h4>
                 </div>
+                <div *ngIf="offsetterLoading === false" class="list-container">
                     <div class="list-item" *ngFor="let offsetter of offsetters; let i = index">
                         <div class="offsetter-list-item">
                             <img class="offsetter-icon" src="assets/images/removeIcon.svg" alt="remove offsetter" (click)="deleteOffsetter(i)">
@@ -223,6 +228,8 @@
                             <p class="offsetter-ghg">{{offsetter.CCS}} GHG/Year</p>
                         </div>
                     </div>
+                </div>
+                    
                 
             </div>
     
@@ -235,7 +242,7 @@
                     <div class="list-item" *ngFor="let recommendation of recommendations; let i = index">
                         <div class="recommendation-list-item">
                             <img class="recommendation-icon" src="assets/images/addIcon.svg" alt="Add offsetter" (click)="addOffsetter(i)">
-                            <a class="recommendation-name" href="{{recommendation.productLocation}}">
+                            <a class="recommendation-name" href="{{recommendation.productLocation}}" target="_blank">
                                 {{recommendation.product}}
                             </a>
                         </div>

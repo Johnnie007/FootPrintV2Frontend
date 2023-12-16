@@ -16,28 +16,35 @@ export class DemoComponent {
   year = new Date().getFullYear();
   month = new Date().getMonth();
   currentMonth = `${months[this.month]} ${this.year}`;
-
+  offsetterLoading = false;
   offsetters = [
     {
       id: 1,
       type: "plant",
       product: "Succulent",
-      CCS: -30,
-      userId: 5
+      CCS: .04,
+      userId: 10000
   },
     {
       id: 2,
       type: "home",
       product: "Solar",
-      CCS: -30,
-      userId: 5
+      CCS: .2,
+      userId: 10000
   },
     {
       id: 3,
       type: "plant",
-      product: "Succulent",
-      CCS: -30,
-      userId: 5
+      product: "Bonsai Plant",
+      CCS: .04,
+      userId: 10000
+  },
+    {
+      id: 4,
+      type: "plant",
+      product: "Plants",
+      CCS: .04,
+      userId: 10000
   }
   ]
   
@@ -47,24 +54,32 @@ export class DemoComponent {
       type: "plant",
       product: "Succulent",
       productLocation: "https://succulentsbox.com/",
-      CCS: -30,
-      userId: 5
+      CCS: .04,
+      userId: 10000
   },
     {
       id: 2,
       type: "home",
       product: "Solar",
       productLocation: "https://www.sunrun.com/",
-      CCS: -30,
-      userId: 5
+      CCS: .2,
+      userId: 10000
   },
     {
       id: 3,
       type: "plant",
-      product: "Succulent",
-      productLocation: "https://succulentsbox.com/",
-      CCS: -30,
-      userId: 5
+      product: "Bonsai Plant",
+      productLocation: "https://www.bonsaioutlet.com/all-bonsai-trees/",
+      CCS: .04,
+      userId: 10000
+  },
+    {
+      id: 4,
+      type: "plant",
+      product: "Plants",
+      productLocation: "https://www.plants.com/",
+      CCS: .04,
+      userId: 10000
   }
 ]
   user = {
@@ -73,7 +88,7 @@ export class DemoComponent {
     first_name: "John",
     last_name: "Doe",
     lifeStyle: "null",
-    footprint: 1721.41
+    footprint: 18.16
   }
   
   userImage = null;
@@ -81,34 +96,34 @@ export class DemoComponent {
   vehicles = [
     {
     type: "car",
-    mpg: 4,
+    mpg: 23,
     userId: 10000,
-    vehicleGHG: 65
+    vehicleGHG: 4.64
   },
     {
     type: "truck",
     mpg: 10,
     userId: 10000,
-    vehicleGHG: 66
+    vehicleGHG: 10.67
   }];
 
   homes = [
     {
     homeType: 'house',
-    homeSize: 1312,
-    homeGHG: 233,
+    homeSize: 3500,
+    homeGHG: 1.12,
     userId: 10000
     },
     {
     homeType: 'apartment',
-    homeSize: 112,
-    homeGHG: 123,
+    homeSize: 1400,
+    homeGHG: .45,
     userId: 10000
     },
     {
     homeType: 'house',
-    homeSize: 1232,
-    homeGHG: 1233,
+    homeSize: 4000,
+    homeGHG: 1.28,
     userId: 10000
     }];
 
@@ -168,20 +183,20 @@ export class DemoComponent {
       userId: 10000
     },
       {
-      vehicleTotal: 0,
-      homeTotal: 0,
+      vehicleTotal: 7.2,
+      homeTotal: 1.12,
       storageMonth: 'Oct',
       userId: 10000
     },
       {
-      vehicleTotal: 131,
-      homeTotal: 1589,
+      vehicleTotal: 7.2,
+      homeTotal: 1.12,
       storageMonth: 'Nov',
       userId: 10000
     },
       {
-      vehicleTotal: 0,
-      homeTotal: 0,
+      vehicleTotal: 15.31,
+      homeTotal: 2.85,
       storageMonth: 'Dec',
       userId: 10000
     },
@@ -522,7 +537,8 @@ export class DemoComponent {
     let offsetter = this.offsetters[id];
     let index = new Date().getMonth();
 
-    this.GHGStorage[index].homeTotal = this.GHGStorage[index].homeTotal - offsetter.CCS;
+    this.GHGStorage[index].homeTotal = this.GHGStorage[index].homeTotal + offsetter.CCS;
+    this.user.footprint = this.user.footprint + offsetter.CCS;
 
     this.offsetters.splice(id, 1);
   }
@@ -539,6 +555,7 @@ export class DemoComponent {
 
     let index = new Date().getMonth();
     this.GHGStorage[index].homeTotal = this.GHGStorage[index].homeTotal + offsetter.CCS;
+    this.user.footprint = this.user.footprint - offsetter.CCS;
 
     this.offsetters.push(offsetter)
   }

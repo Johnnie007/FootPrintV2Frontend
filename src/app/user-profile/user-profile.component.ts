@@ -19,6 +19,7 @@ export class UserProfileComponent implements OnInit{
   userSubscription: Subscription
 
   offsetters;
+  offsetterLoading;
   
   recommendations;
   user: User = null;
@@ -185,7 +186,7 @@ export class UserProfileComponent implements OnInit{
       this.restService.getOffsetters(this.user.id)
       .subscribe(
         data => {
-       
+          this.offsetterLoading = false;
           this.offsetters = data
           resolve(true);
         }
@@ -317,8 +318,9 @@ export class UserProfileComponent implements OnInit{
      product: this.recommendations[id].product,
      CCS: this.recommendations[id].CCS,
      userId: this.user.id
-    };
-    
+    }
+    this.offsetterLoading = true;
+
     let total = this.user.footprint - offsetter.CCS;
 
     this.user.footprint = Math.round(total * 100) / 100;
@@ -419,6 +421,7 @@ export class UserProfileComponent implements OnInit{
 
     this.GHGStorage[this.findStorageMonth()].homeTotal = this.GHGStorage[this.findStorageMonth()].homeTotal + offsetter.CCS;
     
+    this.offsetterLoading = true;
     let total = this.user.footprint + offsetter.CCS;
 
     this.user.footprint = Math.round(total * 100) / 100;
@@ -464,9 +467,9 @@ export class UserProfileComponent implements OnInit{
   setNewUserImage(e){
     let reader = new FileReader();
     let file = e.target.files[0];
-    this.holdNewImage = e.target.files[0]
     
     if(file.name.length <= 20){
+      this.holdNewImage = e.target.files[0]
       reader.readAsDataURL(file);
       reader.onload = () =>{
         this.previewImage = reader.result
