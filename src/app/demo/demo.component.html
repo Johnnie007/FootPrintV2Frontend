@@ -7,7 +7,7 @@
         
         <div *ngIf="userEditMode !== true" class="user-container">
             <div class="edit-icon">
-               <img (click)="editUser()" src="assets/images/edit.svg" alt="edit">
+               <img (click)="editUser()" src="../../assets/images/edit.svg" alt="edit">
             </div>
             <div class="info-container">
                 <div class="image-container">
@@ -47,13 +47,13 @@
         <div *ngIf="vehicles?.length == 0 && vehicleEditMode == false" class="vehicle-container">
             <div class="add-vehicle">
                 <h2>Add Vehicle</h2>
-                    <img (click)="editVehicle()" class="add-button" src="assets/images/AddButton.svg" alt="add vehicle">
+                    <img (click)="editVehicle()" class="add-button" src="../../assets/images/AddButton.svg" alt="add vehicle">
             </div>
         </div>
         
         <div *ngIf="vehicleEditMode" class="edit-vehicle-container">
             <div *ngIf="vehicles.length > 0" class="leftArrow">
-                <img (click)="decreaseVehicleIndex()" class="left-arrow" src="assets/images/leftArrow.svg" alt="">
+                <img (click)="decreaseVehicleIndex()" class="left-arrow" src="../../assets/images/leftArrow.svg" alt="">
             </div>
             <div class="edit-container">
                 <h2 class="edit-header">Add Vehicle</h2>
