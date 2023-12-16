@@ -538,8 +538,10 @@ export class DemoComponent {
     let index = new Date().getMonth();
 
     this.GHGStorage[index].homeTotal = this.GHGStorage[index].homeTotal + offsetter.CCS;
-    this.user.footprint = this.user.footprint + offsetter.CCS;
+    
+    let total = this.user.footprint + offsetter.CCS;
 
+    this.user.footprint = Math.round(total * 100) / 100;
     this.offsetters.splice(id, 1);
   }
 
@@ -555,7 +557,9 @@ export class DemoComponent {
 
     let index = new Date().getMonth();
     this.GHGStorage[index].homeTotal = this.GHGStorage[index].homeTotal + offsetter.CCS;
-    this.user.footprint = this.user.footprint - offsetter.CCS;
+    let total = this.user.footprint - offsetter.CCS;
+
+    this.user.footprint = Math.round(total * 100) / 100;
 
     this.offsetters.push(offsetter)
   }
