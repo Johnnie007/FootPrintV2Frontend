@@ -465,10 +465,15 @@ export class UserProfileComponent implements OnInit{
     let reader = new FileReader();
     let file = e.target.files[0];
     this.holdNewImage = e.target.files[0]
-    reader.readAsDataURL(file);
-
-    reader.onload = () =>{
-      this.previewImage = reader.result
+    
+    if(file.name.length <= 20){
+      reader.readAsDataURL(file);
+      reader.onload = () =>{
+        this.previewImage = reader.result
+      }
+    }
+    else{
+      alert("File Name Too Long! Must be 20 characters or less.")
     }
     
   }
@@ -477,7 +482,7 @@ export class UserProfileComponent implements OnInit{
     //disables btn
     this.userEdited = true;
     if(this.holdNewImage != null){
-      
+      this.loading = true
       const file: File = this.holdNewImage;
       const formData = new FormData();
       formData.append('file', file);

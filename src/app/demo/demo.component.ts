@@ -245,11 +245,17 @@ export class DemoComponent {
   setNewUserImage(e){
     let reader = new FileReader();
     let file = e.target.files[0];
-    reader.readAsDataURL(file);
-
-    reader.onload = () =>{
-      this.holdNewImage = reader.result
+    
+    if(file.name.length <= 20){
+      reader.readAsDataURL(file);
+      reader.onload = () =>{
+        this.holdNewImage = reader.result
+      }
     }
+    else{
+      alert("File Name Too Long! Must be 20 characters or less.")
+    }
+    
   }
 
   updateUserImage(){
