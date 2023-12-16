@@ -20,6 +20,7 @@
             "outputPath": "dist/footprint",
             "index": "src/index.html",
             "main": "src/main.ts",
+            "baseHref": "/https://johnnie007.github.io/FootPrintV2Frontend/",
             "polyfills": [
               "zone.js"
             ],
@@ -39,7 +40,7 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "590kb",
+                  "maximumWarning": "600kb",
                   "maximumError": "1mb"
                 },
                 {
