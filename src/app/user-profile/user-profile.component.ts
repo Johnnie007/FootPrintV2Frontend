@@ -369,10 +369,10 @@ export class UserProfileComponent implements OnInit{
   deleteVehicle(){
     this.vehicleEdited = true;
     if(this.vehicleType != null || this.vehicleType != undefined){
-     let total = this.user.footprint - this.vehicles[this.vehicleIndex].vehicleGHG;
-    
-      this.user.footprint = Math.round(total * 100) / 100;
+      this.loading = true;
 
+      let total = this.user.footprint - this.vehicles[this.vehicleIndex].vehicleGHG;
+      this.user.footprint = Math.round(total * 100) / 100;
       this.GHGStorage[this.findStorageMonth()].vehicleTotal = this.GHGStorage[this.findStorageMonth()].vehicleTotal - this.vehicles[this.vehicleIndex].vehicleGHG;
        
       
@@ -380,17 +380,19 @@ export class UserProfileComponent implements OnInit{
         this.vehicleEditMode = false;
         this.updateUserTotal().then(()=>{
           this.setVehicleData();
-          this.vehicleEdited = false;
+          //this.vehicleEdited = false;
         });
       });
+    }else{
+      this.vehicleEdited = false;
     }
-    this.vehicleEdited = false;
+   
   }
 
   deleteHome(){
     this.homeEdited = true;
     if(this.homeType != null || this.homeType != undefined){
-
+      this.loading = true;
       let total = this.user.footprint - this.homes[this.homeIndex].homeGHG;
 
       this.user.footprint = Math.round(total * 100) / 100;
@@ -406,7 +408,9 @@ export class UserProfileComponent implements OnInit{
         })
       });
     }
-    this.homeEdited = false;
+    else{
+      this.homeEdited = false;
+    }
   }
 
   deleteOffsetter(id){
@@ -428,7 +432,6 @@ export class UserProfileComponent implements OnInit{
   }
 
   calculateVehicleGHG(){
-
     if(this.vehicleMpg > 0){
     let gasUsed =  12000/ this.vehicleMpg;
     let ghgPerYear =(8.89 * (10**-3) * gasUsed);

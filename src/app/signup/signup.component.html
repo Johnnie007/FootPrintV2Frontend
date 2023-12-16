@@ -1,4 +1,8 @@
-<div class="login-container">
+<div *ngIf="submitted === true" class="loading">
+    <div class="loading-animation">Loading</div>
+</div>
+
+<div *ngIf="submitted === false" class="login-container">
     <div class="login-form">
         <div class="logo-container">
             <img class="logo" src="../../assets/images/plant.svg" alt="logo">
@@ -24,7 +28,7 @@
         </div>
 
         <div>
-        <button class="login-btn" (click)="validateLogin()">Sign Up</button>
+        <button [ngClass]="submitted ? 'submitted-btn' : 'login-btn'" [disabled]="submitted" (click)="validateLogin()">Sign Up</button>
         </div>
         <div class="signup">
         <a class="signup" routerLink="/signin">Need to Sign In?</a>

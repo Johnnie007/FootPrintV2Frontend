@@ -1,4 +1,8 @@
-<div class="login-container">
+<div *ngIf="submitted === true" class="loading">
+    <div class="loading-animation">Loading</div>
+</div>
+
+<div *ngIf="submitted === false" class="login-container">
     <div class="login-form">
         <div class="logo-container">
             <img class="logo" src="../../assets/images/plant.svg" alt="logo">

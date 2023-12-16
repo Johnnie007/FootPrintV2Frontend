@@ -17,7 +17,7 @@ export class LoginComponent {
   constructor(private router:Router, private authenticationService: AuthencationService){}
 
   validateLogin(){
-    this.submitted = true
+    this.submitted = true;
     if(this.email != '' && this.password != ''){
         this.authenticationService.authenticateUser(this.email, this.password).subscribe(
           data =>{

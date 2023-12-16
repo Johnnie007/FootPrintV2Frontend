@@ -17,6 +17,7 @@ export class SignupComponent implements OnInit{
   lastName = '';
   isValid: boolean;
   currentMonth = null;
+  submitted= false;
   warningMessage: string;
   constructor(private router:Router, private authenticationService: AuthencationService, private restService: RestService){}
  
@@ -28,32 +29,32 @@ export class SignupComponent implements OnInit{
 
 
   validateLogin(){
+    this.submitted = true;
   if(this.email != '' && this.password != '' && this.firstName != '' && this.lastName != ''){
-
   this.authenticationService.createUser(this.firstName, this.lastName, this.email, this.password, this.currentMonth).subscribe(
       data =>{
         if(data.status == 226){
           this.isValid = false
-          this.warningMessage = "Email has been taken"
+          this.warningMessage = "Email has been taken";
+          this.submitted = false;
         }else{
-          setTimeout(() => {
             this.isValid = null;
             this.router.navigate(['/userprofile'], {state:{newUser: "true"}});
-          }, 500);
-         
         }
       },
       error =>{
         if(error.status == 0){
           alert("Server is down. Try again later")
         }
+        this.submitted = false;
       }
       );
     }else{
       this.isValid = false;
       this.email = '';
-      this.password = ''
-      this.warningMessage = "All fields are required"
+      this.password = '';
+      this.warningMessage = "All fields are required";
+      this.submitted = false;
     }  
   }
 }
