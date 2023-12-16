@@ -207,7 +207,7 @@ export class DemoComponent {
 
   loading = true;
   holdNewImage = null;
-  defaultImage =  "../../assets/images/demoProfile.png";
+  defaultImage =  "assets/images/demoProfile.png";
   
   ngOnInit(): void {
     if(this.userImage == null){

@@ -52,7 +52,7 @@ export class UserProfileComponent implements OnInit{
   loading = true;
   holdNewImage = null;
   previewImage = null;
-  defaultImage =  "../../assets/images/demoProfile.png";
+  defaultImage =  "assets/images/demoProfile.png";
   errorIndicator = 0;
 
   constructor(private restService: RestService, private router: Router){
