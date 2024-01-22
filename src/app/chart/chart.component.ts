@@ -99,6 +99,7 @@ export class ChartComponent implements OnInit, OnChanges {
   }
 
   setData(){
+    console.log(this.userJoinedDate)
     let indicator = new Date().getMonth();
     let currentYear = new Date().getFullYear();
     let currentStorageMonth = this.monthlyStorage.find((x) =>  x.storageMonth == months[indicator]);
@@ -109,6 +110,7 @@ export class ChartComponent implements OnInit, OnChanges {
         let holdVehicleOutput = [];
         let holdOutput = [];
         let holdLabels = [];
+        console.log(this.monthlyStorage)
       for(let i = 0; i < this.monthlyStorage.length; i++){
         let storage = this.monthlyStorage.find((x) =>  x.storageMonth == months[indicator]);
 
@@ -152,6 +154,7 @@ export class ChartComponent implements OnInit, OnChanges {
     if(this.totalFootprint != total){
       let correctTotal = this.monthlyStorage.find((x) =>  (x.vehicleTotal + x.homeTotal + 0.41) == this.totalFootprint);
       let index = this.monthlyStorage.findIndex((x) =>  (x.vehicleTotal + x.homeTotal + 0.41) == this.totalFootprint);
+      console.log(correctTotal)
       let vTotal = correctTotal.vehicleTotal;
       let hTotal = correctTotal.homeTotal;
       let proceed = 'false'
@@ -183,6 +186,10 @@ export class ChartComponent implements OnInit, OnChanges {
           indicator--
         }
       }
+
+      console.log(this.vehicleOutput)
+      console.log(this.homeOutput)
+      console.log(this.totalOutput)
     }
     else{
       for(let i = 0; i < this.monthlyStorage.length; i++){

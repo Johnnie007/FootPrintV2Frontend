@@ -16,6 +16,7 @@ export class DemoComponent {
   year = new Date().getFullYear();
   month = new Date().getMonth();
   currentMonth = `${months[this.month]} ${this.year}`;
+ 
   offsetterLoading = false;
   offsetters = [
     {
@@ -84,11 +85,11 @@ export class DemoComponent {
 ]
   user = {
     id: 10000,
-    month_joined: this.currentMonth,
+    month_joined: 'Oct 2023',
     first_name: "John",
     last_name: "Doe",
     lifeStyle: "null",
-    footprint: 18.16
+    footprint: 18.25
   }
   
   userImage = null;
@@ -171,8 +172,8 @@ export class DemoComponent {
       userId: 10000
     },
       {
-      vehicleTotal: 1590,
-      homeTotal: 131,
+      vehicleTotal: 0,
+      homeTotal: 0,
       storageMonth: 'Aug',
       userId: 10000
     },
@@ -196,7 +197,7 @@ export class DemoComponent {
     },
       {
       vehicleTotal: 15.31,
-      homeTotal: 2.85,
+      homeTotal: 2.53,
       storageMonth: 'Dec',
       userId: 10000
     },
@@ -556,7 +557,7 @@ export class DemoComponent {
     };
 
     let index = new Date().getMonth();
-    this.GHGStorage[index].homeTotal = this.GHGStorage[index].homeTotal + offsetter.CCS;
+    this.GHGStorage[index].homeTotal = this.GHGStorage[index].homeTotal - offsetter.CCS;
     let total = this.user.footprint - offsetter.CCS;
 
     this.user.footprint = Math.round(total * 100) / 100;

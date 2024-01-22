@@ -81,7 +81,7 @@ describe('DemoComponent', () => {
 
       component.addOffsetter(1);
 
-      expect(component.GHGStorage[index].homeTotal).toBe(70);
+      expect(component.GHGStorage[index].homeTotal).toBe(99.8);
       expect(component.GHGStorage[index].vehicleTotal).toBe(0);
   });
 
@@ -140,7 +140,7 @@ describe('DemoComponent', () => {
 
       component.deleteOffsetter(1);
 
-      expect(component.GHGStorage[index].homeTotal).toBe(230);
+      expect(component.GHGStorage[index].homeTotal).toBe(200.2);
       expect(component.GHGStorage[index].vehicleTotal).toBe(200);
   });
 
